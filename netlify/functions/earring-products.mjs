@@ -49,7 +49,7 @@ function parseCarouselFilename(filename) {
 }
 export default async function handler() {
   try {
-    const privateKey = const privateKey = process.env.IMAGEKIT_PRIVATE_KEY;;
+    const privateKey = process.env.IMAGEKIT_PRIVATE_KEY;;
     if (!privateKey) return json({ error:'IMAGEKIT_PRIVATE_KEY is missing in Netlify.' }, 500);
     const result = await fetchAllFiles(privateKey);
     if (!result.ok) return json({ error:'ImageKit could not be read.', status:result.status, imageKitMessage:result.detail }, 502);
