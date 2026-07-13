@@ -98,7 +98,7 @@ function parseCarouselFilename(filename) {
 
 export default async function handler() {
   try {
-    const privateKey = process.env.IMAGEKIT_PRIVATE_KEY;
+    const privateKey = process.env.private_uVJGSW5Xd8KXUNY+4i/MZLytKEI=;
 
     if (!privateKey) {
       return json({
