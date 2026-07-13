@@ -1,0 +1,30 @@
+[
+  {
+    "slug": "maharani-manika-topaz-set",
+    "name": "Maharani Manika Topaz Set",
+    "description": "A regal topaz-toned statement set with matching earrings.",
+    "extension": "png",
+    "price": 65
+  },
+  {
+    "slug": "maharani-manika-gulabi-set",
+    "name": "Maharani Manika Gulabi Set",
+    "description": "A romantic gulabi-hued jewelry set for weddings and festive celebrations.",
+    "extension": "png",
+    "price": 65
+  },
+  {
+    "slug": "rajwadi-navratna-set",
+    "name": "Rajwadi Navratna Set",
+    "description": "A royal navratna-inspired set featuring rich multicolored detailing.",
+    "extension": "png",
+    "price": 85
+  },
+  {
+    "slug": "maharani-manika-ruby-set",
+    "name": "Maharani Manika Ruby Set",
+    "description": "A bold ruby-toned Maharani set designed for grand occasions.",
+    "extension": "png",
+    "price": 65
+  }
+]
