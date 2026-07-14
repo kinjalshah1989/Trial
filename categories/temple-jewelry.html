@@ -1,0 +1,91 @@
+<!doctype html><html><head><meta charset="utf-8"><meta http-equiv="refresh" content="0; url=jewelry-sets.html"><title>Jewelry Sets</title><script>location.replace('jewelry-sets.html');</script></head><body><a href="jewelry-sets.html">Open Jewelry Sets</a>
+<style id="offscreen-animation-pause-style">
+  .is-offscreen, .is-offscreen *, .page-hidden, .page-hidden * {
+    animation-play-state: paused !important;
+  }
+</style>
+<script id="offscreen-animation-controller">
+(() => {
+  const targets = new Set();
+  const selectors = [
+    'header','main','section','footer','.royal-drops-shell','.royal-3d-stage',
+    '.inventory-editorial-section','.video-grid','.ferris-video-card',
+    '.category-grid','.product-grid','.recommendations','.ar-app','.tryon-app',
+    '[data-animation-section]','canvas'
+  ];
+  document.querySelectorAll(selectors.join(',')).forEach(el => targets.add(el));
+
+  const videoState = new WeakMap();
+  const setVisible = (el, visible) => {
+    el.classList.toggle('is-offscreen', !visible);
+    el.querySelectorAll('video').forEach(video => {
+      if (!visible) {
+        videoState.set(video, !video.paused);
+        if (!video.paused) video.pause();
+      } else if (videoState.get(video) && video.autoplay) {
+        video.play().catch(() => {});
+      }
+    });
+  };
+
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => setVisible(entry.target, entry.isIntersecting));
+    }, { rootMargin: '120px 0px 120px 0px', threshold: 0.01 });
+    targets.forEach(el => observer.observe(el));
+  }
+
+  const syncPageVisibility = () => {
+    document.documentElement.classList.toggle('page-hidden', document.hidden);
+    document.querySelectorAll('video').forEach(video => {
+      if (document.hidden) {
+        videoState.set(video, !video.paused);
+        if (!video.paused) video.pause();
+      } else if (videoState.get(video) && video.autoplay && !video.closest('.is-offscreen')) {
+        video.play().catch(() => {});
+      }
+    });
+  };
+  document.addEventListener('visibilitychange', syncPageVisibility, { passive: true });
+  syncPageVisibility();
+
+  window.globalRaniAnimationVisible = el =>
+    !document.hidden && !!el && !el.closest('.is-offscreen') && el.getClientRects().length > 0;
+})();
+</script>
+
+
+<!-- Global Rani background music: shared across pages in the current browser tab. -->
+<audio id="globalRaniMusic" autoplay loop preload="auto" playsinline>
+  <source src="https://ik.imagekit.io/k0wpvuatq/global-rani-music.mp3" type="audio/mpeg">
+</audio>
+<script id="global-rani-music-controller">
+(() => {
+  const audio = document.getElementById('globalRaniMusic');
+  if (!audio) return;
+  audio.volume = 0.72;
+
+  try {
+    const savedTime = Number(sessionStorage.getItem('globalRaniMusicTime') || 0);
+    if (savedTime > 0 && Number.isFinite(savedTime)) audio.currentTime = savedTime;
+  } catch (e) {}
+
+  const saveTime = () => {
+    try { sessionStorage.setItem('globalRaniMusicTime', String(audio.currentTime || 0)); } catch (e) {}
+  };
+
+  const startMusic = () => audio.play().catch(() => {});
+  startMusic();
+  window.addEventListener('load', startMusic, { once: true });
+  ['pointerdown', 'touchstart', 'keydown'].forEach(eventName => {
+    document.addEventListener(eventName, startMusic, { once: true, passive: true });
+  });
+  window.addEventListener('pagehide', saveTime);
+  window.addEventListener('beforeunload', saveTime);
+  audio.addEventListener('timeupdate', () => {
+    if (Math.floor(audio.currentTime) % 3 === 0) saveTime();
+  });
+})();
+</script>
+
+</body></html>
