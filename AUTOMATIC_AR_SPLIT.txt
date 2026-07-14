@@ -1,0 +1,8 @@
+The AR page now automatically separates a transparent product PNG into:
+- one necklace overlay
+- one left earring overlay
+- one right earring overlay
+
+The source PNG must have a genuinely transparent background, and the necklace and
+each earring must be disconnected from one another. The browser performs the
+cropping at runtime; separate ImageKit files are no longer required for Gulabi.
