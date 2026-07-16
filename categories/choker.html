@@ -307,8 +307,12 @@
       .newsletter-row button { padding: 14px 18px; }
     }
 
-</style></head>
-<body><div class="top-banner">We Ship Globally</div><nav><div class="nav-inner"><a class="brand" href="../index.html"><img src="https://ik.imagekit.io/k0wpvuatq/global-rani-logo.png" alt="The Global Rani logo"><span>The Global Rani</span></a><div class="nav-actions"><a class="mini-link" href="../index.html#categories">Collections</a><a class="back" href="../index.html#shop">Royal Drops</a><div class="profile-menu-wrap"><button class="profile-icon-link profile-trigger bloom-hover" type="button" title="Sign up or log in" aria-label="Open member profile sign up and login" aria-haspopup="true" aria-expanded="false"><span class="profile-caret-badge">⌄</span></button><div class="profile-dropdown" role="menu"><a href="../account.html" role="menuitem">Member Profile</a><a href="../account.html?action=login" role="menuitem">Log in</a></div></div></div></div></nav>
+</style>
+<style>
+.profile-dropdown .global-profile-logout{display:block;width:100%;position:relative;z-index:1;padding:11px 14px;border:0;border-radius:14px;background:transparent;color:var(--ruby,#9e1533);font:inherit;font-size:14px;font-weight:900;white-space:nowrap;text-align:center;cursor:pointer}.profile-dropdown .global-profile-logout:hover{background:linear-gradient(135deg,rgba(158,21,51,.10),rgba(185,133,47,.16));color:var(--ruby,#9e1533)}.profile-dropdown .global-profile-logout[hidden]{display:none!important}
+</style>
+</head>
+<body><div class="top-banner">We Ship Globally</div><nav><div class="nav-inner"><a class="brand" href="../index.html"><img src="https://ik.imagekit.io/k0wpvuatq/global-rani-logo.png" alt="The Global Rani logo"><span>The Global Rani</span></a><div class="nav-actions"><a class="mini-link" href="../index.html#categories">Collections</a><a class="back" href="../index.html#shop">Royal Drops</a><div class="profile-menu-wrap"><button class="profile-icon-link profile-trigger bloom-hover" type="button" title="Sign up or log in" aria-label="Open member profile sign up and login" aria-haspopup="true" aria-expanded="false"><span class="profile-caret-badge">⌄</span></button><div class="profile-dropdown" role="menu"><a href="../account.html" role="menuitem">Member Profile</a><a href="../account.html?action=login" role="menuitem">Log in</a><button class="profile-dropdown-logout global-profile-logout" type="button" role="menuitem" hidden>Log Out</button></div></div></div></div></nav>
 <header><div><div class="eyebrow">Collection Page</div><h1>Choker Collection</h1><p>Use this page for your Choker Collection inventory. Each product display below matches the luxury Royal Drops style, so you can replace photos, names, descriptions, and prices as you add new items.</p><a class="back" href="#inventory">Add Inventory Here</a></div><div class="hero-img"><img src="https://ik.imagekit.io/k0wpvuatq/category-choker.jpg" alt="Choker Collection collection image"></div></header>
 <section class="section-title" id="inventory"><h2>Choker Collection Inventory</h2><p>Featured product display ready for your first item in this category.</p></section>
 <section class="products">
@@ -464,6 +468,13 @@
     document.addEventListener('click', function(event){
       const arrow = event.target.closest('.profile-trigger');
       if (arrow) {
+        const clickedCaret = !!event.target.closest('.profile-caret-badge');
+        if (arrow.dataset.profileSignedIn === 'true' && !clickedCaret) {
+          window.location.href = arrow.dataset.orderSummaryUrl || (location.pathname.includes('/categories/') ? '../account.html#order-summary' : 'account.html#order-summary');
+          event.preventDefault();
+          event.stopPropagation();
+          return;
+        }
         const wrap = arrow.closest('.profile-menu-wrap');
         const willOpen = !wrap.classList.contains('open');
         closeProfileMenus(wrap);
@@ -545,5 +556,80 @@
 @media(max-width:620px){.global-rani-whatsapp-help{right:14px;bottom:14px;padding:12px 15px;font-size:13px}}
 </style>
 <a class="global-rani-whatsapp-help" href="https://wa.me/12164570935?text=Hello%20Global%20Rani%2C%20I%20need%20help." target="_blank" rel="noopener noreferrer" aria-label="Need help? Contact The Global Rani on WhatsApp"><span class="wa-icon" aria-hidden="true">◉</span><span>Need help?</span></a>
+
+
+<script type="module" data-global-profile-auth>
+  import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: ["AI", "zaSyBise9pqTYgQwmG-xOVZQ0-30j1EvcgDng"].join(""),
+    authDomain: "the-global-rani-website.firebaseapp.com",
+    projectId: "the-global-rani-website",
+    storageBucket: "the-global-rani-website.firebasestorage.app",
+    messagingSenderId: "603989663669",
+    appId: "1:603989663669:web:24c32f6c1bce81a20803fc"
+  };
+
+  const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  function updateCombinedProfileMenu(user) {
+    document.querySelectorAll('.profile-menu-wrap').forEach((wrap) => {
+      const trigger = wrap.querySelector('.profile-trigger, .profile-icon-link');
+      const links = Array.from(wrap.querySelectorAll('.profile-dropdown a'));
+      const loginLink = links.find((link) => /log\s*in/i.test(link.textContent || '') || /action=login/.test(link.getAttribute('href') || ''));
+      const memberLink = links.find((link) => /member profile/i.test(link.textContent || ''));
+      const logoutButton = wrap.querySelector('.global-profile-logout');
+
+      trigger?.classList.toggle('logged-in', !!user);
+      if (trigger) {
+        const accountBase = location.pathname.includes('/categories/') ? '../account.html' : 'account.html';
+        trigger.title = user ? `Signed in as ${user.email || 'member'}` : 'Sign up or log in';
+        trigger.setAttribute('aria-label', user ? 'Open order summary' : 'Open member profile sign up and login');
+        trigger.dataset.profileSignedIn = user ? 'true' : 'false';
+        trigger.dataset.orderSummaryUrl = `${accountBase}#order-summary`;
+      }
+      if (memberLink) {
+        const accountBase = location.pathname.includes('/categories/') ? '../account.html' : 'account.html';
+        memberLink.hidden = false;
+        memberLink.href = user ? `${accountBase}#order-summary` : accountBase;
+      }
+      if (loginLink) loginLink.hidden = !!user;
+      if (logoutButton) logoutButton.hidden = !user;
+    });
+  }
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      sessionStorage.setItem('globalRaniLoggedInMember', JSON.stringify({
+        firstName: '', lastName: '', email: user.email || '', uid: user.uid || ''
+      }));
+      sessionStorage.setItem('globalRaniCheckoutMode', 'member');
+    } else {
+      sessionStorage.removeItem('globalRaniLoggedInMember');
+    }
+    updateCombinedProfileMenu(user);
+  });
+
+  document.addEventListener('click', async (event) => {
+    const logoutButton = event.target.closest('.global-profile-logout');
+    if (!logoutButton) return;
+    logoutButton.disabled = true;
+    try {
+      const savedCart = sessionStorage.getItem('globalRaniCart');
+      await signOut(auth);
+      sessionStorage.clear();
+      if (savedCart !== null) sessionStorage.setItem('globalRaniCart', savedCart);
+      localStorage.removeItem('globalRaniLoggedInMember');
+      localStorage.removeItem('globalRaniCustomerProfile');
+      window.location.replace(location.pathname.includes('/categories/') ? '../index.html' : 'index.html');
+    } catch (error) {
+      console.error('Logout failed:', error);
+      logoutButton.disabled = false;
+      alert('Logout failed. Please try again.');
+    }
+  });
+</script>
 
 </body></html>

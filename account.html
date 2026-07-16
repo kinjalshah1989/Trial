@@ -532,9 +532,14 @@
       document.querySelectorAll(".profile-icon-link").forEach(link => {
         link.classList.toggle("logged-in", !!user);
         link.title = user ? `Signed in as ${user.email || "member"}` : "Member profile";
-        link.setAttribute("aria-label", user ? "Open account menu" : "Open member profile sign up and login");
+        link.setAttribute("aria-label", user ? "Open order summary" : "Open member profile sign up and login");
+        link.dataset.profileSignedIn = user ? "true" : "false";
+        link.dataset.orderSummaryUrl = "account.html#order-summary";
       });
-      if (profileMemberLink) profileMemberLink.hidden = !!user;
+      if (profileMemberLink) {
+        profileMemberLink.hidden = false;
+        profileMemberLink.href = user ? "account.html#order-summary" : "account.html";
+      }
       if (profileLoginLink) profileLoginLink.hidden = !!user;
       if (profileLogoutBtn) profileLogoutBtn.hidden = !user;
     }
@@ -687,6 +692,12 @@
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         setSessionMember(userCredential.user);
         showSignupMessage("Account created successfully.", "success");
+        // Remember that this shipping verification started from a new signup.
+        // After the address is verified, shipping.html will open the Order Summary.
+        sessionStorage.setItem("globalRaniSignupShippingFlow", "true");
+        // A newly-created member cannot have previous orders yet.
+        // Let the Order Summary render immediately without an unnecessary API request.
+        sessionStorage.setItem("globalRaniNewMemberNoPreviousOrders", "true");
         window.setTimeout(() => {
           window.location.href = "shipping.html";
         }, 5000);
@@ -837,17 +848,43 @@
       if (!user || !orderSummarySection || !memberOrderList) return;
       orderSummarySection.classList.add("show");
       if (orderMemberEmail) orderMemberEmail.textContent = user.email ? `Signed in as ${user.email}` : "Signed-in member";
+
+      // A customer who has just signed up has no previous orders. Showing the
+      // normal empty-order state is faster and avoids a needless first fetch.
+      const isBrandNewMember = sessionStorage.getItem("globalRaniNewMemberNoPreviousOrders") === "true";
+      if (isBrandNewMember && !forceRefresh) {
+        sessionStorage.removeItem("globalRaniNewMemberNoPreviousOrders");
+        renderMemberOrders([]);
+        if (refreshOrdersBtn) refreshOrdersBtn.disabled = false;
+        return;
+      }
+
       memberOrderList.innerHTML = '<div class="order-loading">Loading your orders…</div>';
       if (refreshOrdersBtn) refreshOrdersBtn.disabled = true;
-      try {
-        const idToken = await getIdToken(user, forceRefresh);
+
+      async function requestOrders(forceTokenRefresh) {
+        const idToken = await getIdToken(user, forceTokenRefresh);
         const response = await fetch('/api/member-orders', {
           headers: { Authorization: `Bearer ${idToken}` },
           cache: 'no-store'
         });
         const body = await response.json().catch(() => ({}));
         if (!response.ok) throw new Error(body.error || "Could not load your orders.");
-        renderMemberOrders(body.orders || []);
+        return body.orders || [];
+      }
+
+      try {
+        let orders;
+        try {
+          orders = await requestOrders(forceRefresh);
+        } catch (firstError) {
+          // A freshly-created Firebase session can need a moment before its
+          // token is accepted on the next page. Refresh once, just as login does.
+          if (!(firstError instanceof TypeError) && firstError?.message !== "Failed to fetch") throw firstError;
+          await new Promise(resolve => setTimeout(resolve, 700));
+          orders = await requestOrders(true);
+        }
+        renderMemberOrders(orders);
       } catch (error) {
         console.error("Order summary failed:", error);
         memberOrderList.innerHTML = `<div class="order-error">${escapeOrderHtml(error.message || "Could not load your orders. Please try again.")}</div>`;
@@ -976,6 +1013,13 @@
     document.addEventListener('click', function(event){
       const arrow = event.target.closest('.profile-trigger');
       if (arrow) {
+        const clickedCaret = !!event.target.closest('.profile-caret-badge');
+        if (arrow.dataset.profileSignedIn === 'true' && !clickedCaret) {
+          window.location.href = arrow.dataset.orderSummaryUrl || (location.pathname.includes('/categories/') ? '../account.html#order-summary' : 'account.html#order-summary');
+          event.preventDefault();
+          event.stopPropagation();
+          return;
+        }
         const wrap = arrow.closest('.profile-menu-wrap');
         const willOpen = !wrap.classList.contains('open');
         closeProfileMenus(wrap);

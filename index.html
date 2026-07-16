@@ -4591,6 +4591,10 @@
       box-shadow: none !important;
     }
   </style>
+
+<style>
+.profile-dropdown .global-profile-logout{display:block;width:100%;position:relative;z-index:1;padding:11px 14px;border:0;border-radius:14px;background:transparent;color:var(--ruby,#9e1533);font:inherit;font-size:14px;font-weight:900;white-space:nowrap;text-align:center;cursor:pointer}.profile-dropdown .global-profile-logout:hover{background:linear-gradient(135deg,rgba(158,21,51,.10),rgba(185,133,47,.16));color:var(--ruby,#9e1533)}.profile-dropdown .global-profile-logout[hidden]{display:none!important}
+</style>
 </head>
 <body class="home-page">
 <div class="petal-layer" id="petalLayer"></div>
@@ -4621,7 +4625,7 @@
 <option value="QA|QAR|Qatar|ر.ق">🇶🇦 Qatar — QAR</option>
 </select>
 </div>
-<div class="profile-menu-wrap"><button aria-expanded="false" aria-haspopup="true" aria-label="Open member profile sign up and login" class="profile-icon-link profile-trigger bloom-hover" title="Sign up or log in" type="button"><span class="profile-caret-badge">⌄</span></button><div class="profile-dropdown" data-profile-dropdown="" role="menu"><a href="account.html" role="menuitem">Member Profile</a><a href="account.html?action=login" role="menuitem">Log in</a></div></div>
+<div class="profile-menu-wrap"><button aria-expanded="false" aria-haspopup="true" aria-label="Open member profile sign up and login" class="profile-icon-link profile-trigger bloom-hover" title="Sign up or log in" type="button"><span class="profile-caret-badge">⌄</span></button><div class="profile-dropdown" data-profile-dropdown="" role="menu"><a href="account.html" role="menuitem">Member Profile</a><a href="account.html?action=login" role="menuitem">Log in</a><button class="profile-dropdown-logout global-profile-logout" type="button" role="menuitem" hidden>Log Out</button></div></div>
 <button aria-label="Open shopping bag" class="cart-btn cart-icon-btn bloom-hover" onclick="toggleCart()"><span aria-hidden="true" class="bag-icon"><svg focusable="false" role="img" viewbox="0 0 24 24"><path class="bag-body" d="M6.2 8.2h11.6l1.1 12.1H5.1L6.2 8.2Z"></path><path class="bag-handle" d="M8.8 9V6.9a3.2 3.2 0 0 1 6.4 0V9"></path><path class="bag-sparkle" d="M17.2 3.4l.45 1.15 1.15.45-1.15.45-.45 1.15-.45-1.15-1.15-.45 1.15-.45.45-1.15Z"></path></svg></span><span class="cart-count-badge" id="cartCount">0</span></button><div class="hamburger-menu-wrap"><button aria-expanded="false" aria-haspopup="true" aria-label="Open site menu" class="hamburger-toggle bloom-hover" type="button"><span></span><span></span><span></span></button><div class="hamburger-dropdown" role="menu"><span class="hamburger-menu-label">Menu</span><a href="#categories" role="menuitem">Shop by Collection</a><a href="#shop" role="menuitem">Royal Drops</a><a href="#ugc" role="menuitem">Videos</a><a href="#happy-customers" role="menuitem">Happy Customers</a><span class="hamburger-menu-label">Bottom Menu</span><a href="index.html#footer-newsletter" role="menuitem">Newsletter</a><a href="index.html#footer-newsletter" role="menuitem">Track Order</a><a href="mailto:hello@theglobalrani.com" role="menuitem">Email Us</a><a href="https://wa.me/12162160291" role="menuitem">WhatsApp</a><a href="index.html#footer-newsletter" role="menuitem">Return Policy</a><a href="index.html#footer-newsletter" role="menuitem">Privacy Policy</a><a href="index.html#footer-newsletter" role="menuitem">Shipping Policy</a></div></div>
 </div>
 </nav>
@@ -6005,7 +6009,7 @@
         if (member) {
           dropdown.innerHTML = '<a href="#" class="profile-logout-link" role="menuitem">Log out</a>';
         } else {
-          dropdown.innerHTML = '<a href="account.html" role="menuitem">Member Profile</a><a href="account.html?action=login" role="menuitem">Log in</a>';
+          dropdown.innerHTML = '<a href="account.html" role="menuitem">Member Profile</a><a href="account.html?action=login" role="menuitem">Log in</a><button class="profile-dropdown-logout global-profile-logout" type="button" role="menuitem" hidden>Log Out</button>';
         }
       });
     }
@@ -6069,6 +6073,13 @@
     document.addEventListener('click', function(event){
       const arrow = event.target.closest('.profile-trigger');
       if (arrow) {
+        const clickedCaret = !!event.target.closest('.profile-caret-badge');
+        if (arrow.dataset.profileSignedIn === 'true' && !clickedCaret) {
+          window.location.href = arrow.dataset.orderSummaryUrl || (location.pathname.includes('/categories/') ? '../account.html#order-summary' : 'account.html#order-summary');
+          event.preventDefault();
+          event.stopPropagation();
+          return;
+        }
         const wrap = arrow.closest('.profile-menu-wrap');
         const willOpen = !wrap.classList.contains('open');
         closeProfileMenus(wrap);
@@ -6822,6 +6833,81 @@
       else start();
     })();
   </script>
+
+<script type="module" data-global-profile-auth>
+  import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: ["AI", "zaSyBise9pqTYgQwmG-xOVZQ0-30j1EvcgDng"].join(""),
+    authDomain: "the-global-rani-website.firebaseapp.com",
+    projectId: "the-global-rani-website",
+    storageBucket: "the-global-rani-website.firebasestorage.app",
+    messagingSenderId: "603989663669",
+    appId: "1:603989663669:web:24c32f6c1bce81a20803fc"
+  };
+
+  const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  function updateCombinedProfileMenu(user) {
+    document.querySelectorAll('.profile-menu-wrap').forEach((wrap) => {
+      const trigger = wrap.querySelector('.profile-trigger, .profile-icon-link');
+      const links = Array.from(wrap.querySelectorAll('.profile-dropdown a'));
+      const loginLink = links.find((link) => /log\s*in/i.test(link.textContent || '') || /action=login/.test(link.getAttribute('href') || ''));
+      const memberLink = links.find((link) => /member profile/i.test(link.textContent || ''));
+      const logoutButton = wrap.querySelector('.global-profile-logout');
+
+      trigger?.classList.toggle('logged-in', !!user);
+      if (trigger) {
+        const accountBase = location.pathname.includes('/categories/') ? '../account.html' : 'account.html';
+        trigger.title = user ? `Signed in as ${user.email || 'member'}` : 'Sign up or log in';
+        trigger.setAttribute('aria-label', user ? 'Open order summary' : 'Open member profile sign up and login');
+        trigger.dataset.profileSignedIn = user ? 'true' : 'false';
+        trigger.dataset.orderSummaryUrl = `${accountBase}#order-summary`;
+      }
+      if (memberLink) {
+        const accountBase = location.pathname.includes('/categories/') ? '../account.html' : 'account.html';
+        memberLink.hidden = false;
+        memberLink.href = user ? `${accountBase}#order-summary` : accountBase;
+      }
+      if (loginLink) loginLink.hidden = !!user;
+      if (logoutButton) logoutButton.hidden = !user;
+    });
+  }
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      sessionStorage.setItem('globalRaniLoggedInMember', JSON.stringify({
+        firstName: '', lastName: '', email: user.email || '', uid: user.uid || ''
+      }));
+      sessionStorage.setItem('globalRaniCheckoutMode', 'member');
+    } else {
+      sessionStorage.removeItem('globalRaniLoggedInMember');
+    }
+    updateCombinedProfileMenu(user);
+  });
+
+  document.addEventListener('click', async (event) => {
+    const logoutButton = event.target.closest('.global-profile-logout');
+    if (!logoutButton) return;
+    logoutButton.disabled = true;
+    try {
+      const savedCart = sessionStorage.getItem('globalRaniCart');
+      await signOut(auth);
+      sessionStorage.clear();
+      if (savedCart !== null) sessionStorage.setItem('globalRaniCart', savedCart);
+      localStorage.removeItem('globalRaniLoggedInMember');
+      localStorage.removeItem('globalRaniCustomerProfile');
+      window.location.replace(location.pathname.includes('/categories/') ? '../index.html' : 'index.html');
+    } catch (error) {
+      console.error('Logout failed:', error);
+      logoutButton.disabled = false;
+      alert('Logout failed. Please try again.');
+    }
+  });
+</script>
+
 </body>
 </html>
 <style>
