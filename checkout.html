@@ -3105,6 +3105,7 @@
         const params = new URLSearchParams({
           'client-id': config.clientId,
           currency: currencyCode,
+          'disable-funding': 'paylater,paypal',
           intent: 'capture',
           components: 'buttons'
         });
