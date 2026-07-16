@@ -3156,7 +3156,7 @@
       container.classList.add('payment-locked');
       if (!cart.length) {
         container.innerHTML = 'Add a product to your cart first.';
-        if (checkoutNote) checkoutNote.textContent = 'Payment is locked. Please add items to cart, then use your saved member shipping details. Guest checkout is available only when signed out.';
+        if (checkoutNote) checkoutNote.textContent = '';
         return;
       }
       if (!profileSubmittedForPayment) {
