@@ -2972,15 +2972,15 @@
       if (summary) { summary.classList.remove('show'); summary.innerHTML = ''; }
       if (checkoutNote) {
         if (!cart.length) {
-          checkoutNote.textContent = 'Payment is locked. Please add items to cart, then use member checkout or choose one-time guest checkout.';
+          //checkoutNote.textContent = 'Payment is locked. Please add items to cart, then use member checkout or choose one-time guest checkout.';
         } else if (profileSubmittedForPayment) {
           //checkoutNote.textContent = member ? `Signed in as ${member.firstName || 'member'}. Shipping information is verified, so payment is ready.` : 'Guest shipping details submitted. Payment is ready.';
         } else if (member) {
-          checkoutNote.textContent = verificationRequired
+         /* checkoutNote.textContent = verificationRequired
             ? `Signed in as ${member.firstName || 'member'}. Please verify your shipping information below before payment opens.`
-            : `Signed in as ${member.firstName || 'member'}. Add or confirm shipping details before payment.`;
+            : `Signed in as ${member.firstName || 'member'}. Add or confirm shipping details before payment.`; */
         } else {
-          checkoutNote.textContent = 'Continue as a guest by filling shipping details below, or create a profile to save them for next time.';
+          //checkoutNote.textContent = 'Continue as a guest by filling shipping details below, or create a profile to save them for next time.';
         }
       }
       updateCartCheckoutButton();
