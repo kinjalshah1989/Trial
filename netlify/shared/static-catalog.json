@@ -1,0 +1,27 @@
+{
+  "the jaipur pastel set": {
+    "name": "The Jaipur Pastel Set",
+    "priceUSD": 65.0,
+    "image": "https://ik.imagekit.io/k0wpvuatq/jaipur-pastel-set-1.jpeg"
+  },
+  "the noir pearl empress set": {
+    "name": "The Noir Pearl Empress Set",
+    "priceUSD": 55.0,
+    "image": "https://ik.imagekit.io/k0wpvuatq/noir-pearl-empress-set-1.jpg"
+  },
+  "the scarlet maharani set": {
+    "name": "The Scarlet Maharani Set",
+    "priceUSD": 55.0,
+    "image": "https://ik.imagekit.io/k0wpvuatq/scarlet-maharani-set-1.jpg"
+  },
+  "the lotus rajwadi set": {
+    "name": "The Lotus Rajwadi Set",
+    "priceUSD": 55.0,
+    "image": "https://ik.imagekit.io/k0wpvuatq/lotus-rajwadi-set-1.jpg"
+  },
+  "inventory jewelry": {
+    "name": "Inventory Jewelry",
+    "priceUSD": 45.0,
+    "image": ""
+  }
+}
