@@ -6397,10 +6397,10 @@
     carousel.addEventListener('click', function(event){
       const card = event.target.closest('.category-card');
       if (!card || !carousel.contains(card)) return;
-      if (!card.classList.contains('is-active')) {
-        event.preventDefault();
-        activateCard(card);
-      }
+
+      // Do not block the link. Every mosaic image should open its
+      // collection page with a single click, even when it is not centered.
+      activateCard(card);
     });
     let touchStartX = null;
     let touchStartY = null;
@@ -6439,7 +6439,9 @@
         renderCategoryCarousel();
         cards[activeIndex].focus();
       }
-      if ((event.key === 'Enter' || event.key === ' ') && !currentCard.classList.contains('is-active')) {
+      // Enter follows the anchor normally. Space activates a non-centred
+      // card without preventing subsequent normal link navigation.
+      if (event.key === ' ' && !currentCard.classList.contains('is-active')) {
         event.preventDefault();
         activateCard(currentCard);
         currentCard.focus();
