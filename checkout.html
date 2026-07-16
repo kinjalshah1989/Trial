@@ -2261,7 +2261,7 @@
           <p class="tip-thanks">Thank you, we appreciate it.</p>
         </div>
                 <div id="checkoutCurrencyNote" class="checkout-currency-note">Select your country above to see prices in your local currency.</div>
-        
+        <div id="checkoutProfileNote" class="checkout-currency-note">Payment is locked. Please add items to cart, then use your saved member shipping details. Guest checkout is available only when signed out.</div>
         <div id="paypal-button-container">Payment will appear after shipping details are submitted.</div>
       </div>
     </div>
@@ -2705,8 +2705,7 @@
       if (!note) return;
       const paymentCurrency = paypalSupportedCurrencies.has(selectedCurrency.code) ? selectedCurrency.code : 'USD';
       if (selectedCurrency.country === 'IN') {
-        note.textContent = 'India pricing applied: customers pay 50% of the USD price. Prices display in INR, and PayPal will process the discounted total in USD if INR is not supported.';
-      } else if (paymentCurrency === selectedCurrency.code) {
+        note.textContent = '';
         note.textContent = '';
         note.hidden = true;
       } else {
