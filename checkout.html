@@ -2493,8 +2493,8 @@
       });
       const rate = exchangeRates[selectedCurrency.code] || fallbackRates[selectedCurrency.code] || 1;
       const note = selectedCurrency.country === 'IN'
-        ? `India pricing applied: 50% off the USD price, then converted to INR. 1 discounted USD ≈ ${rate.toFixed(4)} INR.`
-        : selectedCurrency.code === 'USD'
+        ? `India pricing applied': USD ≈ ${rate.toFixed(4)} INR.`
+        : selectedCurrency.code === 'USD''
           ? 'Prices shown in USD.'
           : `Prices shown in ${selectedCurrency.code}. Live rate used when available: 1 USD ≈ ${rate.toFixed(4)} ${selectedCurrency.code}.`;
       const rateNote = document.getElementById('rateNote');
