@@ -945,8 +945,6 @@
     body.checkout-page #ugc,
     body.checkout-page footer { display: none; }
     body.checkout-page #profile { padding-top: 70px; }
-    html.checkout-payment-ready body.checkout-page #profile {
-  display: none;
     body.checkout-page #checkout { display: none; }
     html.checkout-payment-ready body.checkout-page #checkout { display: block; }
     body.checkout-page .section-title p { max-width: 760px; margin-inline: auto; }
@@ -1787,7 +1785,7 @@
 
 .cart-tax-shipping-note{margin:4px 0 14px;font-size:14px;color:#4f4a45;line-height:1.4;}
 </style>
-
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
   <script type="module">
     // Firebase checkout protection
@@ -2227,12 +2225,12 @@
           <div class="checkout-shipping-row">
             <div class="checkout-shipping-label">Ship to</div>
             <div class="checkout-shipping-value"><strong id="checkoutShipName">Add shipping information</strong><span id="checkoutShipAddress">Complete the customer profile or verify shipping information above.</span></div>
-            
+            <div class="checkout-shipping-caret" aria-hidden="true">⌄</div>
           </div>
           <div class="checkout-shipping-row">
             <div class="checkout-shipping-label">Shipping</div>
             <div class="checkout-shipping-value"><strong>Standard · FREE</strong><span id="checkoutShippingDate">Ships 2 weeks after the order is placed</span></div>
-            
+            <div class="checkout-shipping-caret" aria-hidden="true">⌄</div>
           </div>
         </div>
         <h3>Your Cart</h3>
@@ -2263,6 +2261,7 @@
           <p class="tip-thanks">Thank you, we appreciate it.</p>
         </div>
                 <div id="checkoutCurrencyNote" class="checkout-currency-note">Select your country above to see prices in your local currency.</div>
+        <div id="checkoutProfileNote" class="checkout-currency-note">Payment is locked. Please add items to cart, then use your saved member shipping details. Guest checkout is available only when signed out.</div>
         <div id="paypal-button-container">Payment will appear after shipping details are submitted.</div>
       </div>
     </div>
@@ -2495,8 +2494,8 @@
       });
       const rate = exchangeRates[selectedCurrency.code] || fallbackRates[selectedCurrency.code] || 1;
       const note = selectedCurrency.country === 'IN'
-        ? `India pricing applied': USD ≈ ${rate.toFixed(4)} INR.`
-        : selectedCurrency.code === 'USD''
+        ? `India pricing applied: 50% off the USD price, then converted to INR. 1 discounted USD ≈ ${rate.toFixed(4)} INR.`
+        : selectedCurrency.code === 'USD'
           ? 'Prices shown in USD.'
           : `Prices shown in ${selectedCurrency.code}. Live rate used when available: 1 USD ≈ ${rate.toFixed(4)} ${selectedCurrency.code}.`;
       const rateNote = document.getElementById('rateNote');
@@ -2856,7 +2855,44 @@
       return Object.fromEntries(new FormData(form).entries());
     }
 
-   
+    function buildProfileTemplateParams(profile) {
+      return {
+        to_email: 'kinoretta@gmail.com',
+        customer_name: profile.customerName || '',
+        customer_email: profile.customerEmail || '',
+        customer_phone: profile.customerPhone || '',
+        customer_country: profile.shippingCountry || '',
+        customer_address: profile.shippingAddress1 || '',
+        customer_apartment: profile.shippingAddress2 || '',
+        customer_city: profile.shippingCity || '',
+        customer_state: profile.shippingState || '',
+        customer_zip: profile.shippingZip || '',
+        delivery_notes: profile.deliveryNotes || '',
+        special_requests: profile.profileNotes || '',
+        order_items: cart.length ? cart.map(item => `${item.name} × ${getItemQuantity(item)} - ${formatCurrency(convertedAmount(Number(item.priceUSD) * getItemQuantity(item)))}`).join(', ') : 'No cart items found',
+        order_total: `${formatCurrency(convertedAmount(getCartTotalUSD()))} (${getCartPayableTotalUSD().toFixed(2)} USD)`,
+        message: [
+          'New customer shipping profile for The Global Rani',
+          '',
+          `Full Name: ${profile.customerName || ''}`,
+          `Email: ${profile.customerEmail || ''}`,
+          `Phone Number: ${profile.customerPhone || ''}`,
+          `Country: ${profile.shippingCountry || ''}`,
+          `Street Address: ${profile.shippingAddress1 || ''}`,
+          `Apartment / Suite / Landmark: ${profile.shippingAddress2 || ''}`,
+          `City: ${profile.shippingCity || ''}`,
+          `State / Province: ${profile.shippingState || ''}`,
+          `ZIP / Postal Code: ${profile.shippingZip || ''}`,
+          `Delivery Notes: ${profile.deliveryNotes || ''}`,
+          `Special Requests: ${profile.profileNotes || ''}`,
+          '',
+          'Cart / Order Details:',
+          cart.length ? cart.map(item => `- ${item.name} × ${getItemQuantity(item)}: ${formatCurrency(convertedAmount(Number(item.priceUSD) * getItemQuantity(item)))} (${(getDiscountedUSD(item.priceUSD) * getItemQuantity(item)).toFixed(2)} USD)`).join('\n') : 'No cart items found',
+          `Total: ${formatCurrency(convertedAmount(getCartTotalUSD()))} (${getCartPayableTotalUSD().toFixed(2)} USD)`
+        ].join('\n')
+      };
+    }
+
     function getLoggedInMember() {
       try { return JSON.parse(sessionStorage.getItem('globalRaniLoggedInMember') || 'null'); } catch (error) { return null; }
     }
@@ -2938,7 +2974,7 @@
         if (!cart.length) {
           checkoutNote.textContent = 'Payment is locked. Please add items to cart, then use member checkout or choose one-time guest checkout.';
         } else if (profileSubmittedForPayment) {
-          checkoutNote.textContent = member ? `Signed in as ${member.firstName || 'member'}. .` : 'Guest shipping details submitted. Payment is ready.';
+          checkoutNote.textContent = member ? `Signed in as ${member.firstName || 'member'}. Shipping information is verified, so payment is ready.` : 'Guest shipping details submitted. Payment is ready.';
         } else if (member) {
           checkoutNote.textContent = verificationRequired
             ? `Signed in as ${member.firstName || 'member'}. Please verify your shipping information below before payment opens.`
@@ -2950,87 +2986,43 @@
       updateCartCheckoutButton();
     }
 
-    async function saveShippingProfileAndContinue(event) {
-  if (event) event.preventDefault();
-  if (!enforceCheckoutAccess()) return;
-
-  const form = document.getElementById('customerProfileForm');
-  const status = document.getElementById('profileStatus');
-  const submitBtn = document.getElementById('profileSubmitBtn');
-
-  if (!form) return;
-  if (!form.reportValidity()) return;
-
-  const profile = getProfileData();
-
-  try {
-    if (submitBtn) {
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Saving...';
+    async function emailCustomerProfile(event) {
+      if (event) event.preventDefault();
+      if (!enforceCheckoutAccess()) return;
+      const form = document.getElementById('customerProfileForm');
+      const status = document.getElementById('profileStatus');
+      const submitBtn = document.getElementById('profileSubmitBtn');
+      if (!form) return;
+      if (!form.reportValidity()) return;
+      if (!window.emailjs) {
+        if (status) status.textContent = 'Email service is still loading. Please try again in a moment.';
+        return;
+      }
+      const profile = getProfileData();
+      const params = buildProfileTemplateParams(profile);
+      try {
+        if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Sending...'; }
+        if (status) status.textContent = 'Sending securely...';
+        await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, params);
+        saveCustomerProfile(profile);
+        sessionStorage.removeItem('globalRaniRequireShippingVerification');
+        const shouldContinueToCheckout = sessionStorage.getItem('globalRaniReturnToCheckoutAfterVerify') === 'true';
+        sessionStorage.removeItem('globalRaniReturnToCheckoutAfterVerify');
+        profileSubmittedForPayment = true;
+        renderCustomerProfile();
+        const checkoutNote = document.getElementById('checkoutProfileNote');
+        if (checkoutNote) { checkoutNote.textContent = ''; checkoutNote.hidden = true; }
+        if (status) status.textContent = 'Thank you! Shipping information is verified. Now complete payment below.';
+        renderPayPalButtons();
+        document.getElementById('checkout')?.scrollIntoView({ behavior: shouldContinueToCheckout ? 'smooth' : 'smooth', block: 'start' });
+        setTimeout(() => { if (status) status.textContent = ''; }, 6000);
+      } catch (error) {
+        console.error('EmailJS error:', error);
+        if (status) status.textContent = 'Sorry, the profile could not be sent. Please try again.';
+      } finally {
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = getLoggedInMember() ? 'Verify Shipping Information & Continue to Payment' : 'Save Shipping Details & Continue'; }
+      }
     }
-
-    if (status) {
-      status.textContent = 'Saving shipping information...';
-    }
-
-    saveCustomerProfile(profile);
-
-    sessionStorage.removeItem(
-      'globalRaniRequireShippingVerification'
-    );
-
-    const shouldContinueToCheckout =
-      sessionStorage.getItem(
-        'globalRaniReturnToCheckoutAfterVerify'
-      ) === 'true';
-
-    sessionStorage.removeItem(
-      'globalRaniReturnToCheckoutAfterVerify'
-    );
-
-    profileSubmittedForPayment = true;
-
-    renderCustomerProfile();
-
-    const checkoutNote =
-      document.getElementById('checkoutProfileNote');
-
-    if (checkoutNote) {
-      checkoutNote.textContent = '';
-      checkoutNote.hidden = true;
-    }
-
-    if (status) {
-      status.textContent =
-        'Shipping information is verified. You can now complete payment.';
-    }
-
-    renderPayPalButtons();
-
-    document.getElementById('checkout')?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start'
-    });
-
-    setTimeout(() => {
-      if (status) status.textContent = '';
-    }, 6000);
-  } catch (error) {
-    console.error('Shipping profile save error:', error);
-
-    if (status) {
-      status.textContent =
-        'Shipping information could not be saved. Please try again.';
-    }
-  } finally {
-    if (submitBtn) {
-      submitBtn.disabled = false;
-      submitBtn.textContent = getLoggedInMember()
-        ? 'Verify Shipping Information & Continue to Payment'
-        : 'Save Shipping Details & Continue';
-    }
-  }
-}
 
     function clearCustomerProfile() {
       const form = document.getElementById('customerProfileForm');
