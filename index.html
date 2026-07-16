@@ -4375,7 +4375,7 @@
   }
 }
 </style>
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
 <style>
 /* Responsive Happy Customers section */
 #happy-customers {
@@ -5596,43 +5596,7 @@
       return Object.fromEntries(new FormData(form).entries());
     }
 
-    function buildProfileTemplateParams(profile) {
-      return {
-        to_email: 'kinoretta@gmail.com',
-        customer_name: profile.customerName || '',
-        customer_email: profile.customerEmail || '',
-        customer_phone: profile.customerPhone || '',
-        customer_country: profile.shippingCountry || '',
-        customer_address: profile.shippingAddress1 || '',
-        customer_apartment: profile.shippingAddress2 || '',
-        customer_city: profile.shippingCity || '',
-        customer_state: profile.shippingState || '',
-        customer_zip: profile.shippingZip || '',
-        delivery_notes: profile.deliveryNotes || '',
-        special_requests: profile.profileNotes || '',
-        order_items: cart.length ? cart.map(item => `${item.name} × ${getItemQuantity(item)} - ${formatCurrency(convertedAmount(Number(item.priceUSD) * getItemQuantity(item)))}`).join(', ') : 'No cart items found',
-        order_total: `${formatCurrency(convertedAmount(getCartTotalUSD()))} (${getCartPayableTotalUSD().toFixed(2)} USD)`,
-        message: [
-          'New customer shipping profile for The Global Rani',
-          '',
-          `Full Name: ${profile.customerName || ''}`,
-          `Email: ${profile.customerEmail || ''}`,
-          `Phone Number: ${profile.customerPhone || ''}`,
-          `Country: ${profile.shippingCountry || ''}`,
-          `Street Address: ${profile.shippingAddress1 || ''}`,
-          `Apartment / Suite / Landmark: ${profile.shippingAddress2 || ''}`,
-          `City: ${profile.shippingCity || ''}`,
-          `State / Province: ${profile.shippingState || ''}`,
-          `ZIP / Postal Code: ${profile.shippingZip || ''}`,
-          `Delivery Notes: ${profile.deliveryNotes || ''}`,
-          `Special Requests: ${profile.profileNotes || ''}`,
-          '',
-          'Cart / Order Details:',
-          cart.length ? cart.map(item => `- ${item.name} × ${getItemQuantity(item)}: ${formatCurrency(convertedAmount(Number(item.priceUSD) * getItemQuantity(item)))} (${(getDiscountedUSD(item.priceUSD) * getItemQuantity(item)).toFixed(2)} USD)`).join('\n') : 'No cart items found',
-          `Total: ${formatCurrency(convertedAmount(getCartTotalUSD()))} (${getCartPayableTotalUSD().toFixed(2)} USD)`
-        ].join('\n')
-      };
-    }
+    
 
     function getLoggedInMember() {
       try { return JSON.parse(sessionStorage.getItem('globalRaniLoggedInMember') || 'null'); } catch (error) { return null; }
@@ -5726,41 +5690,87 @@
       }
       updateCartCheckoutButton();
     }
+async function saveShippingProfileAndContinue(event) {
+  if (event) event.preventDefault();
+  if (!enforceCheckoutAccess()) return;
 
-    async function emailCustomerProfile(event) {
-      if (event) event.preventDefault();
-      const form = document.getElementById('customerProfileForm');
-      const status = document.getElementById('profileStatus');
-      const submitBtn = document.getElementById('profileSubmitBtn');
-      if (!form) return;
-      if (!form.reportValidity()) return;
-      if (!window.emailjs) {
-        if (status) status.textContent = 'Email service is still loading. Please try again in a moment.';
-        return;
-      }
-      const profile = getProfileData();
-      const params = buildProfileTemplateParams(profile);
-      try {
-        if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Sending...'; }
-        if (status) status.textContent = 'Sending securely...';
-        await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, params);
-        saveCustomerProfile(profile);
-        sessionStorage.removeItem('globalRaniRequireShippingVerification');
-        profileSubmittedForPayment = true;
-        renderCustomerProfile();
-        const checkoutNote = document.getElementById('checkoutProfileNote');
-        if (checkoutNote) { checkoutNote.textContent = ''; checkoutNote.hidden = true; }
-        if (status) status.textContent = 'Thank you! Shipping information is verified. Now complete payment below.';
-        renderPayPalButtons();
-        document.getElementById('checkout')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        setTimeout(() => { if (status) status.textContent = ''; }, 6000);
-      } catch (error) {
-        console.error('EmailJS error:', error);
-        if (status) status.textContent = 'Sorry, the profile could not be sent. Please try again.';
-      } finally {
-        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = getLoggedInMember() ? 'Verify Shipping Information & Continue to Payment' : 'Save Shipping Details & Continue'; }
-      }
+  const form = document.getElementById('customerProfileForm');
+  const status = document.getElementById('profileStatus');
+  const submitBtn = document.getElementById('profileSubmitBtn');
+
+  if (!form) return;
+  if (!form.reportValidity()) return;
+
+  const profile = getProfileData();
+
+  try {
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Saving...';
     }
+
+    if (status) {
+      status.textContent = 'Saving shipping information...';
+    }
+
+    saveCustomerProfile(profile);
+
+    sessionStorage.removeItem(
+      'globalRaniRequireShippingVerification'
+    );
+
+    const shouldContinueToCheckout =
+      sessionStorage.getItem(
+        'globalRaniReturnToCheckoutAfterVerify'
+      ) === 'true';
+
+    sessionStorage.removeItem(
+      'globalRaniReturnToCheckoutAfterVerify'
+    );
+
+    profileSubmittedForPayment = true;
+
+    renderCustomerProfile();
+
+    const checkoutNote =
+      document.getElementById('checkoutProfileNote');
+
+    if (checkoutNote) {
+      checkoutNote.textContent = '';
+      checkoutNote.hidden = true;
+    }
+
+    if (status) {
+      status.textContent =
+        'Shipping information is verified. You can now complete payment.';
+    }
+
+    renderPayPalButtons();
+
+    document.getElementById('checkout')?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+
+    setTimeout(() => {
+      if (status) status.textContent = '';
+    }, 6000);
+  } catch (error) {
+    console.error('Shipping profile save error:', error);
+
+    if (status) {
+      status.textContent =
+        'Shipping information could not be saved. Please try again.';
+    }
+  } finally {
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = getLoggedInMember()
+        ? 'Verify Shipping Information & Continue to Payment'
+        : 'Save Shipping Details & Continue';
+    }
+  }
+}
 
     function clearCustomerProfile() {
       const form = document.getElementById('customerProfileForm');
