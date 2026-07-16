@@ -2225,19 +2225,16 @@
           <div class="checkout-shipping-row">
             <div class="checkout-shipping-label">Ship to</div>
             <div class="checkout-shipping-value"><strong id="checkoutShipName">Add shipping information</strong><span id="checkoutShipAddress">Complete the customer profile or verify shipping information above.</span></div>
-            <div class="checkout-shipping-caret" aria-hidden="true">⌄</div>
           </div>
           <div class="checkout-shipping-row">
             <div class="checkout-shipping-label">Shipping</div>
             <div class="checkout-shipping-value"><strong>Standard · FREE</strong><span id="checkoutShippingDate">Ships 2 weeks after the order is placed</span></div>
-            <div class="checkout-shipping-caret" aria-hidden="true">⌄</div>
           </div>
         </div>
         <h3>Your Cart</h3>
         <div class="cart-list" id="cartList"><p>Your cart is empty.</p></div>
         <h2>Total: <span id="cartTotal">$0.00</span></h2>
         <p class="cart-tax-shipping-note">Taxes and <u>shipping</u> calculated at checkout</p>
-        <div class="currency-note" id="rateNote">Prices shown in USD.</div>
       </div>
       <div>
         
@@ -2260,8 +2257,6 @@
           <div class="tip-total-line" id="tipTotalLine" hidden><span>Tip</span><strong id="selectedTipAmount">$0.00</strong></div>
           <p class="tip-thanks">Thank you, we appreciate it.</p>
         </div>
-                <div id="checkoutCurrencyNote" class="checkout-currency-note">Select your country above to see prices in your local currency.</div>
-        <div id="checkoutProfileNote" class="checkout-currency-note"></div>
         <div id="paypal-button-container">Payment will appear after shipping details are submitted.</div>
       </div>
     </div>
@@ -2390,8 +2385,7 @@
           document.documentElement.classList.add('checkout-locked');
           const status = document.getElementById('profileStatus');
           if (status) status.textContent = 'Please add a product to your cart before entering shipping details.';
-          const checkoutNote = document.getElementById('checkoutProfileNote');
-          if (checkoutNote) checkoutNote.textContent = 'Checkout is locked until a product is added to cart.';
+              if (checkoutNote) checkoutNote.textContent = 'Checkout is locked until a product is added to cart.';
           return false;
         }
         document.documentElement.classList.remove('checkout-locked');
@@ -2555,7 +2549,6 @@
       updateCheckoutStepVisibility();
       renderPayPalButtons();
       const profileStatus = document.getElementById('profileStatus');
-      const checkoutNote = document.getElementById('checkoutProfileNote');
       if (!cart.length) {
         if (profileStatus) profileStatus.textContent = 'Your cart is empty. Please add a product before entering shipping details.';
         if (checkoutNote) checkoutNote.textContent = 'Checkout is locked until a product is added to cart.';
@@ -2961,7 +2954,6 @@
 
     function renderCustomerProfile() {
       const summary = document.getElementById('profileSummary');
-      const checkoutNote = document.getElementById('checkoutProfileNote');
       const member = getLoggedInMember();
       const verificationRequired = sessionStorage.getItem('globalRaniRequireShippingVerification') === 'true';
       const profileSubmitBtn = document.getElementById('profileSubmitBtn');
@@ -3009,8 +3001,7 @@
         sessionStorage.removeItem('globalRaniReturnToCheckoutAfterVerify');
         profileSubmittedForPayment = true;
         renderCustomerProfile();
-        const checkoutNote = document.getElementById('checkoutProfileNote');
-        if (checkoutNote) { checkoutNote.textContent = ''; checkoutNote.hidden = true; }
+          if (checkoutNote) { checkoutNote.textContent = ''; checkoutNote.hidden = true; }
         if (status) status.textContent = 'Thank you! Shipping information is verified. Now complete payment below.';
         renderPayPalButtons();
         document.getElementById('checkout')?.scrollIntoView({ behavior: shouldContinueToCheckout ? 'smooth' : 'smooth', block: 'start' });
@@ -3147,7 +3138,6 @@
     async function renderPayPalButtons() {
       updateCheckoutStepVisibility();
       const container = document.getElementById('paypal-button-container');
-      const checkoutNote = document.getElementById('checkoutProfileNote');
       if (!container) return;
       if (!enforceCheckoutAccess()) {
         container.innerHTML = 'Add a product to your cart before checkout.';
@@ -3156,12 +3146,10 @@
       container.classList.add('payment-locked');
       if (!cart.length) {
         container.innerHTML = 'Add a product to your cart first.';
-        if (checkoutNote) checkoutNote.textContent = '';
         return;
       }
       if (!profileSubmittedForPayment) {
         container.innerHTML = 'Payment is locked until shipping information is verified.';
-        if (checkoutNote) checkoutNote.textContent = getLoggedInMember() ? 'Please verify the saved shipping information for this member profile before payment.' : 'Continue as a guest by submitting shipping details below, or create a profile to save details for next time.';
         return;
       }
       const currencyCode = getPayPalCurrency();
@@ -3173,6 +3161,13 @@
         container.innerHTML = '';
         let secureCheckoutToken = '';
         paypalInstance.Buttons({
+          fundingSource: paypalInstance.FUNDING.CARD,
+          style: {
+            layout: 'vertical',
+            shape: 'rect',
+            label: 'pay',
+            height: 45
+          },
           createOrder: async function() {
             const response = await fetch('/api/create-paypal-order', {
               method: 'POST',
