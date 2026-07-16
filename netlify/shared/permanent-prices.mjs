@@ -97,10 +97,13 @@ function numberFromDocument(document) {
   return Number.isFinite(parsed) && parsed > 0 ? parsed : null;
 }
 
-function randomWholePrice(min, max) {
+function stableWholePrice(productId, min, max) {
   const low = Math.ceil(Number(min));
   const high = Math.floor(Number(max));
-  return Math.floor(Math.random() * (high - low + 1)) + low;
+  const range = Math.max(1, high - low + 1);
+  const digest = crypto.createHash('sha256').update(String(productId)).digest();
+  const number = digest.readUInt32BE(0);
+  return low + (number % range);
 }
 
 export async function getOrCreatePermanentPrice(productId, min = 79, max = 149) {
@@ -110,22 +113,44 @@ export async function getOrCreatePermanentPrice(productId, min = 79, max = 149) 
   const high = Number.isFinite(Number(max)) ? Number(max) : 149;
   if (high < low) throw new Error('Maximum product price must be greater than or equal to minimum price.');
 
+  // This price is derived from the product ID, so it never changes on refresh,
+  // redeploy, another browser, or a temporary Firebase outage.
+  const stablePrice = stableWholePrice(id, low, high);
   const { projectId } = credentials();
-  if (!projectId) throw new Error('Firebase project ID is not configured.');
-  const token = await accessToken();
+
+  // Keep the storefront working even when Firebase has not been configured yet.
+  // When Firebase becomes available, the exact same stable price is saved there.
+  if (!projectId) return stablePrice;
+
+  let token;
+  try {
+    token = await accessToken();
+  } catch (error) {
+    console.warn('Using stable product price because Firebase authentication is unavailable:', error?.message || error);
+    return stablePrice;
+  }
+
   const base = `https://firestore.googleapis.com/v1/projects/${encodeURIComponent(projectId)}/databases/(default)/documents`;
   const documentUrl = `${base}/products/${encodeURIComponent(id)}`;
   const headers = { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' };
 
-  const existing = await fetch(documentUrl, { headers });
+  let existing;
+  try {
+    existing = await fetch(documentUrl, { headers });
+  } catch (error) {
+    console.warn('Using stable product price because Firestore is unreachable:', error?.message || error);
+    return stablePrice;
+  }
+
   if (existing.ok) {
     const price = numberFromDocument(await existing.json());
     if (price !== null) return price;
   } else if (existing.status !== 404) {
-    throw new Error(`Firestore price lookup failed (${existing.status}).`);
+    console.warn(`Using stable product price because Firestore lookup failed (${existing.status}).`);
+    return stablePrice;
   }
 
-  const price = randomWholePrice(low, high);
+  const price = stablePrice;
   const create = await fetch(`${base}/products?documentId=${encodeURIComponent(id)}`, {
     method: 'POST',
     headers,
@@ -145,7 +170,8 @@ export async function getOrCreatePermanentPrice(productId, min = 79, max = 149) 
     }
   }
   const detail = await create.text();
-  throw new Error(`Firestore price save failed (${create.status}): ${detail.slice(0, 180)}`);
+  console.warn(`Using stable product price because Firestore save failed (${create.status}): ${detail.slice(0, 180)}`);
+  return stablePrice;
 }
 
 export function configuredSetPriceRange() {
