@@ -2974,7 +2974,7 @@
         if (!cart.length) {
           checkoutNote.textContent = 'Payment is locked. Please add items to cart, then use member checkout or choose one-time guest checkout.';
         } else if (profileSubmittedForPayment) {
-          checkoutNote.textContent = member ? `Signed in as ${member.firstName || 'member'}. Shipping information is verified, so payment is ready.` : 'Guest shipping details submitted. Payment is ready.';
+          //checkoutNote.textContent = member ? `Signed in as ${member.firstName || 'member'}. Shipping information is verified, so payment is ready.` : 'Guest shipping details submitted. Payment is ready.';
         } else if (member) {
           checkoutNote.textContent = verificationRequired
             ? `Signed in as ${member.firstName || 'member'}. Please verify your shipping information below before payment opens.`
