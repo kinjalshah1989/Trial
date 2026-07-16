@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 
 <html lang="en">
@@ -1200,26 +1201,7 @@ a, button, [role="button"], input[type="button"], input[type="submit"], input[ty
 }
 .profile-trigger:hover, .profile-menu-wrap.open .profile-trigger { transform: translateY(-3px) scale(1.04); box-shadow: 0 16px 32px rgba(158,21,51,.25); }
 .profile-trigger.logged-in { background: radial-gradient(circle at 35% 25%, #fff7d6, var(--emerald) 42%, var(--gold) 100%); }
-.profile-caret-badge {
-  position: absolute;
-  right: -2px;
-  bottom: -2px;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  border: 1px solid rgba(255,245,190,.92);
-  background: linear-gradient(135deg, var(--ruby), var(--gold));
-  color: #fff8ef;
-  font-size: 12px;
-  font-weight: 900;
-  line-height: 1;
-  display: grid;
-  place-items: center;
-  box-shadow: 0 8px 20px rgba(158,21,51,.24);
-  transition: transform .22s ease, box-shadow .22s ease;
-  pointer-events: none;
-}
-.profile-menu-wrap.open .profile-caret-badge { transform: rotate(180deg); box-shadow: 0 12px 24px rgba(158,21,51,.28); }
+.profile-menu-wrap.open 
 .profile-dropdown {
   display: none;
   position: absolute;
@@ -1513,12 +1495,8 @@ a, button, [role="button"], input[type="button"], input[type="submit"], input[ty
     height: clamp(9px, 2.6vw, 13px) !important;
     bottom: clamp(7px, 2vw, 9px) !important;
   }
-  .profile-caret-badge {
-    width: clamp(16px, 4.2vw, 22px) !important;
-    height: clamp(16px, 4.2vw, 22px) !important;
-    font-size: clamp(10px, 2.7vw, 14px) !important;
-  }
-  .cart-btn.cart-icon-btn,
+  
+.cart-btn.cart-icon-btn,
   .cart-icon-btn {
     width: auto !important;
     min-width: clamp(48px, 14vw, 70px) !important;
@@ -1651,12 +1629,8 @@ a, button, [role="button"], input[type="button"], input[type="submit"], input[ty
     height: clamp(8px, 2.5vw, 12px) !important;
     bottom: clamp(7px, 1.8vw, 9px) !important;
   }
-  .profile-caret-badge {
-    width: clamp(15px, 4.2vw, 21px) !important;
-    height: clamp(15px, 4.2vw, 21px) !important;
-    font-size: clamp(9px, 2.6vw, 13px) !important;
-  }
-  .cart-btn.cart-icon-btn,
+  
+.cart-btn.cart-icon-btn,
   .cart-icon-btn {
     grid-area: bag !important;
     width: auto !important;
@@ -1875,7 +1849,7 @@ a, button, [role="button"], input[type="button"], input[type="submit"], input[ty
 
   <nav>
     <div class="nav-inner">
-      <a class="brand" href="index.html" aria-label="Return to The Global Rani homepage"><img src="https://ik.imagekit.io/k0wpvuatq/global-rani-logo.png" alt="The Global Rani logo"><span>The Global Rani</span></a>
+      <a aria-label='Return to The Global Rani homepage' class='brand' href='/'><img src="https://ik.imagekit.io/k0wpvuatq/global-rani-logo.png" alt="The Global Rani logo"><span>The Global Rani</span></a>
 
   <div class="currency-switcher bloom-hover">
     <label for="countryCurrency">Ship to</label>
@@ -1898,7 +1872,7 @@ a, button, [role="button"], input[type="button"], input[type="submit"], input[ty
       <option value="QA|QAR|Qatar|ر.ق">🇶🇦 Qatar — QAR</option>
     </select>
   </div>
-  <div class="profile-menu-wrap"><button class="profile-icon-link profile-trigger bloom-hover" type="button" title="Sign up or log in" aria-label="Open member profile sign up and login" aria-haspopup="true" aria-expanded="false"><span class="profile-caret-badge">⌄</span></button><div class="profile-dropdown" role="menu"><a href="account.html" class="profile-member-action" role="menuitem">Member Profile</a><a href="account.html?action=login" class="profile-login-action" role="menuitem">Log in</a><a href="#" id="checkoutLogoutLink" class="profile-logout-action" role="menuitem" style="display:none;">Log out</a></div></div>
+  <div class="profile-menu-wrap"><button class="profile-icon-link profile-trigger bloom-hover" type="button" title="Sign up or log in" aria-label="Open member profile sign up and login" aria-haspopup="true" aria-expanded="false"></button><div class="profile-dropdown" role="menu"><a class='profile-member-action' href='/account' role='menuitem'>Member Profile</a><a class='profile-login-action' href='/account?action=login' role='menuitem'>Log in</a><a href="#" id="checkoutLogoutLink" class="profile-logout-action" role="menuitem" style="display:none;">Log out</a></div></div>
   <button class="cart-btn cart-icon-btn bloom-hover" onclick="toggleCart()" aria-label="Open shopping bag"><span class="bag-icon" aria-hidden="true"><svg viewBox="0 0 24 24" role="img" focusable="false"><path class="bag-body" d="M6.2 8.2h11.6l1.1 12.1H5.1L6.2 8.2Z"/><path class="bag-handle" d="M8.8 9V6.9a3.2 3.2 0 0 1 6.4 0V9"/><path class="bag-sparkle" d="M17.2 3.4l.45 1.15 1.15.45-1.15.45-.45 1.15-.45-1.15-1.15-.45 1.15-.45.45-1.15Z"/></svg></span><span id="cartCount" class="cart-count-badge">0</span></button>
   
 </div>
@@ -1916,7 +1890,7 @@ a, button, [role="button"], input[type="button"], input[type="submit"], input[ty
     </div>
     <div class="hero-card">
       <div class="ring"></div>
-      <a class="logo-orb" href="index.html" aria-label="Return to The Global Rani homepage"><img src="https://ik.imagekit.io/k0wpvuatq/global-rani-logo.png" alt="The Global Rani luxury jewelry logo"></a>
+      <a aria-label='Return to The Global Rani homepage' class='logo-orb' href='/'><img src="https://ik.imagekit.io/k0wpvuatq/global-rani-logo.png" alt="The Global Rani luxury jewelry logo"></a>
     </div>
   </header>
 
@@ -1943,51 +1917,51 @@ a, button, [role="button"], input[type="button"], input[type="submit"], input[ty
 
 </div>
 <div class="category-grid">
-  <a class="category-card bloom-hover" href="categories/earrings.html" aria-label="Open Earrings collection page">
+  <a aria-label='Open Earrings collection page' class='category-card bloom-hover' href='/categories/earrings'>
     <img src="https://ik.imagekit.io/k0wpvuatq/category-earrings.jpg" alt="Earrings category" loading="lazy" decoding="async">
     <span>Earrings</span>
   </a>
-  <a class="category-card bloom-hover" href="categories/necklaces.html" aria-label="Open Necklaces collection page">
+  <a aria-label='Open Necklaces collection page' class='category-card bloom-hover' href='/categories/necklaces'>
     <img src="https://ik.imagekit.io/k0wpvuatq/category-necklaces.jpg" alt="Necklaces category" loading="lazy" decoding="async">
     <span>Necklaces</span>
   </a>
-  <a class="category-card bloom-hover" href="categories/bangles-kadas.html" aria-label="Open Bangles/kadas collection page">
+  <a aria-label='Open Bangles/kadas collection page' class='category-card bloom-hover' href='/categories/bangles-kadas'>
     <img src="https://ik.imagekit.io/k0wpvuatq/category-bangles-kadas.jpg" alt="Bangles/kadas category" loading="lazy" decoding="async">
     <span>Bangles/kadas</span>
   </a>
-  <a class="category-card bloom-hover" href="categories/german-silver.html" aria-label="Open German Silver / Silver looka-like Collection collection page">
+  <a aria-label='Open German Silver / Silver looka-like Collection collection page' class='category-card bloom-hover' href='/categories/german-silver'>
     <img src="https://ik.imagekit.io/k0wpvuatq/category-german-silver.jpg" alt="German Silver / Silver looka-like Collection category" loading="lazy" decoding="async">
     <span>German Silver / Silver looka-like Collection</span>
   </a>
-  <a class="category-card bloom-hover" href="categories/moissanite.html" aria-label="Open Moissanite Collection collection page">
+  <a aria-label='Open Moissanite Collection collection page' class='category-card bloom-hover' href='/categories/moissanite'>
     <img src="https://ik.imagekit.io/k0wpvuatq/category-moissanite.jpg" alt="Moissanite Collection category" loading="lazy" decoding="async">
     <span>Moissanite Collection</span>
   </a>
-  <a class="category-card bloom-hover" href="categories/just-jhumkas.html" aria-label="Open JUST JHUMKAS collection page">
+  <a aria-label='Open JUST JHUMKAS collection page' class='category-card bloom-hover' href='/categories/just-jhumkas'>
     <img src="https://ik.imagekit.io/k0wpvuatq/category-just-jhumkas.jpg" alt="JUST JHUMKAS category" loading="lazy" decoding="async">
     <span>JUST JHUMKAS</span>
   </a>
-  <a class="category-card bloom-hover" href="categories/tayani.html" aria-label="Open Tayani Collection collection page">
+  <a aria-label='Open Tayani Collection collection page' class='category-card bloom-hover' href='/categories/tayani'>
     <img src="https://ik.imagekit.io/k0wpvuatq/category-tayani.jpg" alt="Tayani Collection category" loading="lazy" decoding="async">
     <span>Tayani Collection</span>
   </a>
-  <a class="category-card bloom-hover" href="categories/american-diamond-cz.html" aria-label="Open American Diamond/Cz Collection collection page">
+  <a aria-label='Open American Diamond/Cz Collection collection page' class='category-card bloom-hover' href='/categories/american-diamond-cz'>
     <img src="https://ik.imagekit.io/k0wpvuatq/category-american-diamond-cz.jpg" alt="American Diamond/Cz Collection category" loading="lazy" decoding="async">
     <span>American Diamond/Cz Collection</span>
   </a>
-  <a class="category-card bloom-hover" href="categories/jewelry-sets.html" aria-label="Open Jewelry Sets collection page">
+  <a aria-label='Open Jewelry Sets collection page' class='category-card bloom-hover' href='/categories/jewelry-sets'>
     <img src="https://ik.imagekit.io/k0wpvuatq/category-temple-jewelry.jpg" alt="JEWELRY SETS category" loading="lazy" decoding="async">
     <span>JEWELRY SETS</span>
   </a>
-  <a class="category-card bloom-hover" href="categories/choker.html" aria-label="Open Choker Collection collection page">
+  <a aria-label='Open Choker Collection collection page' class='category-card bloom-hover' href='/categories/choker'>
     <img src="https://ik.imagekit.io/k0wpvuatq/category-choker.jpg" alt="Choker Collection category" loading="lazy" decoding="async">
     <span>Choker Collection</span>
   </a>
-  <a class="category-card bloom-hover" href="categories/solitaire.html" aria-label="Open Solitaire Collection collection page">
+  <a aria-label='Open Solitaire Collection collection page' class='category-card bloom-hover' href='/categories/solitaire'>
     <img src="https://ik.imagekit.io/k0wpvuatq/category-solitaire.jpg" alt="Solitaire Collection category" loading="lazy" decoding="async">
     <span>Solitaire Collection</span>
   </a>
-  <a class="category-card bloom-hover" href="categories/pb-organizers.html" aria-label="Open PB ORGANIZERS collection page">
+  <a aria-label='Open PB ORGANIZERS collection page' class='category-card bloom-hover' href='/categories/pb-organizers'>
     <img src="https://ik.imagekit.io/k0wpvuatq/category-pb-organizers.jpg" alt="PB ORGANIZERS category" loading="lazy" decoding="async">
     <span>PB ORGANIZERS</span>
   </a>
@@ -2237,7 +2211,7 @@ a, button, [role="button"], input[type="button"], input[type="submit"], input[ty
   <footer class="site-footer">
     <div class="footer-main">
       <div class="footer-column footer-brand-column">
-        <a class="footer-brand-line" href="index.html" aria-label="The Global Rani home">
+        <a aria-label='The Global Rani home' class='footer-brand-line' href='/'>
           <img src="https://ik.imagekit.io/k0wpvuatq/global-rani-logo.png" alt="The Global Rani logo">
           <span>The Global Rani</span>
         </a>
