@@ -6037,7 +6037,7 @@
     function updateProfileMenu(member){
       document.querySelectorAll('[data-profile-dropdown]').forEach(dropdown => {
         if (member) {
-          dropdown.innerHTML = '<a href="#" class="profile-logout-link" role="menuitem">Log out</a>';
+          dropdown.innerHTML = '<button class="profile-dropdown-logout global-profile-logout" type="button" role="menuitem">Log Out</button>';
         } else {
           dropdown.innerHTML = '<a href="account.html" role="menuitem">Member Profile</a><a href="account.html?action=login" role="menuitem">Log in</a><button class="profile-dropdown-logout global-profile-logout" type="button" role="menuitem" hidden>Log Out</button>';
         }
@@ -6103,13 +6103,6 @@
     document.addEventListener('click', function(event){
       const arrow = event.target.closest('.profile-trigger');
       if (arrow) {
-        const clickedCaret = !!event.target.closest('.profile-caret-badge');
-        if (arrow.dataset.profileSignedIn === 'true' && !clickedCaret) {
-          window.location.href = arrow.dataset.orderSummaryUrl || (location.pathname.includes('/categories/') ? '../account.html#order-summary' : 'account.html#order-summary');
-          event.preventDefault();
-          event.stopPropagation();
-          return;
-        }
         const wrap = arrow.closest('.profile-menu-wrap');
         const willOpen = !wrap.classList.contains('open');
         closeProfileMenus(wrap);
@@ -6125,59 +6118,6 @@
       if (event.key === 'Escape') closeProfileMenus(null);
     });
   })();
-</script>
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import { getAuth, setPersistence, browserSessionPersistence, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-  const firebaseConfig = {
-    apiKey: ["AI", "zaSyBise9pqTYgQwmG-xOVZQ0-30j1EvcgDng"].join(""),
-    authDomain: "the-global-rani-website.firebaseapp.com",
-    projectId: "the-global-rani-website",
-    storageBucket: "the-global-rani-website.firebasestorage.app",
-    messagingSenderId: "603989663669",
-    appId: "1:603989663669:web:24c32f6c1bce81a20803fc"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  await setPersistence(auth, browserSessionPersistence);
-
-  function clearGlobalRaniMemberSession() {
-    const customerKeys = [
-      "globalRaniLoggedInMember",
-      "globalRaniCheckoutMode",
-      "globalRaniRequireShippingVerification",
-      "globalRaniReturnToCheckoutAfterVerify",
-      "globalRaniCustomerProfile",
-      "globalRaniGuestShippingProfile",
-      "globalRaniGuestShippingDraft",
-      "globalRaniShippingProfiles",
-      "globalRaniScrollToCheckout",
-      "globalRaniSelectedTryOn"
-    ];
-    customerKeys.forEach((key) => {
-      sessionStorage.removeItem(key);
-      localStorage.removeItem(key);
-    });
-    if (window.GlobalRaniMember && typeof window.GlobalRaniMember.updateProfileIcon === "function") {
-      window.GlobalRaniMember.updateProfileIcon();
-    }
-    window.dispatchEvent(new Event("globalRaniMemberChanged"));
-  }
-
-  document.addEventListener("click", async (event) => {
-    const logoutLink = event.target.closest(".profile-logout-link");
-    if (!logoutLink) return;
-    event.preventDefault();
-    clearGlobalRaniMemberSession();
-    try {
-      await signOut(auth);
-    } catch (error) {
-      console.warn("Firebase logout issue:", error);
-    }
-    window.location.replace("index.html");
-  });
 </script>
 <div aria-hidden="true" class="video-viewer-overlay" id="videoViewerOverlay">
 <div aria-labelledby="videoViewerTitle" aria-modal="true" class="video-viewer-modal" role="dialog">
@@ -6876,13 +6816,13 @@
       if (trigger) {
         const accountBase = location.pathname.includes('/categories/') ? '../account.html' : 'account.html';
         trigger.title = user ? `Signed in as ${user.email || 'member'}` : 'Sign up or log in';
-        trigger.setAttribute('aria-label', user ? 'Open order summary' : 'Open member profile sign up and login');
+        trigger.setAttribute('aria-label', user ? 'Open member menu' : 'Open member profile sign up and login');
         trigger.dataset.profileSignedIn = user ? 'true' : 'false';
         trigger.dataset.orderSummaryUrl = `${accountBase}#order-summary`;
       }
       if (memberLink) {
         const accountBase = location.pathname.includes('/categories/') ? '../account.html' : 'account.html';
-        memberLink.hidden = false;
+        memberLink.hidden = !!user;
         memberLink.href = user ? `${accountBase}#order-summary` : accountBase;
       }
       if (loginLink) loginLink.hidden = !!user;
