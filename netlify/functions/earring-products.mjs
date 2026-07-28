@@ -3,10 +3,10 @@ const IMAGEKIT_FOLDER = '/global-rani-earrings';
 const SERVER_CACHE_TTL = 15 * 60 * 1000;
 let memoryCache = null;
 
-function json(body, status = 200, cacheStatus = 'MISS') {
+function json(body, status = 200, cacheStatus = 'MISS', forceRefresh = false) {
   return new Response(JSON.stringify(body, null, 2), {
     status,
-    headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': status === 200 ? 'public, max-age=300, s-maxage=900, stale-while-revalidate=86400' : 'no-store, max-age=0',
+    headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': status === 200 && !forceRefresh ? 'public, max-age=300, s-maxage=900, stale-while-revalidate=86400' : 'no-store, max-age=0',
       'X-Global-Rani-Cache': cacheStatus }
   });
 }
@@ -20,8 +20,26 @@ function parentFolder(file) {
   const path = filePathOf(file); const index = path.lastIndexOf('/');
   return index <= 0 ? '/' : path.slice(0, index);
 }
+function versionedFileUrl(file) {
+  const raw = String(file?.url || '').trim();
+  if (!raw) return '';
+  const version = String(file?.updatedAt || file?.createdAt || file?.fileId || '').trim();
+  if (!version) return raw;
+  const separator = raw.includes('?') ? '&' : '?';
+  return `${raw}${separator}grv=${encodeURIComponent(version)}`;
+}
+
 function titleFromId(id) {
   return String(id || '').split('-').filter(Boolean).map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+}
+function collectionIdForFile(file, wantedFolder, baseId) {
+  const folder = parentFolder(file);
+  const relative = folder.slice(wantedFolder.length).replace(/^\/+|\/+$/g, '');
+  return (relative ? relative.split('/')[0] : String(baseId || '')).toLowerCase();
+}
+function collectionTitle(id, suffix) {
+  const base = titleFromId(id);
+  return new RegExp(`\b${suffix}$`, 'i').test(base) ? base : `${base} ${suffix}`;
 }
 function numberValue(value, fallback = 45) {
   const parsed = Number(String(value ?? '').replace(/[^0-9.-]/g, ''));
@@ -82,17 +100,28 @@ export default async function handler(request) {
       const arFile = arCandidates.map(n=>byName.get(n.toLowerCase())).find(Boolean);
       const gifFile = gifCandidates.map(n=>byName.get(n.toLowerCase())).find(Boolean);
       const metadata=firstImage.customMetadata||{}; if(!booleanValue(metadata.active,true)) continue;
+      const collectionId = collectionIdForFile(firstImage, wantedFolder, baseId);
+      const collectionName = metadata.collectionName || metadata.productFamilyName || collectionTitle(collectionId, 'Earrings');
       products.push({
-        id:`${baseId}-earrings`, name:metadata.productName||metadata.name||titleFromId(baseId),
+        id:`${baseId}-earrings`, collectionId, collectionName,
+        name:metadata.productName||metadata.name||titleFromId(baseId),
         description:metadata.description||metadata.productDescription||'Statement earrings from The Global Rani collection.',
         price:numberValue(metadata.price??metadata.priceUSD,45), category:metadata.category||'Earrings',
-        images:orderedImages.map(file=>file.url), image:firstImage.url, arImage:arFile?.url||'', boxGif:gifFile?.url||''
+        images:orderedImages.map(versionedFileUrl), image:versionedFileUrl(firstImage), arImage:versionedFileUrl(arFile), boxGif:versionedFileUrl(gifFile)
       });
     }
     products.sort((a,b)=>a.name.localeCompare(b.name));
-    const payload = { products, count:products.length, folder:wantedFolder, filesSeenInProductFolder:files.length, filenamesSeen:files.map(f=>f.name), incompleteProducts };
+    const collectionMap = new Map();
+    for (const product of products) {
+      const key = product.collectionId || product.id;
+      if (!collectionMap.has(key)) collectionMap.set(key, { id:key, name:product.collectionName, description:product.description, category:product.category, image:product.image, images:product.images, price:product.price, colorCount:0, variants:[] });
+      const collection = collectionMap.get(key);
+      collection.colorCount += 1; collection.variants.push(product); collection.price = Math.min(collection.price, product.price);
+    }
+    const collections = Array.from(collectionMap.values()).sort((a,b)=>a.name.localeCompare(b.name));
+    const payload = { products, collections, count:products.length, folder:wantedFolder, filesSeenInProductFolder:files.length, filenamesSeen:files.map(f=>f.name), incompleteProducts };
     memoryCache = { savedAt:Date.now(), body:payload };
-    return json(payload, 200, 'MISS');
+    return json(payload, 200, 'MISS', forceRefresh);
   } catch(error) { return json({ error:'Earring products could not be loaded.', detail:error?.message||String(error) },500); }
 }
 export const config = { path:'/api/earring-products' };

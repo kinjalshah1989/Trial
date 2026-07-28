@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Virtual AR Try-On | The Global Rani</title>
+  <title>Virtual Try-On | The Global Rani</title>
 
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="preconnect" href="https://storage.googleapis.com" crossorigin>
@@ -114,16 +114,27 @@
 
 
 
-    /* After the customer taps Start Camera, remove menus from the camera view on desktop and mobile. */
-    .app.camera-active .topbar,
+    /* Keep the simplified header visible after the camera starts. */
     .app.camera-active .panel,
     .app.camera-active .selected-badge,
-    .app.camera-active .card,
     .app.camera-active .status {
       display: none !important;
       opacity: 0 !important;
       visibility: hidden !important;
       pointer-events: none !important;
+    }
+
+    /* Simplified AR page: show only the title, Home, and Start Camera. */
+    .brand-mark,
+    .brand p,
+    #trackingBtn,
+    #necklaceBtn,
+    #earringsBtn,
+    #resetBtn,
+    .selected-badge,
+    .panel,
+    .status {
+      display: none !important;
     }
 
     .selected-badge {
@@ -385,13 +396,13 @@
       <div class="brand">
         <a class="brand-mark" href="index.html" title="Back to The Global Rani" style="text-decoration:none">GR</a>
         <div>
-          <h1>The Global Rani Virtual AR Try-On</h1>
+          <h1>The Global Rani Virtual Try-On</h1>
           <p id="selectedTryOnLabel">Virtual jewelry fitting</p>
         </div>
       </div>
 
       <div class="actions">
-        <a class="home-link" href="index.html">Home</a><button id="startBtn">Start Camera</button>
+        <a class="home-link" href="index.html">Home</a><button id="startBtn">Start Camera to See How It Looks on You</button>
         <button id="trackingBtn" class="active">Tracking On</button>
         <button id="necklaceBtn" class="active">Necklace</button>
         <button id="earringsBtn" class="active">Earrings</button>
@@ -1062,7 +1073,7 @@
 
         video.srcObject = stream;
         await video.play();
-        startBtn.textContent = "Camera On";
+        startBtn.textContent = "Start Camera to See How It Looks on You";
         statusEl.textContent = "Camera preview is on. Finishing face tracking...";
 
         await trackerReady;

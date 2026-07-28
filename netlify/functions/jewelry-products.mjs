@@ -4,12 +4,12 @@ const IMAGEKIT_FOLDER = '/global-rani-products';
 const SERVER_CACHE_TTL = 15 * 60 * 1000;
 let memoryCache = null;
 
-function json(body, status = 200, cacheStatus = 'MISS') {
+function json(body, status = 200, cacheStatus = 'MISS', forceRefresh = false) {
   return new Response(JSON.stringify(body, null, 2), {
     status,
     headers: {
       'Content-Type': 'application/json; charset=utf-8',
-      'Cache-Control': status === 200 ? 'public, max-age=300, s-maxage=900, stale-while-revalidate=86400' : 'no-store, max-age=0',
+      'Cache-Control': status === 200 && !forceRefresh ? 'public, max-age=300, s-maxage=900, stale-while-revalidate=86400' : 'no-store, max-age=0',
       'X-Global-Rani-Cache': cacheStatus
     }
   });
@@ -30,13 +30,34 @@ function parentFolder(file) {
   const index = path.lastIndexOf('/');
   return index <= 0 ? '/' : path.slice(0, index);
 }
+function versionedFileUrl(file) {
+  const raw = String(file?.url || '').trim();
+  if (!raw) return '';
+  const version = String(file?.updatedAt || file?.createdAt || file?.fileId || '').trim();
+  if (!version) return raw;
+  const separator = raw.includes('?') ? '&' : '?';
+  return `${raw}${separator}grv=${encodeURIComponent(version)}`;
+}
 
-function displayNameFromId(id) {
+
+function titleFromId(id) {
   return String(id || '')
     .split('-')
     .filter(Boolean)
     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ') + ' Set';
+    .join(' ');
+}
+
+function displayNameFromId(id) {
+  const title = titleFromId(id);
+  return /\bset$/i.test(title) ? title : `${title} Set`;
+}
+
+function collectionIdForFile(file, wantedFolder, baseId) {
+  const folder = parentFolder(file);
+  const relative = folder.slice(wantedFolder.length).replace(/^\/+|\/+$/g, '');
+  if (relative) return relative.split('/')[0].toLowerCase();
+  return String(baseId || '').toLowerCase();
 }
 
 function numberValue(value, fallback = 85) {
@@ -173,29 +194,57 @@ export default async function handler(request) {
       const gifFile = gifCandidates.map(name => byName.get(name.toLowerCase())).find(Boolean);
       const metadata = firstImage.customMetadata || {};
       if (!booleanValue(metadata.active, true)) continue;
+      const collectionId = collectionIdForFile(firstImage, wantedFolder, baseId);
+      const collectionName = metadata.collectionName || metadata.setFamilyName || displayNameFromId(collectionId);
 
       products.push({
         id: `${baseId}-set`,
+        collectionId,
+        collectionName,
         name: metadata.productName || metadata.name || displayNameFromId(baseId),
         description: metadata.description || metadata.productDescription || 'A coordinated jewelry set from The Global Rani collection.',
         price: 0,
         category: metadata.category || 'Jewelry Set',
-        images: orderedImages.map(file => file.url),
-        image: firstImage.url,
-        arImage: arFile?.url || '',
-        boxGif: gifFile?.url || ''
+        images: orderedImages.map(versionedFileUrl),
+        image: versionedFileUrl(firstImage),
+        arImage: versionedFileUrl(arFile),
+        boxGif: versionedFileUrl(gifFile)
       });
     }
 
     const priceRange = configuredSetPriceRange();
     await Promise.all(products.map(async product => {
-      product.price = await getOrCreatePermanentPrice(product.id, priceRange.min, priceRange.max);
+      product.price = await getOrCreatePermanentPrice(product.collectionId || product.id, priceRange.min, priceRange.max);
     }));
 
     products.sort((a, b) => a.name.localeCompare(b.name));
 
+    const collectionMap = new Map();
+    for (const product of products) {
+      const key = product.collectionId || product.id;
+      if (!collectionMap.has(key)) {
+        collectionMap.set(key, {
+          id: key,
+          name: product.collectionName || displayNameFromId(key),
+          description: product.description,
+          category: product.category,
+          image: product.image,
+          images: product.images,
+          price: product.price,
+          colorCount: 0,
+          variants: []
+        });
+      }
+      const collection = collectionMap.get(key);
+      collection.colorCount += 1;
+      collection.variants.push(product);
+      collection.price = Math.min(collection.price, product.price);
+    }
+    const collections = Array.from(collectionMap.values()).sort((a, b) => a.name.localeCompare(b.name));
+
     const payload = {
       products,
+      collections,
       count: products.length,
       folder: wantedFolder,
       totalImageKitFilesRead: allFiles.length,
@@ -204,7 +253,7 @@ export default async function handler(request) {
       incompleteProducts
     };
     memoryCache = { savedAt: Date.now(), body: payload };
-    return json(payload, 200, 'MISS');
+    return json(payload, 200, 'MISS', forceRefresh);
   } catch (error) {
     return json({
       error: 'Jewelry products could not be loaded.',

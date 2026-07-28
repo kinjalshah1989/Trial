@@ -1,14 +1,15 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Checkout | The Global Rani</title>
-  <meta name="description" content="The Global Rani is a trendy, feminine Indian jewelry ecommerce boutique shipping worldwide." />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>Checkout | The Global Rani</title>
+<meta content="The Global Rani is a trendy, feminine Indian jewelry ecommerce boutique shipping worldwide." name="description"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&amp;family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<style>
     .profile-dropdown [hidden] {
   display: none !important;
 }
@@ -1784,9 +1785,8 @@
 
 .cart-tax-shipping-note{margin:4px 0 14px;font-size:14px;color:#4f4a45;line-height:1.4;}
 </style>
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-
-  <script type="module">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script type="module">
     // Firebase checkout protection
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import {
@@ -1882,8 +1882,7 @@
       });
     }
   </script>
-
-  <script>
+<script>
     (function () {
       function hasInitialCheckoutCart() {
         try {
@@ -1908,412 +1907,374 @@
     .checkout-shipping-value strong{display:block;font-weight:900;color:var(--dark)}
         @media(max-width:560px){.checkout-shipping-row{grid-template-columns:72px minmax(0,1fr);padding:13px 12px;gap:8px}.checkout-shipping-label,.checkout-shipping-value{font-size:13px}}
 </style>
-
 <style>
 .profile-dropdown .global-profile-logout{display:block;width:100%;position:relative;z-index:1;padding:11px 14px;border:0;border-radius:14px;background:transparent;color:var(--ruby,#9e1533);font:inherit;font-size:14px;font-weight:900;white-space:nowrap;text-align:center;cursor:pointer}.profile-dropdown .global-profile-logout:hover{background:linear-gradient(135deg,rgba(158,21,51,.10),rgba(185,133,47,.16));color:var(--ruby,#9e1533)}.profile-dropdown .global-profile-logout[hidden]{display:none!important}
 </style>
 </head>
 <body class="checkout-page">
-  <div class="petal-layer" id="petalLayer"></div>
-  <div class="cursor-flowers" id="cursorFlowers"></div>
+<div class="petal-layer" id="petalLayer"></div>
+<div class="cursor-flowers" id="cursorFlowers"></div>
+<span class="sparkle"></span><span class="sparkle"></span><span class="sparkle"></span><span class="sparkle"></span><span class="sparkle"></span>
+<div class="top-banner">We Ship Globally</div>
+<nav>
+<div class="nav-inner">
+<a aria-label="Return to The Global Rani homepage" class="brand" href="index.html"><img alt="The Global Rani logo" src="https://ik.imagekit.io/k0wpvuatq/global-rani-logo.png"/><span>The Global Rani</span></a>
+<div class="currency-switcher bloom-hover">
+<label for="countryCurrency">Ship to</label>
+<select aria-label="Choose country and currency" id="countryCurrency">
+<option value="US|USD|United States|$">🇺🇸 United States — USD</option>
+<option value="IN|INR|India|₹">🇮🇳 India — INR</option>
+<option value="GB|GBP|United Kingdom|£">🇬🇧 United Kingdom — GBP</option>
+<option value="CA|CAD|Canada|C$">🇨🇦 Canada — CAD</option>
+<option value="AU|AUD|Australia|A$">🇦🇺 Australia — AUD</option>
+<option value="EU|EUR|Europe|€">🇪🇺 Europe — EUR</option>
+<option value="AE|AED|UAE|د.إ">🇦🇪 UAE — AED</option>
+<option value="SG|SGD|Singapore|S$">🇸🇬 Singapore — SGD</option>
+<option value="NZ|NZD|New Zealand|NZ$">🇳🇿 New Zealand — NZD</option>
+<option value="JP|JPY|Japan|¥">🇯🇵 Japan — JPY</option>
+<option value="MY|MYR|Malaysia|RM">🇲🇾 Malaysia — MYR</option>
+<option value="PH|PHP|Philippines|₱">🇵🇭 Philippines — PHP</option>
+<option value="MX|MXN|Mexico|MX$">🇲🇽 Mexico — MXN</option>
+<option value="ZA|ZAR|South Africa|R">🇿🇦 South Africa — ZAR</option>
+<option value="SA|SAR|Saudi Arabia|﷼">🇸🇦 Saudi Arabia — SAR</option>
+<option value="QA|QAR|Qatar|ر.ق">🇶🇦 Qatar — QAR</option>
+</select>
+</div>
+<div class="profile-menu-wrap"><button aria-expanded="false" aria-haspopup="true" aria-label="Open member profile sign up and login" class="profile-icon-link profile-trigger bloom-hover" title="Sign up or log in" type="button"><span class="profile-caret-badge">⌄</span></button><div class="profile-dropdown" role="menu"><a class="profile-member-action" href="account.html" role="menuitem">Member Profile</a><a class="profile-login-action" href="account.html?action=login" role="menuitem">Log in</a><button class="profile-dropdown-logout global-profile-logout" hidden="" role="menuitem" type="button">Log Out</button><a class="profile-logout-action" href="#" id="checkoutLogoutLink" role="menuitem" style="display:none;">Log out</a></div></div>
+<button aria-label="Open shopping bag" class="cart-btn cart-icon-btn bloom-hover" onclick="toggleCart()"><span aria-hidden="true" class="bag-icon"><svg focusable="false" role="img" viewbox="0 0 24 24"><path class="bag-body" d="M6.2 8.2h11.6l1.1 12.1H5.1L6.2 8.2Z"></path><path class="bag-handle" d="M8.8 9V6.9a3.2 3.2 0 0 1 6.4 0V9"></path><path class="bag-sparkle" d="M17.2 3.4l.45 1.15 1.15.45-1.15.45-.45 1.15-.45-1.15-1.15-.45 1.15-.45.45-1.15Z"></path></svg></span><span class="cart-count-badge" id="cartCount">0</span></button>
+</div>
+</nav>
+<header>
+<div class="hero">
+<div class="eyebrow">Indian jewelry • global glow</div>
+<h1>For every Rani, everywhere.</h1>
+<div class="hero-actions">
 
-  <span class="sparkle"></span><span class="sparkle"></span><span class="sparkle"></span><span class="sparkle"></span><span class="sparkle"></span>
-
-  <div class="top-banner">We Ship Globally</div>
-
-  <nav>
-    <div class="nav-inner">
-      <a class="brand" href="index.html" aria-label="Return to The Global Rani homepage"><img src="https://ik.imagekit.io/k0wpvuatq/global-rani-logo.png" alt="The Global Rani logo"><span>The Global Rani</span></a>
-      
-      <div class="currency-switcher bloom-hover">
-        <label for="countryCurrency">Ship to</label>
-        <select id="countryCurrency" aria-label="Choose country and currency">
-          <option value="US|USD|United States|$">🇺🇸 United States — USD</option>
-          <option value="IN|INR|India|₹">🇮🇳 India — INR</option>
-          <option value="GB|GBP|United Kingdom|£">🇬🇧 United Kingdom — GBP</option>
-          <option value="CA|CAD|Canada|C$">🇨🇦 Canada — CAD</option>
-          <option value="AU|AUD|Australia|A$">🇦🇺 Australia — AUD</option>
-          <option value="EU|EUR|Europe|€">🇪🇺 Europe — EUR</option>
-          <option value="AE|AED|UAE|د.إ">🇦🇪 UAE — AED</option>
-          <option value="SG|SGD|Singapore|S$">🇸🇬 Singapore — SGD</option>
-          <option value="NZ|NZD|New Zealand|NZ$">🇳🇿 New Zealand — NZD</option>
-          <option value="JP|JPY|Japan|¥">🇯🇵 Japan — JPY</option>
-          <option value="MY|MYR|Malaysia|RM">🇲🇾 Malaysia — MYR</option>
-          <option value="PH|PHP|Philippines|₱">🇵🇭 Philippines — PHP</option>
-          <option value="MX|MXN|Mexico|MX$">🇲🇽 Mexico — MXN</option>
-          <option value="ZA|ZAR|South Africa|R">🇿🇦 South Africa — ZAR</option>
-          <option value="SA|SAR|Saudi Arabia|﷼">🇸🇦 Saudi Arabia — SAR</option>
-          <option value="QA|QAR|Qatar|ر.ق">🇶🇦 Qatar — QAR</option>
-        </select>
-      </div>
-      <div class="profile-menu-wrap"><button class="profile-icon-link profile-trigger bloom-hover" type="button" title="Sign up or log in" aria-label="Open member profile sign up and login" aria-haspopup="true" aria-expanded="false"><span class="profile-caret-badge">⌄</span></button><div class="profile-dropdown" role="menu"><a href="account.html" class="profile-member-action" role="menuitem">Member Profile</a><a href="account.html?action=login" class="profile-login-action" role="menuitem">Log in</a><button class="profile-dropdown-logout global-profile-logout" type="button" role="menuitem" hidden>Log Out</button><a href="#" id="checkoutLogoutLink" class="profile-logout-action" role="menuitem" style="display:none;">Log out</a></div></div>
-      <button class="cart-btn cart-icon-btn bloom-hover" onclick="toggleCart()" aria-label="Open shopping bag"><span class="bag-icon" aria-hidden="true"><svg viewBox="0 0 24 24" role="img" focusable="false"><path class="bag-body" d="M6.2 8.2h11.6l1.1 12.1H5.1L6.2 8.2Z"/><path class="bag-handle" d="M8.8 9V6.9a3.2 3.2 0 0 1 6.4 0V9"/><path class="bag-sparkle" d="M17.2 3.4l.45 1.15 1.15.45-1.15.45-.45 1.15-.45-1.15-1.15-.45 1.15-.45.45-1.15Z"/></svg></span><span id="cartCount" class="cart-count-badge">0</span></button>
-      
-    </div>
-  </nav>
-
-  <header>
-    <div class="hero">
-      <div class="eyebrow">Indian jewelry • global glow</div>
-      <h1>For every Rani, everywhere.</h1>
-      <div class="hero-actions">
-        <a class="cta bloom-hover" href="#shop" style="text-decoration:none;">Shop Collection</a>
-        <a class="cta ghost bloom-hover" href="#ugc" style="text-decoration:none;">Watch Videos</a>
-      </div>
-    </div>
-    <div class="hero-card">
-      <div class="ring"></div>
-      <a class="logo-orb" href="index.html" aria-label="Return to The Global Rani homepage"><img src="https://ik.imagekit.io/k0wpvuatq/global-rani-logo.png" alt="The Global Rani luxury jewelry logo"></a>
-    </div>
-  </header>
-
-  <div class="marquee">
-    <div class="marquee-track">
-      <div class="marquee-group" aria-hidden="false">
-        <span>✦ WORLDWIDE SHIPPING</span>
-        <span>✦ DESI GLAM</span>
-        <span>✦ GIFT READY</span>
-        <span>✦ ROYAL STYLE</span>
-      </div>
-      <div class="marquee-group" aria-hidden="true">
-        <span>✦ WORLDWIDE SHIPPING</span>
-        <span>✦ DESI GLAM</span>
-        <span>✦ GIFT READY</span>
-        <span>✦ ROYAL STYLE</span>
-      </div>
-    </div>
-  </div>
-
-
-  <section id="categories" class="category-section">
-    <div class="section-title">
-      <h2>Shop by Collection</h2>
-      
-    </div>
-    <div class="category-grid">
-      <a class="category-card bloom-hover" href="categories/earrings.html" aria-label="Open Earrings collection page">
-        <img src="https://ik.imagekit.io/k0wpvuatq/category-earrings.jpg" alt="Earrings category" loading="lazy" decoding="async">
-        <span>Earrings</span>
-      </a>
-      <a class="category-card bloom-hover" href="categories/necklaces.html" aria-label="Open Necklaces collection page">
-        <img src="https://ik.imagekit.io/k0wpvuatq/category-necklaces.jpg" alt="Necklaces category" loading="lazy" decoding="async">
-        <span>Necklaces</span>
-      </a>
-      <a class="category-card bloom-hover" href="categories/bangles-kadas.html" aria-label="Open Bangles/kadas collection page">
-        <img src="https://ik.imagekit.io/k0wpvuatq/category-bangles-kadas.jpg" alt="Bangles/kadas category" loading="lazy" decoding="async">
-        <span>Bangles/kadas</span>
-      </a>
-      <a class="category-card bloom-hover" href="categories/german-silver.html" aria-label="Open German Silver / Silver looka-like Collection collection page">
-        <img src="https://ik.imagekit.io/k0wpvuatq/category-german-silver.jpg" alt="German Silver / Silver looka-like Collection category" loading="lazy" decoding="async">
-        <span>German Silver / Silver looka-like Collection</span>
-      </a>
-      <a class="category-card bloom-hover" href="categories/moissanite.html" aria-label="Open Moissanite Collection collection page">
-        <img src="https://ik.imagekit.io/k0wpvuatq/category-moissanite.jpg" alt="Moissanite Collection category" loading="lazy" decoding="async">
-        <span>Moissanite Collection</span>
-      </a>
-      <a class="category-card bloom-hover" href="categories/just-jhumkas.html" aria-label="Open JUST JHUMKAS collection page">
-        <img src="https://ik.imagekit.io/k0wpvuatq/category-just-jhumkas.jpg" alt="JUST JHUMKAS category" loading="lazy" decoding="async">
-        <span>JUST JHUMKAS</span>
-      </a>
-      <a class="category-card bloom-hover" href="categories/tayani.html" aria-label="Open Tayani Collection collection page">
-        <img src="https://ik.imagekit.io/k0wpvuatq/category-tayani.jpg" alt="Tayani Collection category" loading="lazy" decoding="async">
-        <span>Tayani Collection</span>
-      </a>
-      <a class="category-card bloom-hover" href="categories/american-diamond-cz.html" aria-label="Open American Diamond/Cz Collection collection page">
-        <img src="https://ik.imagekit.io/k0wpvuatq/category-american-diamond-cz.jpg" alt="American Diamond/Cz Collection category" loading="lazy" decoding="async">
-        <span>American Diamond/Cz Collection</span>
-      </a>
-      <a class="category-card bloom-hover" href="categories/jewelry-sets.html" aria-label="Open Jewelry Sets collection page">
-        <img src="https://ik.imagekit.io/k0wpvuatq/category-temple-jewelry.jpg" alt="JEWELRY SETS category" loading="lazy" decoding="async">
-        <span>JEWELRY SETS</span>
-      </a>
-      <a class="category-card bloom-hover" href="categories/choker.html" aria-label="Open Choker Collection collection page">
-        <img src="https://ik.imagekit.io/k0wpvuatq/category-choker.jpg" alt="Choker Collection category" loading="lazy" decoding="async">
-        <span>Choker Collection</span>
-      </a>
-      <a class="category-card bloom-hover" href="categories/solitaire.html" aria-label="Open Solitaire Collection collection page">
-        <img src="https://ik.imagekit.io/k0wpvuatq/category-solitaire.jpg" alt="Solitaire Collection category" loading="lazy" decoding="async">
-        <span>Solitaire Collection</span>
-      </a>
-      <a class="category-card bloom-hover" href="categories/pb-organizers.html" aria-label="Open PB ORGANIZERS collection page">
-        <img src="https://ik.imagekit.io/k0wpvuatq/category-pb-organizers.jpg" alt="PB ORGANIZERS category" loading="lazy" decoding="async">
-        <span>PB ORGANIZERS</span>
-      </a>
-    </div>
-  </section>
-
-  <section id="shop">
-    <div class="section-title">
-      <h2>Royal Drops</h2>
-      <p>Shop trend-forward Indian jewelry styled for weddings, festive outfits, brunch looks, and gift-ready moments.</p>
-    </div>
-    <div class="products">
-      <article class="product featured-product bloom-hover" data-name="The Jaipur Pastel Set" data-price="65.00" data-usd-price="65.00">
-        <div class="antique-frame">
-          <div class="frame-price-badge converted-price" data-usd="65">$65</div>
-          <div class="product-carousel royal-drops-carousel" data-carousel="jaipur-pastel">
-            <img class="active" src="https://ik.imagekit.io/k0wpvuatq/jaipur-pastel-set-1.jpeg" alt="The Jaipur Pastel Set necklace and earrings displayed on a teal jewelry stand" loading="lazy" decoding="async">
-            <img src="https://ik.imagekit.io/k0wpvuatq/jaipur-pastel-set-2.jpeg" alt="The Jaipur Pastel Set styled with a cream saree, side portrait" loading="lazy" decoding="async">
-            <img src="https://ik.imagekit.io/k0wpvuatq/jaipur-pastel-set-3.jpeg" alt="The Jaipur Pastel Set styled with a cream saree, front portrait" loading="lazy" decoding="async">
-            <button class="carousel-btn prev bloom-hover" type="button" aria-label="Previous Jaipur Pastel Set photo" onclick="moveCarousel('jaipur-pastel', -1)">‹</button>
-            <button class="carousel-btn next bloom-hover" type="button" aria-label="Next Jaipur Pastel Set photo" onclick="moveCarousel('jaipur-pastel', 1)">›</button>
-            <div class="carousel-dots" aria-label="Jaipur Pastel Set carousel dots">
-              <button class="carousel-dot active" type="button" aria-label="Show photo 1" onclick="showCarousel('jaipur-pastel', 0)"></button>
-              <button class="carousel-dot" type="button" aria-label="Show photo 2" onclick="showCarousel('jaipur-pastel', 1)"></button>
-              <button class="carousel-dot" type="button" aria-label="Show photo 3" onclick="showCarousel('jaipur-pastel', 2)"></button>
-            </div>
-          </div>
-        </div>
-        <div class="product-copy">
-          <span class="tag">Pastel Royalty</span>
-          <h3>The Jaipur Pastel Set</h3>
-          <p>A regal kundan-inspired necklace and earring set with pearl layers, antique gold details, and dreamy pastel drops in mint, blush, lavender, and aqua tones.</p>
-          <div class="style-notes"><span>Antique gold frame</span><span>Pearl finish</span><span>Festive + wedding ready</span></div>
-          <div class="price-row"><div><div class="price converted-price" data-usd="65">$65.00</div><div class="price-note">Price updates when customers choose their country</div></div><button class="add-btn bloom-hover" onclick="addToCart(this)">Add to Cart</button></div>
-        </div>
-      </article>
-
-      <article class="product featured-product bloom-hover" data-name="The Shakti Statement Set" data-price="55" data-usd-price="55">
-        <div class="antique-frame">
-          <div class="frame-price-badge">New Drop</div>
-          <div class="product-carousel royal-drops-carousel" data-carousel="shakti-statement">
-            <img class="active" src="https://ik.imagekit.io/k0wpvuatq/shakti-statement-set-1.jpg" alt="The Shakti Statement Set styled with a colorful saree, front portrait" loading="lazy" decoding="async">
-            <img src="https://ik.imagekit.io/k0wpvuatq/shakti-statement-set-2.jpg" alt="The Shakti Statement Set styled with a colorful saree, side portrait" loading="lazy" decoding="async">
-            <img src="https://ik.imagekit.io/k0wpvuatq/shakti-statement-set-3.jpg" alt="The Shakti Statement Set product flat lay with necklace, earrings, and ring" loading="lazy" decoding="async">
-            <button class="carousel-btn prev bloom-hover" type="button" aria-label="Previous Shakti Statement Set photo" onclick="moveCarousel('shakti-statement', -1)">‹</button>
-            <button class="carousel-btn next bloom-hover" type="button" aria-label="Next Shakti Statement Set photo" onclick="moveCarousel('shakti-statement', 1)">›</button>
-            <div class="carousel-dots" aria-label="Shakti Statement Set carousel dots">
-              <button class="carousel-dot active" type="button" aria-label="Show photo 1" onclick="showCarousel('shakti-statement', 0)"></button>
-              <button class="carousel-dot" type="button" aria-label="Show photo 2" onclick="showCarousel('shakti-statement', 1)"></button>
-              <button class="carousel-dot" type="button" aria-label="Show photo 3" onclick="showCarousel('shakti-statement', 2)"></button>
-            </div>
-          </div>
-        </div>
-        <div class="product-copy">
-          <span class="tag">Temple Statement</span>
-          <h3>The Shakti Statement Set</h3>
-          <p>A bold temple-inspired statement jewelry set with oxidized silver tones, antique gold accents, goddess motifs, matching earrings, and a coordinating ring for a powerful festive look.</p>
-          <div class="style-notes"><span>Temple inspired</span><span>Statement necklace</span><span>Festive + cultural ready</span></div>
-          <div class="price-row"><div><div class="price converted-price" data-usd="55">$55.00</div><div class="price-note">Price updates when customers choose their country</div></div><button class="add-btn bloom-hover" onclick="addToCart(this)">Add to Cart</button></div>
-        </div>
-      </article>
-
-
-      <article class="product featured-product bloom-hover" data-name="The Scarlet Maharani Set" data-price="0" data-usd-price="0">
-        <div class="antique-frame">
-          <div class="frame-price-badge">New Drop</div>
-          <div class="product-carousel royal-drops-carousel" data-carousel="scarlet-maharani">
-            <img class="active" src="https://ik.imagekit.io/k0wpvuatq/scarlet-maharani-set-1.jpg" alt="The Scarlet Maharani Set styled in a rich scarlet saree, side portrait" loading="lazy" decoding="async">
-            <img src="https://ik.imagekit.io/k0wpvuatq/scarlet-maharani-set-2.jpg" alt="The Scarlet Maharani Set styled in a rich scarlet saree, front portrait" loading="lazy" decoding="async">
-            <img src="https://ik.imagekit.io/k0wpvuatq/scarlet-maharani-set-3.jpg" alt="The Scarlet Maharani Set necklace and earrings displayed on a black jewelry stand" loading="lazy" decoding="async">
-            <button class="carousel-btn prev bloom-hover" type="button" aria-label="Previous Scarlet Maharani Set photo" onclick="moveCarousel('scarlet-maharani', -1)">‹</button>
-            <button class="carousel-btn next bloom-hover" type="button" aria-label="Next Scarlet Maharani Set photo" onclick="moveCarousel('scarlet-maharani', 1)">›</button>
-            <div class="carousel-dots" aria-label="Scarlet Maharani Set carousel dots">
-              <button class="carousel-dot active" type="button" aria-label="Show photo 1" onclick="showCarousel('scarlet-maharani', 0)"></button>
-              <button class="carousel-dot" type="button" aria-label="Show photo 2" onclick="showCarousel('scarlet-maharani', 1)"></button>
-              <button class="carousel-dot" type="button" aria-label="Show photo 3" onclick="showCarousel('scarlet-maharani', 2)"></button>
-            </div>
-          </div>
-        </div>
-        <div class="product-copy">
-          <span class="tag">Scarlet Glam</span>
-          <h3>The Scarlet Maharani Set</h3>
-          <p>A regal choker-style necklace and earring set with radiant ruby-red stones, kundan sparkle, pearl drop details, and a classic royal look designed for weddings, festive outfits, and statement styling.</p>
-          <div class="style-notes"><span>Ruby red stones</span><span>Choker statement</span><span>Wedding + festive ready</span></div>
-          <div class="price-row"><div><div class="price converted-price" data-usd="55">$55.00</div><div class="price-note">Price updates when customers choose their country</div></div><button class="add-btn bloom-hover" onclick="addToCart(this)">Add to Cart</button></div>
-        </div>
-      </article>
-
-    </div>
-  </section>
-
-  <section id="ugc">
-    <div class="video-grid">
-      <div class="ugc-card bloom-hover">
-        <div class="phone"></div>
-      </div>
-      <div class="story-card bloom-hover">
-        <span class="tag">Videos</span>
-        <h2>Unboxing, styling, and customer glow videos.</h2>
-        <p>Add vertical product videos here. This section is designed for TikTok/Reels-style product clips, customer testimonials, and “how to style it” videos.</p>
-        <div class="badges"><span class="badge bloom-hover">Unboxing</span><span class="badge bloom-hover">Try-on</span><span class="badge bloom-hover">Festive looks</span><span class="badge bloom-hover">Gift ideas</span></div>
-      </div>
-    </div>
-  </section>
-
-
-  <section id="profile">
-    <div class="section-title">
-      <h2>Customer Profile</h2>
-      
-    </div>
-    <div class="profile-panel bloom-hover">
-      <form class="profile-form" id="customerProfileForm" onsubmit="emailCustomerProfile(event)">
-        <div class="profile-field">
-          <label for="customerName">Full Name</label>
-          <input id="customerName" name="customerName" autocomplete="name" placeholder="Enter full name" required>
-        </div>
-        <div class="profile-field">
-          <label for="customerEmail">Email</label>
-          <input id="customerEmail" name="customerEmail" type="email" autocomplete="email" placeholder="name@example.com" required>
-        </div>
-        <div class="profile-field">
-          <label for="customerPhone">Phone Number</label>
-          <input id="customerPhone" name="customerPhone" type="tel" autocomplete="tel" placeholder="Phone number">
-        </div>
-        <div class="profile-field">
-          <label for="shippingCountry">Country</label>
-          <select id="shippingCountry" name="shippingCountry" autocomplete="country-name" required>
-            <option value="United States">United States</option>
-            <option value="India">India</option>
-            <option value="United Kingdom">United Kingdom</option>
-            <option value="Canada">Canada</option>
-            <option value="Australia">Australia</option>
-            <option value="Europe">Europe</option>
-            <option value="UAE">UAE</option>
-            <option value="Singapore">Singapore</option>
-            <option value="New Zealand">New Zealand</option>
-            <option value="Japan">Japan</option>
-            <option value="Other">Other</option>
-          </select>
-        </div>
-        <div class="profile-field full">
-          <label for="shippingAddress1">Street Address</label>
-          <input id="shippingAddress1" name="shippingAddress1" autocomplete="address-line1" placeholder="House / apartment / street" required>
-        </div>
-        <div class="profile-field full">
-          <label for="shippingAddress2">Apartment, Suite, Landmark</label>
-          <input id="shippingAddress2" name="shippingAddress2" autocomplete="address-line2" placeholder="Optional">
-        </div>
-        <div class="profile-field">
-          <label for="shippingCity">City</label>
-          <input id="shippingCity" name="shippingCity" autocomplete="address-level2" placeholder="City" required>
-        </div>
-        <div class="profile-field">
-          <label for="shippingState">State / Province</label>
-          <input id="shippingState" name="shippingState" autocomplete="address-level1" placeholder="State or province">
-        </div>
-        <div class="profile-field">
-          <label for="shippingZip">ZIP / Postal Code</label>
-          <input id="shippingZip" name="shippingZip" autocomplete="postal-code" placeholder="Postal code" required>
-        </div>
-        <div class="profile-field">
-          <label for="deliveryNotes">Delivery Notes</label>
-          <input id="deliveryNotes" name="deliveryNotes" placeholder="Gate code, gift note, preferred delivery note">
-        </div>
-        <div class="profile-field full">
-          <label for="profileNotes">Special Requests</label>
-          <textarea id="profileNotes" name="profileNotes" placeholder="Gift wrapping, occasion, sizing or shipping notes"></textarea>
-        </div>
-      </form>
-      <div class="profile-actions">
-        <button class="add-btn bloom-hover" type="submit" form="customerProfileForm" id="profileSubmitBtn">Save Shipping Details & Continue</button>
-        <button class="checkout-btn bloom-hover" type="button" onclick="clearCustomerProfile()">Clear Form</button>
-        <span class="profile-status" id="profileStatus"></span>
-      </div>
-      <div class="profile-summary" id="profileSummary" aria-hidden="true"></div>
-    </div>
-  </section>
-
-  <section id="checkout">
-    <div class="section-title">
-      <h2>Checkout</h2>
-      
-    </div>
-    <div class="checkout-panel bloom-hover">
-      <div>
-
-        <div class="checkout-shipping-summary" id="checkoutShippingSummary" aria-label="Shipping summary">
-          <div class="checkout-shipping-row">
-            <div class="checkout-shipping-label">Ship to</div>
-            <div class="checkout-shipping-value"><strong id="checkoutShipName">Add shipping information</strong><span id="checkoutShipAddress">Complete the customer profile or verify shipping information above.</span></div>
-          </div>
-          <div class="checkout-shipping-row">
-            <div class="checkout-shipping-label">Shipping</div>
-            <div class="checkout-shipping-value"><strong>Standard · FREE</strong><span id="checkoutShippingDate">Ships 2 weeks after the order is placed</span></div>
-          </div>
-        </div>
-        <h3>Your Cart</h3>
-        <div class="cart-list" id="cartList"><p>Your cart is empty.</p></div>
-        <h2>Total: <span id="cartTotal">$0.00</span></h2>
-        <p class="cart-tax-shipping-note">Taxes and <u>shipping</u> calculated at checkout</p>
-        <div class="currency-note" id="rateNote">Prices shown in USD.</div>
-      </div>
-      <div>
-        
-
-        <div class="tip-section" id="tipSection">
-          <h3>Add tip</h3>
-          <label class="tip-support-row"><input id="tipEnabled" type="checkbox" checked> <span>Show your support for The Global Rani team</span></label>
-          <div class="tip-options" role="group" aria-label="Select a tip amount">
-            <button class="tip-option" type="button" data-tip-percent="5">5%<small id="tip5Amount">$0.00</small></button>
-            <button class="tip-option" type="button" data-tip-percent="10">10%<small id="tip10Amount">$0.00</small></button>
-            <button class="tip-option" type="button" data-tip-percent="15">15%<small id="tip15Amount">$0.00</small></button>
-            <button class="tip-option active" type="button" data-tip-percent="0">None</button>
-          </div>
-          <div class="custom-tip-row">
-            <input class="custom-tip-input" id="customTipInput" type="number" min="0" step="1" inputmode="decimal" placeholder="Custom tip" aria-label="Custom tip amount">
-            <button class="tip-step" id="customTipMinus" type="button" aria-label="Decrease custom tip">−</button>
-            <button class="tip-step" id="customTipPlus" type="button" aria-label="Increase custom tip">＋</button>
-            <button class="add-custom-tip" id="addCustomTip" type="button">Add tip</button>
-          </div>
-          <div class="tip-total-line" id="tipTotalLine" hidden><span>Tip</span><strong id="selectedTipAmount">$0.00</strong></div>
-          <p class="tip-thanks">Thank you, we appreciate it.</p>
-        </div>
-                <div id="checkoutCurrencyNote" class="checkout-currency-note">Select your country above to see prices in your local currency.</div>
-        <div id="checkoutProfileNote" class="checkout-currency-note">Payment is locked. Please add items to cart, then use your saved member shipping details. Guest checkout is available only when signed out.</div>
-        <div class="card-payment-section" id="cardPaymentSection">
-          <h3>Pay by Debit or Credit Card</h3>
-          <div id="paypal-button-container" aria-label="Debit or credit card payment"></div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <section id="orderConfirmation" class="order-confirmation" aria-live="polite">
-    <h3>Thank you for your order! ✨</h3>
-    <p id="thankYouMessage">Your payment was successful. We are so excited to prepare your beautiful jewelry with love and care.</p>
-    <div class="receipt-box">
-      <h4 style="margin:0;color:var(--gold);font-family:'Cinzel',serif;">Order Summary</h4>
-      <div id="paidItems"></div>
-      <div class="receipt-total"><span>Total Paid</span><strong id="paidTotal">$0.00</strong></div>
-    </div>
-  </section>
-
-  <footer class="site-footer">
-    <div class="footer-main">
-      <div class="footer-column footer-brand-column">
-        <a class="footer-brand-line" href="index.html" aria-label="The Global Rani home">
-          <img src="https://ik.imagekit.io/k0wpvuatq/global-rani-logo.png" alt="The Global Rani logo">
-          <span>The Global Rani</span>
-        </a>
-      </div>
-<div class="footer-column" id="footer-newsletter">
-        <h3 class="footer-heading">Newsletter</h3>
-        <form class="newsletter-row" onsubmit="event.preventDefault(); this.querySelector('input').value='';" aria-label="Newsletter signup">
-          <input type="email" placeholder="Email address" aria-label="Email address">
-          <button type="submit">Subscribe</button>
-        </form>
-        
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <div class="footer-bottom-inner">
-        <div class="footer-copy">© 2026, The Global Rani</div>
-      </div>
-    </div>
-  </footer>
-
-  <aside class="drawer" id="cartDrawer">
-    <div class="drawer-top"><h2>Your Cart</h2><button class="close bloom-hover" onclick="toggleCart()">×</button></div>
-    <div id="drawerCart"></div>
-    <h2>Total: <span id="drawerTotal">$0.00</span></h2>
-    <p class="cart-tax-shipping-note">Taxes and <u>shipping</u> calculated at checkout</p>
-    <button class="checkout-btn bloom-hover" id="drawerCheckoutBtn" type="button" onclick="continueToCheckout()" style="display:inline-block;text-decoration:none;">Continue to Checkout</button>
-  </aside>
-
-  <script>
+<a class="cta ghost bloom-hover" href="#ugc" style="text-decoration:none;">Watch Videos</a>
+</div>
+</div>
+<div class="hero-card">
+<div class="ring"></div>
+<a aria-label="Return to The Global Rani homepage" class="logo-orb" href="index.html"><img alt="The Global Rani luxury jewelry logo" src="https://ik.imagekit.io/k0wpvuatq/global-rani-logo.png"/></a>
+</div>
+</header>
+<div class="marquee">
+<div class="marquee-track">
+<div aria-hidden="false" class="marquee-group">
+<span>✦ WORLDWIDE SHIPPING</span>
+<span>✦ DESI GLAM</span>
+<span>✦ GIFT READY</span>
+<span>✦ ROYAL STYLE</span>
+</div>
+<div aria-hidden="true" class="marquee-group">
+<span>✦ WORLDWIDE SHIPPING</span>
+<span>✦ DESI GLAM</span>
+<span>✦ GIFT READY</span>
+<span>✦ ROYAL STYLE</span>
+</div>
+</div>
+</div>
+<section class="category-section" id="categories">
+<div class="section-title">
+<h2>Shop by Collection</h2>
+</div>
+<div class="category-grid">
+<a aria-label="Open Earrings collection page" class="category-card bloom-hover" href="categories/earrings.html">
+<img alt="Earrings category" decoding="async" loading="lazy" src="https://ik.imagekit.io/k0wpvuatq/category-earrings.jpg"/>
+<span>Earrings</span>
+</a>
+<a aria-label="Open Necklaces collection page" class="category-card bloom-hover" href="categories/necklaces.html">
+<img alt="Necklaces category" decoding="async" loading="lazy" src="https://ik.imagekit.io/k0wpvuatq/category-necklaces.jpg"/>
+<span>Necklaces</span>
+</a>
+<a aria-label="Open Bangles/kadas collection page" class="category-card bloom-hover" href="categories/bangles-kadas.html">
+<img alt="Bangles/kadas category" decoding="async" loading="lazy" src="https://ik.imagekit.io/k0wpvuatq/category-bangles-kadas.jpg"/>
+<span>Bangles/kadas</span>
+</a>
+<a aria-label="Open German Silver / Silver looka-like Collection collection page" class="category-card bloom-hover" href="categories/german-silver.html">
+<img alt="German Silver / Silver looka-like Collection category" decoding="async" loading="lazy" src="https://ik.imagekit.io/k0wpvuatq/category-german-silver.jpg"/>
+<span>German Silver / Silver looka-like Collection</span>
+</a>
+<a aria-label="Open Moissanite Collection collection page" class="category-card bloom-hover" href="categories/moissanite.html">
+<img alt="Moissanite Collection category" decoding="async" loading="lazy" src="https://ik.imagekit.io/k0wpvuatq/category-moissanite.jpg"/>
+<span>Moissanite Collection</span>
+</a>
+<a aria-label="Open JUST JHUMKAS collection page" class="category-card bloom-hover" href="categories/just-jhumkas.html">
+<img alt="JUST JHUMKAS category" decoding="async" loading="lazy" src="https://ik.imagekit.io/k0wpvuatq/category-just-jhumkas.jpg"/>
+<span>JUST JHUMKAS</span>
+</a>
+<a aria-label="Open Tayani Collection collection page" class="category-card bloom-hover" href="categories/tayani.html">
+<img alt="Tayani Collection category" decoding="async" loading="lazy" src="https://ik.imagekit.io/k0wpvuatq/category-tayani.jpg"/>
+<span>Tayani Collection</span>
+</a>
+<a aria-label="Open American Diamond/Cz Collection collection page" class="category-card bloom-hover" href="categories/american-diamond-cz.html">
+<img alt="American Diamond/Cz Collection category" decoding="async" loading="lazy" src="https://ik.imagekit.io/k0wpvuatq/category-american-diamond-cz.jpg"/>
+<span>American Diamond/Cz Collection</span>
+</a>
+<a aria-label="Open Jewelry Sets collection page" class="category-card bloom-hover" href="categories/jewelry-sets.html">
+<img alt="JEWELRY SETS category" decoding="async" loading="lazy" src="https://ik.imagekit.io/k0wpvuatq/category-temple-jewelry.jpg"/>
+<span>JEWELRY SETS</span>
+</a>
+<a aria-label="Open Choker Collection collection page" class="category-card bloom-hover" href="categories/choker.html">
+<img alt="Choker Collection category" decoding="async" loading="lazy" src="https://ik.imagekit.io/k0wpvuatq/category-choker.jpg"/>
+<span>Choker Collection</span>
+</a>
+<a aria-label="Open Solitaire Collection collection page" class="category-card bloom-hover" href="categories/solitaire.html">
+<img alt="Solitaire Collection category" decoding="async" loading="lazy" src="https://ik.imagekit.io/k0wpvuatq/category-solitaire.jpg"/>
+<span>Solitaire Collection</span>
+</a>
+<a aria-label="Open PB ORGANIZERS collection page" class="category-card bloom-hover" href="categories/pb-organizers.html">
+<img alt="PB ORGANIZERS category" decoding="async" loading="lazy" src="https://ik.imagekit.io/k0wpvuatq/category-pb-organizers.jpg"/>
+<span>PB ORGANIZERS</span>
+</a>
+</div>
+</section>
+<section id="shop">
+<div class="section-title">
+<h2>Royal Drops</h2>
+<p>Shop trend-forward Indian jewelry styled for weddings, festive outfits, brunch looks, and gift-ready moments.</p>
+</div>
+<div class="products">
+<article class="product featured-product bloom-hover" data-name="The Jaipur Pastel Set" data-price="65.00" data-usd-price="65.00">
+<div class="antique-frame">
+<div class="frame-price-badge converted-price" data-usd="65">$65</div>
+<div class="product-carousel royal-drops-carousel" data-carousel="jaipur-pastel">
+<img alt="The Jaipur Pastel Set necklace and earrings displayed on a teal jewelry stand" class="active" decoding="async" loading="lazy" src="https://ik.imagekit.io/k0wpvuatq/jaipur-pastel-set-1.jpeg"/>
+<img alt="The Jaipur Pastel Set styled with a cream saree, side portrait" decoding="async" loading="lazy" src="https://ik.imagekit.io/k0wpvuatq/jaipur-pastel-set-2.jpeg"/>
+<img alt="The Jaipur Pastel Set styled with a cream saree, front portrait" decoding="async" loading="lazy" src="https://ik.imagekit.io/k0wpvuatq/jaipur-pastel-set-3.jpeg"/>
+<button aria-label="Previous Jaipur Pastel Set photo" class="carousel-btn prev bloom-hover" onclick="moveCarousel('jaipur-pastel', -1)" type="button">‹</button>
+<button aria-label="Next Jaipur Pastel Set photo" class="carousel-btn next bloom-hover" onclick="moveCarousel('jaipur-pastel', 1)" type="button">›</button>
+<div aria-label="Jaipur Pastel Set carousel dots" class="carousel-dots">
+<button aria-label="Show photo 1" class="carousel-dot active" onclick="showCarousel('jaipur-pastel', 0)" type="button"></button>
+<button aria-label="Show photo 2" class="carousel-dot" onclick="showCarousel('jaipur-pastel', 1)" type="button"></button>
+<button aria-label="Show photo 3" class="carousel-dot" onclick="showCarousel('jaipur-pastel', 2)" type="button"></button>
+</div>
+</div>
+</div>
+<div class="product-copy">
+<span class="tag">Pastel Royalty</span>
+<h3>The Jaipur Pastel Set</h3>
+<p>A regal kundan-inspired necklace and earring set with pearl layers, antique gold details, and dreamy pastel drops in mint, blush, lavender, and aqua tones.</p>
+<div class="style-notes"><span>Antique gold frame</span><span>Pearl finish</span><span>Festive + wedding ready</span></div>
+<div class="price-row"><div><div class="price converted-price" data-usd="65">$65.00</div><div class="price-note">Price updates when customers choose their country</div></div><button class="add-btn bloom-hover" onclick="addToCart(this)">Add to Cart</button></div>
+</div>
+</article>
+<article class="product featured-product bloom-hover" data-name="The Shakti Statement Set" data-price="55" data-usd-price="55">
+<div class="antique-frame">
+<div class="frame-price-badge">New Drop</div>
+<div class="product-carousel royal-drops-carousel" data-carousel="shakti-statement">
+<img alt="The Shakti Statement Set styled with a colorful saree, front portrait" class="active" decoding="async" loading="lazy" src="https://ik.imagekit.io/k0wpvuatq/shakti-statement-set-1.jpg"/>
+<img alt="The Shakti Statement Set styled with a colorful saree, side portrait" decoding="async" loading="lazy" src="https://ik.imagekit.io/k0wpvuatq/shakti-statement-set-2.jpg"/>
+<img alt="The Shakti Statement Set product flat lay with necklace, earrings, and ring" decoding="async" loading="lazy" src="https://ik.imagekit.io/k0wpvuatq/shakti-statement-set-3.jpg"/>
+<button aria-label="Previous Shakti Statement Set photo" class="carousel-btn prev bloom-hover" onclick="moveCarousel('shakti-statement', -1)" type="button">‹</button>
+<button aria-label="Next Shakti Statement Set photo" class="carousel-btn next bloom-hover" onclick="moveCarousel('shakti-statement', 1)" type="button">›</button>
+<div aria-label="Shakti Statement Set carousel dots" class="carousel-dots">
+<button aria-label="Show photo 1" class="carousel-dot active" onclick="showCarousel('shakti-statement', 0)" type="button"></button>
+<button aria-label="Show photo 2" class="carousel-dot" onclick="showCarousel('shakti-statement', 1)" type="button"></button>
+<button aria-label="Show photo 3" class="carousel-dot" onclick="showCarousel('shakti-statement', 2)" type="button"></button>
+</div>
+</div>
+</div>
+<div class="product-copy">
+<span class="tag">Temple Statement</span>
+<h3>The Shakti Statement Set</h3>
+<p>A bold temple-inspired statement jewelry set with oxidized silver tones, antique gold accents, goddess motifs, matching earrings, and a coordinating ring for a powerful festive look.</p>
+<div class="style-notes"><span>Temple inspired</span><span>Statement necklace</span><span>Festive + cultural ready</span></div>
+<div class="price-row"><div><div class="price converted-price" data-usd="55">$55.00</div><div class="price-note">Price updates when customers choose their country</div></div><button class="add-btn bloom-hover" onclick="addToCart(this)">Add to Cart</button></div>
+</div>
+</article>
+<article class="product featured-product bloom-hover" data-name="The Scarlet Maharani Set" data-price="0" data-usd-price="0">
+<div class="antique-frame">
+<div class="frame-price-badge">New Drop</div>
+<div class="product-carousel royal-drops-carousel" data-carousel="scarlet-maharani">
+<img alt="The Scarlet Maharani Set styled in a rich scarlet saree, side portrait" class="active" decoding="async" loading="lazy" src="https://ik.imagekit.io/k0wpvuatq/scarlet-maharani-set-1.jpg"/>
+<img alt="The Scarlet Maharani Set styled in a rich scarlet saree, front portrait" decoding="async" loading="lazy" src="https://ik.imagekit.io/k0wpvuatq/scarlet-maharani-set-2.jpg"/>
+<img alt="The Scarlet Maharani Set necklace and earrings displayed on a black jewelry stand" decoding="async" loading="lazy" src="https://ik.imagekit.io/k0wpvuatq/scarlet-maharani-set-3.jpg"/>
+<button aria-label="Previous Scarlet Maharani Set photo" class="carousel-btn prev bloom-hover" onclick="moveCarousel('scarlet-maharani', -1)" type="button">‹</button>
+<button aria-label="Next Scarlet Maharani Set photo" class="carousel-btn next bloom-hover" onclick="moveCarousel('scarlet-maharani', 1)" type="button">›</button>
+<div aria-label="Scarlet Maharani Set carousel dots" class="carousel-dots">
+<button aria-label="Show photo 1" class="carousel-dot active" onclick="showCarousel('scarlet-maharani', 0)" type="button"></button>
+<button aria-label="Show photo 2" class="carousel-dot" onclick="showCarousel('scarlet-maharani', 1)" type="button"></button>
+<button aria-label="Show photo 3" class="carousel-dot" onclick="showCarousel('scarlet-maharani', 2)" type="button"></button>
+</div>
+</div>
+</div>
+<div class="product-copy">
+<span class="tag">Scarlet Glam</span>
+<h3>The Scarlet Maharani Set</h3>
+<p>A regal choker-style necklace and earring set with radiant ruby-red stones, kundan sparkle, pearl drop details, and a classic royal look designed for weddings, festive outfits, and statement styling.</p>
+<div class="style-notes"><span>Ruby red stones</span><span>Choker statement</span><span>Wedding + festive ready</span></div>
+<div class="price-row"><div><div class="price converted-price" data-usd="55">$55.00</div><div class="price-note">Price updates when customers choose their country</div></div><button class="add-btn bloom-hover" onclick="addToCart(this)">Add to Cart</button></div>
+</div>
+</article>
+</div>
+</section>
+<section id="ugc">
+<div class="video-grid">
+<div class="ugc-card bloom-hover">
+<div class="phone"></div>
+</div>
+<div class="story-card bloom-hover">
+<span class="tag">Videos</span>
+<h2>Unboxing, styling, and customer glow videos.</h2>
+<p>Add vertical product videos here. This section is designed for TikTok/Reels-style product clips, customer testimonials, and “how to style it” videos.</p>
+<div class="badges"><span class="badge bloom-hover">Unboxing</span><span class="badge bloom-hover">Try-on</span><span class="badge bloom-hover">Festive looks</span><span class="badge bloom-hover">Gift ideas</span></div>
+</div>
+</div>
+</section>
+<section id="profile">
+<div class="section-title">
+<h2>Customer Profile</h2>
+</div>
+<div class="profile-panel bloom-hover">
+<form class="profile-form" id="customerProfileForm" onsubmit="emailCustomerProfile(event)">
+<div class="profile-field">
+<label for="customerName">Full Name</label>
+<input autocomplete="name" id="customerName" name="customerName" placeholder="Enter full name" required=""/>
+</div>
+<div class="profile-field">
+<label for="customerEmail">Email</label>
+<input autocomplete="email" id="customerEmail" name="customerEmail" placeholder="name@example.com" required="" type="email"/>
+</div>
+<div class="profile-field">
+<label for="customerPhone">Phone Number</label>
+<input autocomplete="tel" id="customerPhone" name="customerPhone" placeholder="Phone number" type="tel"/>
+</div>
+<div class="profile-field">
+<label for="shippingCountry">Country</label>
+<select autocomplete="country-name" id="shippingCountry" name="shippingCountry" required="">
+<option value="United States">United States</option>
+<option value="India">India</option>
+<option value="United Kingdom">United Kingdom</option>
+<option value="Canada">Canada</option>
+<option value="Australia">Australia</option>
+<option value="Europe">Europe</option>
+<option value="UAE">UAE</option>
+<option value="Singapore">Singapore</option>
+<option value="New Zealand">New Zealand</option>
+<option value="Japan">Japan</option>
+<option value="Other">Other</option>
+</select>
+</div>
+<div class="profile-field full">
+<label for="shippingAddress1">Street Address</label>
+<input autocomplete="address-line1" id="shippingAddress1" name="shippingAddress1" placeholder="House / apartment / street" required=""/>
+</div>
+<div class="profile-field full">
+<label for="shippingAddress2">Apartment, Suite, Landmark</label>
+<input autocomplete="address-line2" id="shippingAddress2" name="shippingAddress2" placeholder="Optional"/>
+</div>
+<div class="profile-field">
+<label for="shippingCity">City</label>
+<input autocomplete="address-level2" id="shippingCity" name="shippingCity" placeholder="City" required=""/>
+</div>
+<div class="profile-field">
+<label for="shippingState">State / Province</label>
+<input autocomplete="address-level1" id="shippingState" name="shippingState" placeholder="State or province"/>
+</div>
+<div class="profile-field">
+<label for="shippingZip">ZIP / Postal Code</label>
+<input autocomplete="postal-code" id="shippingZip" name="shippingZip" placeholder="Postal code" required=""/>
+</div>
+<div class="profile-field">
+<label for="deliveryNotes">Delivery Notes</label>
+<input id="deliveryNotes" name="deliveryNotes" placeholder="Gate code, gift note, preferred delivery note"/>
+</div>
+<div class="profile-field full">
+<label for="profileNotes">Special Requests</label>
+<textarea id="profileNotes" name="profileNotes" placeholder="Gift wrapping, occasion, sizing or shipping notes"></textarea>
+</div>
+</form>
+<div class="profile-actions">
+<button class="add-btn bloom-hover" form="customerProfileForm" id="profileSubmitBtn" type="submit">Save Shipping Details &amp; Continue</button>
+<button class="checkout-btn bloom-hover" onclick="clearCustomerProfile()" type="button">Clear Form</button>
+<span class="profile-status" id="profileStatus"></span>
+</div>
+<div aria-hidden="true" class="profile-summary" id="profileSummary"></div>
+</div>
+</section>
+<section id="checkout">
+<div class="section-title">
+<h2>Checkout</h2>
+</div>
+<div class="checkout-panel bloom-hover">
+<div>
+<div aria-label="Shipping summary" class="checkout-shipping-summary" id="checkoutShippingSummary">
+<div class="checkout-shipping-row">
+<div class="checkout-shipping-label">Ship to</div>
+<div class="checkout-shipping-value"><strong id="checkoutShipName">Add shipping information</strong><span id="checkoutShipAddress">Complete the customer profile or verify shipping information above.</span></div>
+</div>
+<div class="checkout-shipping-row">
+<div class="checkout-shipping-label">Shipping</div>
+<div class="checkout-shipping-value"><strong>Standard · FREE</strong><span id="checkoutShippingDate">Ships 2 weeks after the order is placed</span></div>
+</div>
+</div>
+<h3>Your Cart</h3>
+<div class="cart-list" id="cartList"><p>Your cart is empty.</p></div>
+<h2>Total: <span id="cartTotal">$0.00</span></h2>
+<p class="cart-tax-shipping-note">Taxes and <u>shipping</u> calculated at checkout</p>
+<div class="currency-note" id="rateNote">Prices shown in USD.</div>
+</div>
+<div>
+<div class="tip-section" id="tipSection">
+<h3>Add tip</h3>
+<label class="tip-support-row"><input checked="" id="tipEnabled" type="checkbox"/> <span>Show your support for The Global Rani team</span></label>
+<div aria-label="Select a tip amount" class="tip-options" role="group">
+<button class="tip-option" data-tip-percent="5" type="button">5%<small id="tip5Amount">$0.00</small></button>
+<button class="tip-option" data-tip-percent="10" type="button">10%<small id="tip10Amount">$0.00</small></button>
+<button class="tip-option" data-tip-percent="15" type="button">15%<small id="tip15Amount">$0.00</small></button>
+<button class="tip-option active" data-tip-percent="0" type="button">None</button>
+</div>
+<div class="custom-tip-row">
+<input aria-label="Custom tip amount" class="custom-tip-input" id="customTipInput" inputmode="decimal" min="0" placeholder="Custom tip" step="1" type="number"/>
+<button aria-label="Decrease custom tip" class="tip-step" id="customTipMinus" type="button">−</button>
+<button aria-label="Increase custom tip" class="tip-step" id="customTipPlus" type="button">＋</button>
+<button class="add-custom-tip" id="addCustomTip" type="button">Add tip</button>
+</div>
+<div class="tip-total-line" hidden="" id="tipTotalLine"><span>Tip</span><strong id="selectedTipAmount">$0.00</strong></div>
+<p class="tip-thanks">Thank you, we appreciate it.</p>
+</div>
+<div class="checkout-currency-note" id="checkoutCurrencyNote">Select your country above to see prices in your local currency.</div>
+<div class="checkout-currency-note" id="checkoutProfileNote">Payment is locked. Please add items to cart, then use your saved member shipping details. Guest checkout is available only when signed out.</div>
+<div class="card-payment-section" id="cardPaymentSection">
+<h3>Pay by Debit or Credit Card</h3>
+<div aria-label="Debit or credit card payment" id="paypal-button-container"></div>
+</div>
+</div>
+</div>
+</section>
+<section aria-live="polite" class="order-confirmation" id="orderConfirmation">
+<h3>Thank you for your order! ✨</h3>
+<p id="thankYouMessage">Your payment was successful. We are so excited to prepare your beautiful jewelry with love and care.</p>
+<div class="receipt-box">
+<h4 style="margin:0;color:var(--gold);font-family:'Cinzel',serif;">Order Summary</h4>
+<div id="paidItems"></div>
+<div class="receipt-total"><span>Total Paid</span><strong id="paidTotal">$0.00</strong></div>
+</div>
+</section>
+<footer class="site-footer">
+<div class="footer-main">
+<div class="footer-column footer-brand-column">
+<a aria-label="The Global Rani home" class="footer-brand-line" href="index.html">
+<img alt="The Global Rani logo" src="https://ik.imagekit.io/k0wpvuatq/global-rani-logo.png"/>
+<span>The Global Rani</span>
+</a>
+</div>
+</div>
+<div class="footer-bottom">
+<div class="footer-bottom-inner">
+<div class="footer-copy">© 2026, The Global Rani</div>
+</div>
+</div>
+</footer>
+<aside class="drawer" id="cartDrawer">
+<div class="drawer-top"><h2>Your Cart</h2><button class="close bloom-hover" onclick="toggleCart()">×</button></div>
+<div id="drawerCart"></div>
+<h2>Total: <span id="drawerTotal">$0.00</span></h2>
+<p class="cart-tax-shipping-note">Taxes and <u>shipping</u> calculated at checkout</p>
+<button class="checkout-btn bloom-hover" id="drawerCheckoutBtn" onclick="continueToCheckout()" style="display:inline-block;text-decoration:none;" type="button">Continue to Checkout</button>
+</aside>
+<script>
     let cart = [];
     try { localStorage.removeItem('globalRaniCart'); } catch (error) {}
     let paypalClientConfigPromise = null;
@@ -3293,15 +3254,9 @@
     loadCustomerProfile();
     loadRates();
   </script>
-
-
-
-
-
-
 <!-- Hidden looping website music. Browsers may require the first tap/click before audible autoplay is allowed. -->
-<audio id="globalRaniMusic" autoplay loop preload="auto" playsinline>
-  <source src="https://ik.imagekit.io/k0wpvuatq/global-rani-music.mp3" type="audio/mpeg">
+<audio autoplay="" id="globalRaniMusic" loop="" playsinline="" preload="auto">
+<source src="https://ik.imagekit.io/k0wpvuatq/global-rani-music.mp3" type="audio/mpeg"/>
 </audio>
 <script>
   (function(){
@@ -3328,8 +3283,6 @@
     });
   })();
 </script>
-
-
 <script>
   (function(){
     function getLoggedInMember(){
@@ -3354,9 +3307,6 @@
     window.GlobalRaniMember = { getLoggedInMember, updateProfileIcon };
   })();
 </script>
-
-
-
 <script>
   (function(){
     function closeHamburgerMenus(exceptWrap){
@@ -3388,7 +3338,6 @@
     });
   })();
 </script>
-
 <script>
   (function(){
     function closeProfileMenus(exceptWrap){
@@ -3480,8 +3429,6 @@
     !document.hidden && !!el && !el.closest('.is-offscreen') && el.getClientRects().length > 0;
 })();
 </script>
-
-
 <script>
   (function () {
     function openCheckoutSectionAfterShipping() {
@@ -3509,7 +3456,6 @@
     }
   })();
 </script>
-
 <script>
 (function(){
   function safeParse(value){ try { return JSON.parse(value || 'null'); } catch(e) { return null; } }
@@ -3564,18 +3510,14 @@
   window.renderCheckoutShippingSummary=renderCheckoutShippingSummary;
 })();
 </script>
-
-
 <style id="global-rani-whatsapp-help-style">
 .global-rani-whatsapp-help{position:fixed;right:20px;bottom:20px;z-index:9999;display:inline-flex;align-items:center;gap:9px;padding:13px 18px;border-radius:999px;text-decoration:none;color:#fff!important;background:linear-gradient(135deg,#128c4a,#25d366);font-family:Inter,Arial,sans-serif;font-weight:900;font-size:14px;box-shadow:0 14px 34px rgba(18,140,74,.32);border:1px solid rgba(255,255,255,.55);transition:transform .2s ease,box-shadow .2s ease}
 .global-rani-whatsapp-help:hover{transform:translateY(-3px);box-shadow:0 18px 40px rgba(18,140,74,.4)}
 .global-rani-whatsapp-help .wa-icon{font-size:20px;line-height:1}
 @media(max-width:620px){.global-rani-whatsapp-help{right:14px;bottom:14px;padding:12px 15px;font-size:13px}}
 </style>
-<a class="global-rani-whatsapp-help" href="https://wa.me/12164570935?text=Hello%20Global%20Rani%2C%20I%20need%20help." target="_blank" rel="noopener noreferrer" aria-label="Need help? Contact The Global Rani on WhatsApp"><span class="wa-icon" aria-hidden="true">◉</span><span>Need help?</span></a>
-
-
-<script type="module" data-global-profile-auth>
+<a aria-label="Need help? Contact The Global Rani on WhatsApp" class="global-rani-whatsapp-help" href="https://wa.me/12164570935?text=Hello%20Global%20Rani%2C%20I%20need%20help." rel="noopener noreferrer" target="_blank"><span aria-hidden="true" class="wa-icon">◉</span><span>Need help?</span></a>
+<script data-global-profile-auth="" type="module">
   import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
   import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
@@ -3648,6 +3590,5 @@
     }
   });
 </script>
-
 </body>
 </html>
