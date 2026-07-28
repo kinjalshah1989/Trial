@@ -6276,18 +6276,166 @@
     const form = chat.querySelector('[data-chat-form]');
     const input = chat.querySelector('[data-chat-input]');
 
-    const products = {
-      jaipur: { name:'The Jaipur Pastel Set', price:'$65.00', image:'https://ik.imagekit.io/k0wpvuatq/jaipur-pastel-set-1.jpeg', id:'jaipur-pastel', reason:'Soft pastel kundan that feels elegant, romantic, and camera-ready.' },
-      noir: { name:'The Noir Pearl Empress Set', price:'$55.00', image:'https://ik.imagekit.io/k0wpvuatq/noir-pearl-empress-set-1.jpg', id:'noir-pearl-empress', reason:'Polished pearls and noir stones for sophisticated evening styling.' },
-      scarlet: { name:'The Scarlet Maharani Set', price:'$55.00', image:'https://ik.imagekit.io/k0wpvuatq/scarlet-maharani-set-3.jpg', id:'scarlet-maharani', reason:'A bold ruby choker that creates an unmistakable royal statement.' },
-      lotus: { name:'The Lotus Rajwadi Set', price:'$55.00', image:'https://ik.imagekit.io/k0wpvuatq/lotus-rajwadi-set-1.jpg', id:'lotus-rajwadi', reason:'Colorful heritage details with a festive, gift-worthy finish.' }
+    const SHOPPER_API = '/api/jewelry-products';
+    const SHOPPER_HISTORY_KEY = 'globalRaniAiRecommendationHistory';
+    const unavailableProductIds = new Set();
+    let catalogPromise = null;
+    let recommendationPending = false;
+
+    const occasionDetails = {
+      wedding: {
+        label: 'a wedding',
+        terms: ['bridal', 'bride', 'wedding', 'maharani', 'rajwadi', 'ruby', 'kundan', 'navratna'],
+        reason: 'A regal statement set selected to shine beautifully at wedding celebrations.'
+      },
+      party: {
+        label: 'a party',
+        terms: ['party', 'statement', 'ruby', 'pearl', 'colorful', 'choker', 'festive'],
+        reason: 'A striking set chosen to add polished sparkle and personality to your party look.'
+      },
+      daily: {
+        label: 'daily wear',
+        terms: ['light', 'pastel', 'pearl', 'delicate', 'soft', 'everyday', 'simple'],
+        reason: 'An elegant set chosen for an easy, versatile look that still feels special.'
+      },
+      gift: {
+        label: 'a gift',
+        terms: ['gift', 'classic', 'pearl', 'pastel', 'colorful', 'timeless'],
+        reason: 'A beautiful, gift-worthy set selected for its versatile and memorable style.'
+      }
     };
-    const occasionMap = {
-      wedding: ['scarlet','jaipur','lotus'],
-      party: ['noir','scarlet','jaipur'],
-      daily: ['jaipur','noir'],
-      gift: ['lotus','jaipur','noir']
-    };
+
+    function productId(product){
+      return String(product?.collectionId || product?.id || product?.slug || product?.name || '').trim().toLowerCase();
+    }
+    function imageUrl(product){
+      const direct = String(product?.image || '').trim();
+      if (direct) return direct;
+      const images = Array.isArray(product?.images) ? product.images : [];
+      return String(images.find(Boolean) || '').trim();
+    }
+    function validProductImageUrl(value){
+      try {
+        const url = new URL(String(value || ''), window.location.href);
+        return /^https?:$/.test(url.protocol) && /\.(?:avif|gif|jpe?g|png|webp)$/i.test(url.pathname);
+      } catch (_) {
+        return false;
+      }
+    }
+    function normalizeProduct(raw){
+      const variants = Array.isArray(raw?.variants) ? raw.variants : [];
+      const firstVariant = variants.find(variant => imageUrl(variant)) || {};
+      const id = productId(raw) || productId(firstVariant);
+      const image = imageUrl(raw) || imageUrl(firstVariant);
+      if (!id || !validProductImageUrl(image)) return null;
+      const rawPrice = Number(raw?.price ?? raw?.priceUSD ?? firstVariant?.price ?? firstVariant?.priceUSD);
+      return {
+        id,
+        collectionId: String(raw?.collectionId || raw?.id || firstVariant?.collectionId || firstVariant?.id || id),
+        name: String(raw?.name || firstVariant?.name || 'The Global Rani Jewelry Set'),
+        description: String(raw?.description || firstVariant?.description || ''),
+        price: Number.isFinite(rawPrice) && rawPrice > 0 ? rawPrice : null,
+        image,
+        arImage: String(raw?.arImage || firstVariant?.arImage || '').trim()
+      };
+    }
+    function catalogItems(data){
+      if (Array.isArray(data?.collections) && data.collections.length) return data.collections;
+      if (Array.isArray(data?.products)) return data.products;
+      return Array.isArray(data) ? data : [];
+    }
+    async function loadCatalog(){
+      if (!catalogPromise) {
+        catalogPromise = fetch(SHOPPER_API, {
+          headers: { Accept: 'application/json' },
+          cache: 'no-store'
+        }).then(async response => {
+          const data = await response.json().catch(() => ({}));
+          if (!response.ok) throw new Error(data?.error || 'The jewelry catalog is unavailable.');
+          const seen = new Set();
+          return catalogItems(data)
+            .map(normalizeProduct)
+            .filter(product => {
+              if (!product || seen.has(product.id)) return false;
+              seen.add(product.id);
+              return true;
+            });
+        }).catch(error => {
+          catalogPromise = null;
+          throw error;
+        });
+      }
+      return catalogPromise;
+    }
+    function imageIsAvailable(url){
+      return new Promise(resolve => {
+        const image = new Image();
+        let finished = false;
+        const finish = available => {
+          if (finished) return;
+          finished = true;
+          clearTimeout(timer);
+          image.onload = null;
+          image.onerror = null;
+          resolve(Boolean(available && image.naturalWidth > 0 && image.naturalHeight > 0));
+        };
+        const timer = window.setTimeout(() => finish(false), 7000);
+        image.onload = () => finish(true);
+        image.onerror = () => finish(false);
+        image.src = url;
+        if (image.complete) finish(image.naturalWidth > 0);
+      });
+    }
+    function readRecommendationHistory(){
+      try {
+        const saved = JSON.parse(sessionStorage.getItem(SHOPPER_HISTORY_KEY) || '[]');
+        return Array.isArray(saved) ? saved.map(String).filter(Boolean).slice(-100) : [];
+      } catch (_) {
+        return [];
+      }
+    }
+    function saveRecommendationHistory(history){
+      try { sessionStorage.setItem(SHOPPER_HISTORY_KEY, JSON.stringify(history.slice(-100))); } catch (_) {}
+    }
+    function shuffled(items){
+      const copy = items.slice();
+      for (let index = copy.length - 1; index > 0; index -= 1) {
+        const swapIndex = Math.floor(Math.random() * (index + 1));
+        [copy[index], copy[swapIndex]] = [copy[swapIndex], copy[index]];
+      }
+      return copy;
+    }
+    function occasionScore(product, occasion){
+      const details = occasionDetails[occasion] || occasionDetails.party;
+      const searchable = `${product.name} ${product.description}`.toLowerCase();
+      return details.terms.reduce((score, term) => score + (searchable.includes(term) ? 1 : 0), 0);
+    }
+    async function nextAvailableProducts(occasion, count = 3){
+      const catalog = await loadCatalog();
+      const history = readRecommendationHistory();
+      const previousGroup = new Set(history.slice(-count));
+      const alreadyShown = new Set(history);
+      const eligible = catalog.filter(product => !unavailableProductIds.has(product.id));
+      const rank = items => shuffled(items).sort((a, b) => occasionScore(b, occasion) - occasionScore(a, occasion));
+      const candidates = [
+        ...rank(eligible.filter(product => !alreadyShown.has(product.id) && !previousGroup.has(product.id))),
+        ...rank(eligible.filter(product => alreadyShown.has(product.id) && !previousGroup.has(product.id))),
+        ...rank(eligible.filter(product => previousGroup.has(product.id)))
+      ];
+      const selected = [];
+
+      for (const product of candidates) {
+        if (selected.some(item => item.id === product.id)) continue;
+        if (await imageIsAvailable(product.image)) {
+          selected.push(product);
+          if (selected.length === count) break;
+          continue;
+        }
+        unavailableProductIds.add(product.id);
+      }
+      if (selected.length) saveRecommendationHistory([...history, ...selected.map(product => product.id)]);
+      return selected;
+    }
 
     function addMessage(text, who){
       const bubble = document.createElement('div');
@@ -6314,32 +6462,85 @@
         { label:'🎁 Gift', action:()=>recommend('gift') }
       ]);
     }
-    function addProductCard(product){
+    function addProductCard(product, occasion){
       const card = document.createElement('div');
       card.className = 'global-rani-shopper-card';
-      card.innerHTML = `<img src="${product.image}" alt="${product.name}" loading="lazy" decoding="async"><div class="global-rani-shopper-copy"><strong>${product.name}</strong><small>${product.reason}</small><div class="global-rani-shopper-price">${product.price}</div><div class="global-rani-shopper-actions"><button type="button" class="primary" data-view-product>View product</button><a class="secondary" href="ar-tryon.html?product=${encodeURIComponent(product.id)}">Try it on</a></div></div>`;
-      card.querySelector('[data-view-product]').addEventListener('click', () => {
-        closeChat();
-        document.getElementById('shop')?.scrollIntoView({ behavior:'smooth', block:'start' });
-        const cards = Array.from(document.querySelectorAll('.royal-3d-card'));
-        const index = cards.findIndex(item => item.dataset.name === product.name);
-        if (index >= 0 && typeof window.setRoyalDropsIndex === 'function') window.setRoyalDropsIndex(index);
-      });
+      const image = document.createElement('img');
+      image.src = product.image;
+      image.alt = product.name;
+      image.loading = 'lazy';
+      image.decoding = 'async';
+
+      const copy = document.createElement('div');
+      copy.className = 'global-rani-shopper-copy';
+      const name = document.createElement('strong');
+      name.textContent = product.name;
+      const reason = document.createElement('small');
+      reason.textContent = occasionDetails[occasion]?.reason || occasionDetails.party.reason;
+      copy.append(name, reason);
+
+      if (product.price) {
+        const price = document.createElement('div');
+        price.className = 'global-rani-shopper-price';
+        price.textContent = `$${product.price.toFixed(2)}`;
+        copy.appendChild(price);
+      }
+
+      const actions = document.createElement('div');
+      actions.className = 'global-rani-shopper-actions';
+      const viewProduct = document.createElement('a');
+      viewProduct.className = 'primary';
+      viewProduct.href = `categories/set-colors.html?set=${encodeURIComponent(product.collectionId || product.id)}`;
+      viewProduct.textContent = 'View product';
+      actions.appendChild(viewProduct);
+
+      if (validProductImageUrl(product.arImage)) {
+        const tryOn = document.createElement('a');
+        tryOn.className = 'secondary';
+        const params = new URLSearchParams({ product: product.id, name: product.name, image: product.arImage });
+        tryOn.href = `ar-tryon.html?${params.toString()}`;
+        tryOn.textContent = 'Try it on';
+        actions.appendChild(tryOn);
+      }
+
+      copy.appendChild(actions);
+      card.append(image, copy);
       messages.appendChild(card);
     }
-    function recommend(occasion){
-      const labels = { wedding:'a wedding', party:'a party', daily:'daily wear', gift:'a gift' };
-      addMessage(`I’m shopping for ${labels[occasion]}.`, 'user');
+    async function recommend(occasion, announceChoice = true){
+      if (recommendationPending) return;
+      recommendationPending = true;
+      const details = occasionDetails[occasion] || occasionDetails.party;
+      if (announceChoice) addMessage(`I’m shopping for ${details.label}.`, 'user');
       options.innerHTML = '';
-      setTimeout(() => {
-        addMessage(`Beautiful choice 👑 Here are my best ${labels[occasion]} recommendations, selected for color, impact, and versatility.`, 'bot');
-        occasionMap[occasion].forEach(key => addProductCard(products[key]));
+      try {
+        const products = await nextAvailableProducts(occasion, 3);
+        if (!products.length) {
+          addMessage('I could not find jewelry sets with working images right now. Please try again after more set photos are added.', 'bot');
+          setOptions([
+            { label:'Try again', action:()=>recommend(occasion, false) },
+            { label:'Start over', action:()=>showMainOptions() }
+          ]);
+          return;
+        }
+        addMessage(`👑 My recommendation for ${details.label} is:`, 'bot');
+        products.forEach(product => addProductCard(product, occasion));
         setOptions([
+          { label:'Recommend another', action:()=>recommend(occasion, false) },
           { label:'Start over', action:()=>{ addMessage('Let’s find another look.', 'user'); showMainOptions(); } },
           { label:'Shipping help', action:()=>addMessage('We ship worldwide. Add your favorite to cart and verify your shipping address during checkout.', 'bot') }
         ]);
         messages.scrollTop = messages.scrollHeight;
-      }, 300);
+      } catch (error) {
+        console.warn('AI shopper catalog unavailable:', error);
+        addMessage('I cannot verify the live jewelry photos right now, so I will not recommend a set that may be unavailable. Please try again in a moment.', 'bot');
+        setOptions([
+          { label:'Try again', action:()=>recommend(occasion, false) },
+          { label:'Start over', action:()=>showMainOptions() }
+        ]);
+      } finally {
+        recommendationPending = false;
+      }
     }
     function understand(text){
       const clean = String(text || '').toLowerCase();
