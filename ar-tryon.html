@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Virtual Try-On | The Global Rani</title>
+  <meta name="description" content="Use The Global Rani virtual try-on experience to preview selected jewelry styles.">
 
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="preconnect" href="https://storage.googleapis.com" crossorigin>
@@ -385,6 +386,7 @@
       }
     }
   </style>
+  <link rel="stylesheet" href="assets/global-rani-quality.css">
 </head>
 
 <body>
@@ -422,12 +424,12 @@
       <h2>Better try-on controls</h2>
       <p id="tryOnHelpText">Start the camera, then drag and resize the jewelry to fine-tune the fit.</p>
 
-      <div class="row"><span>Overall Size</span><input id="sizeSlider" type="range" min="75" max="150" value="76"><output id="sizeOut">76%</output></div>
-      <div class="row"><span>Necklace Y</span><input id="neckYSlider" type="range" min="-80" max="130" value="130"><output id="neckYOut">130</output></div>
-      <div class="row"><span>Necklace Width</span><input id="neckWSlider" type="range" min="75" max="135" value="100"><output id="neckWOut">100%</output></div>
-      <div class="row"><span>Earring Y</span><input id="earYSlider" type="range" min="-50" max="90" value="4"><output id="earYOut">4</output></div>
-      <div class="row"><span>Earring Size</span><input id="earSizeSlider" type="range" min="60" max="140" value="88"><output id="earSizeOut">88%</output></div>
-      <div class="row"><span>Opacity</span><input id="opacitySlider" type="range" min="50" max="100" value="96"><output id="opacityOut">96%</output></div>
+      <div class="row"><label for="sizeSlider">Overall Size</label><input id="sizeSlider" type="range" min="75" max="150" value="76"><output id="sizeOut">76%</output></div>
+      <div class="row"><label for="neckYSlider">Necklace Y</label><input id="neckYSlider" type="range" min="-80" max="130" value="130"><output id="neckYOut">130</output></div>
+      <div class="row"><label for="neckWSlider">Necklace Width</label><input id="neckWSlider" type="range" min="75" max="135" value="100"><output id="neckWOut">100%</output></div>
+      <div class="row"><label for="earYSlider">Earring Y</label><input id="earYSlider" type="range" min="-50" max="90" value="4"><output id="earYOut">4</output></div>
+      <div class="row"><label for="earSizeSlider">Earring Size</label><input id="earSizeSlider" type="range" min="60" max="140" value="88"><output id="earSizeOut">88%</output></div>
+      <div class="row"><label for="opacitySlider">Opacity</label><input id="opacitySlider" type="range" min="50" max="100" value="96"><output id="opacityOut">96%</output></div>
     </div>
 
     <div class="card">
@@ -1355,5 +1357,6 @@
 </style>
 <a class="global-rani-whatsapp-help" href="https://wa.me/12164570935?text=Hello%20Global%20Rani%2C%20I%20need%20help." target="_blank" rel="noopener noreferrer" aria-label="Need help? Contact The Global Rani on WhatsApp"><span class="wa-icon" aria-hidden="true">◉</span><span>Need help?</span></a>
 
+  <script src="assets/global-rani-quality.js" defer></script>
 </body>
 </html>

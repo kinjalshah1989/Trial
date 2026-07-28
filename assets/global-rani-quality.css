@@ -1,0 +1,94 @@
+:root{
+  color-scheme:light;
+  -webkit-text-size-adjust:100%;
+  text-size-adjust:100%;
+}
+
+html{
+  scroll-padding-top:96px;
+}
+
+body{
+  min-width:320px;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+img{
+  max-width:100%;
+  height:auto;
+}
+
+button,
+input,
+select,
+textarea{
+  font:inherit;
+}
+
+a,
+button,
+[role="button"],
+input,
+select,
+textarea{
+  -webkit-tap-highlight-color:rgba(185,133,47,.18);
+}
+
+:where(a,button,[role="button"],input,select,textarea,summary):focus-visible{
+  outline:3px solid #9e1533;
+  outline-offset:4px;
+  box-shadow:0 0 0 7px rgba(227,183,93,.28);
+}
+
+button:disabled,
+[aria-disabled="true"]{
+  cursor:not-allowed!important;
+  opacity:.62;
+}
+
+[aria-busy="true"]{
+  cursor:progress;
+}
+
+html.quality-page-hidden *,
+html.quality-page-hidden *::before,
+html.quality-page-hidden *::after{
+  animation-play-state:paused!important;
+}
+
+@media(prefers-contrast:more){
+  :where(a,button,[role="button"],input,select,textarea,summary):focus-visible{
+    outline-width:4px;
+    outline-color:CanvasText;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto!important}
+  *,
+  *::before,
+  *::after{
+    scroll-behavior:auto!important;
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.01ms!important;
+  }
+}
+
+@media(prefers-reduced-data:reduce){
+  body::before,
+  body::after{
+    animation:none!important;
+  }
+}
+
+@media print{
+  .global-rani-whatsapp-help,
+  .chat-toggle,
+  .chat-panel,
+  video,
+  audio{
+    display:none!important;
+  }
+}

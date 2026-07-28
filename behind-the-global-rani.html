@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Behind The Global Rani | Meet Kinjal</title>
+  <meta name="description" content="Meet Kinjal, the heart behind The Global Rani, and discover the heritage, care, and connection woven into every jewelry collection.">
+  <meta name="theme-color" content="#fffaf2">
+  <link rel="canonical" href="https://theglobalrani.com/behind-the-global-rani.html">
+  <meta property="og:type" content="profile">
+  <meta property="og:title" content="Behind The Global Rani | Meet Kinjal">
+  <meta property="og:description" content="Meet Kinjal and discover the heart, heritage, and care behind The Global Rani.">
+  <meta property="og:url" content="https://theglobalrani.com/behind-the-global-rani.html">
+  <meta property="og:image" content="https://theglobalrani.com/assets/behind-global-rani/kinjal-founder.webp">
+  <link rel="preload" href="assets/behind-global-rani/kinjal-founder.webp" as="image" type="image/webp" fetchpriority="high">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Allura&family=Cinzel:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --ivory:#fffaf2;
+      --cream:#f7ead8;
+      --paper:#fffdf8;
+      --emerald:#075743;
+      --emerald-deep:#033c30;
+      --gold:#b9852f;
+      --gold-light:#e3ba68;
+      --ruby:#9e1533;
+      --rose:#d65c78;
+      --ink:#3b2a1e;
+      --muted:#746458;
+      --line:rgba(185,133,47,.32);
+      --shadow:0 24px 70px rgba(74,42,18,.16);
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      min-width:320px;
+      overflow-x:hidden;
+      color:var(--ink);
+      font-family:'Inter',sans-serif;
+      background:
+        radial-gradient(circle at 18% 8%,rgba(227,186,104,.18),transparent 25%),
+        radial-gradient(circle at 92% 26%,rgba(214,92,120,.10),transparent 24%),
+        linear-gradient(135deg,#fffdf8 0%,#fff8ed 52%,#f6e9d7 100%);
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      pointer-events:none;
+      opacity:.24;
+      background-image:
+        linear-gradient(120deg,transparent 0 48%,rgba(185,133,47,.11) 49% 50%,transparent 51%),
+        radial-gradient(circle at 50% 50%,rgba(255,255,255,.8) 0 1px,transparent 1.5px);
+      background-size:auto,22px 22px;
+    }
+
+    body::after{
+      content:"";
+      position:fixed;
+      left:var(--cursor-x,-500px);
+      top:var(--cursor-y,-500px);
+      z-index:9998;
+      width:320px;
+      height:320px;
+      pointer-events:none;
+      border-radius:50%;
+      opacity:.72;
+      background:radial-gradient(circle,rgba(227,186,104,.18),rgba(214,92,120,.06) 34%,transparent 70%);
+      transform:translate(-50%,-50%);
+      transition:left .16s ease-out,top .16s ease-out;
+      mix-blend-mode:multiply;
+    }
+
+    a{color:inherit}
+    button,a{cursor:pointer}
+    img{max-width:100%}
+    [hidden]{display:none!important}
+
+    .site-nav{
+      position:sticky;
+      top:0;
+      z-index:100;
+      border-bottom:1px solid rgba(185,133,47,.22);
+      background:rgba(255,250,242,.92);
+      backdrop-filter:blur(18px);
+      box-shadow:0 8px 28px rgba(75,45,24,.08);
+    }
+
+    .nav-inner{
+      width:min(100%,1420px);
+      min-height:78px;
+      margin:0 auto;
+      padding:10px clamp(16px,4vw,48px);
+      display:flex;
+      align-items:center;
+      gap:26px;
+    }
+
+    .brand{
+      display:inline-flex;
+      align-items:center;
+      gap:12px;
+      margin-right:auto;
+      color:var(--ink);
+      text-decoration:none;
+      font-family:'Cinzel',serif;
+      font-size:clamp(15px,1.5vw,20px);
+      font-weight:700;
+      letter-spacing:.03em;
+    }
+
+    .brand img{
+      width:55px;
+      height:55px;
+      object-fit:cover;
+      border-radius:50%;
+      border:1px solid rgba(185,133,47,.45);
+      box-shadow:0 8px 22px rgba(74,42,18,.14);
+    }
+
+    .nav-links{
+      display:flex;
+      align-items:center;
+      gap:22px;
+    }
+
+    .nav-links a{
+      position:relative;
+      padding:8px 0;
+      color:#624733;
+      text-decoration:none;
+      font-size:13px;
+      font-weight:800;
+      letter-spacing:.05em;
+      text-transform:uppercase;
+    }
+
+    .nav-links a::after{
+      content:"";
+      position:absolute;
+      left:0;
+      right:100%;
+      bottom:2px;
+      height:2px;
+      background:linear-gradient(90deg,var(--ruby),var(--gold));
+      transition:right .25s ease;
+    }
+
+    .nav-links a:hover::after,.nav-links a[aria-current="page"]::after{right:0}
+
+    main{width:min(100%,1480px);margin:0 auto;overflow:hidden}
+
+    .about-hero{
+      min-height:clamp(660px,74vw,840px);
+      display:grid;
+      grid-template-columns:minmax(0,.92fr) minmax(460px,1.08fr);
+      overflow:hidden;
+      border-bottom:1px solid var(--line);
+      background:rgba(255,253,248,.72);
+    }
+
+    .hero-portrait{
+      position:relative;
+      min-height:660px;
+      overflow:hidden;
+      isolation:isolate;
+      background-image:url("assets/behind-global-rani/kinjal-founder.png");
+      background-image:image-set(
+        url("assets/behind-global-rani/kinjal-founder.webp") type("image/webp"),
+        url("assets/behind-global-rani/kinjal-founder.png") type("image/png")
+      );
+      background-repeat:no-repeat;
+      background-position:center top;
+      background-size:cover;
+      will-change:transform;
+    }
+
+    .hero-portrait::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      z-index:1;
+      pointer-events:none;
+      background:
+        linear-gradient(90deg,transparent 68%,rgba(255,253,248,.92) 100%),
+        linear-gradient(0deg,rgba(24,14,7,.20),transparent 28%);
+    }
+
+    .hero-portrait::after{
+      content:"";
+      position:absolute;
+      right:-2px;
+      bottom:0;
+      z-index:2;
+      width:44%;
+      height:48%;
+      opacity:.55;
+      background:radial-gradient(circle at 100% 100%,rgba(227,186,104,.38),transparent 67%);
+    }
+
+    .portrait-caption{
+      position:absolute;
+      left:clamp(18px,4vw,50px);
+      bottom:28px;
+      z-index:3;
+      padding:10px 17px;
+      border:1px solid rgba(255,244,209,.65);
+      border-radius:999px;
+      color:#fff9e8;
+      background:rgba(4,67,51,.88);
+      box-shadow:0 14px 30px rgba(10,32,25,.20);
+      font-size:12px;
+      font-weight:800;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      animation:captionGlow 3.8s ease-in-out infinite;
+    }
+
+    .hero-copy{
+      position:relative;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      padding:70px clamp(34px,7vw,104px);
+      text-align:center;
+      transform:translate3d(var(--motion-x,0),var(--motion-y,0),0);
+      transition:transform .85s cubic-bezier(.2,.8,.2,1);
+      will-change:transform;
+    }
+
+    .hero-copy::before,.hero-copy::after{
+      content:"✦";
+      position:absolute;
+      color:rgba(185,133,47,.42);
+      font-size:28px;
+    }
+
+    .hero-copy::before{right:8%;top:18%}
+    .hero-copy::after{left:8%;bottom:14%}
+
+    .hero-copy > :not(.hero-sparkles){
+      position:relative;
+      z-index:2;
+    }
+
+    .hero-sparkles{
+      position:absolute;
+      inset:0;
+      z-index:1;
+      overflow:hidden;
+      pointer-events:none;
+    }
+
+    .hero-sparkles span{
+      position:absolute;
+      width:clamp(8px,1vw,15px);
+      aspect-ratio:1;
+      opacity:0;
+      background:linear-gradient(135deg,#fff8d5,var(--gold-light) 46%,var(--rose));
+      clip-path:polygon(50% 0,61% 39%,100% 50%,61% 61%,50% 100%,39% 61%,0 50%,39% 39%);
+      filter:drop-shadow(0 0 8px rgba(227,186,104,.65));
+      animation:sparkleRise 5.2s ease-in-out infinite;
+    }
+
+    .hero-sparkles span:nth-child(1){left:10%;top:18%;animation-delay:-.6s}
+    .hero-sparkles span:nth-child(2){left:84%;top:12%;animation-delay:-2.8s;animation-duration:6.2s}
+    .hero-sparkles span:nth-child(3){left:18%;top:72%;animation-delay:-4.2s;animation-duration:5.8s}
+    .hero-sparkles span:nth-child(4){left:77%;top:69%;animation-delay:-1.8s}
+    .hero-sparkles span:nth-child(5){left:91%;top:42%;animation-delay:-3.7s;animation-duration:6.8s}
+    .hero-sparkles span:nth-child(6){left:7%;top:45%;animation-delay:-5s;animation-duration:6.4s}
+    .hero-sparkles span:nth-child(7){left:67%;top:28%;animation-delay:-2.2s;animation-duration:5.5s}
+    .hero-sparkles span:nth-child(8){left:32%;top:9%;animation-delay:-4.8s;animation-duration:7s}
+
+    .eyebrow{
+      margin:0 0 18px;
+      color:#76522d;
+      font-family:'Cinzel',serif;
+      font-size:clamp(14px,1.6vw,21px);
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+
+    .eyebrow::after{
+      content:"";
+      display:block;
+      width:104px;
+      height:11px;
+      margin:9px auto 0;
+      background:
+        linear-gradient(90deg,transparent,var(--gold),transparent) center/100% 1px no-repeat;
+    }
+
+    h1,h2,h3{font-family:'Cinzel',serif}
+    h1{
+      max-width:720px;
+      margin:0;
+      color:var(--gold);
+      font-size:clamp(52px,7vw,102px);
+      font-weight:500;
+      line-height:.94;
+      letter-spacing:-.045em;
+    }
+
+    @supports((-webkit-background-clip:text) or (background-clip:text)){
+      h1{
+        color:transparent;
+        background:linear-gradient(105deg,#98631e 5%,var(--gold-light) 32%,#fff3c4 45%,var(--gold) 58%,#7f4d17 88%);
+        background-size:220% 100%;
+        -webkit-background-clip:text;
+        background-clip:text;
+        animation:titleShimmer 6s linear infinite;
+      }
+    }
+
+    h1 span{
+      display:block;
+      margin-top:10px;
+      font-size:.68em;
+      letter-spacing:-.03em;
+    }
+
+    .hero-tagline{
+      margin:24px 0 0;
+      color:var(--rose);
+      font-size:clamp(14px,1.7vw,20px);
+      font-weight:800;
+      letter-spacing:.13em;
+      text-transform:uppercase;
+    }
+
+    .hero-intro{
+      max-width:640px;
+      margin:22px auto 0;
+      color:#40352e;
+      font-size:clamp(15px,1.25vw,19px);
+      line-height:1.75;
+    }
+
+    .signature{
+      margin:18px 0 0;
+      color:#453329;
+      font:clamp(44px,5vw,68px)/1 'Allura',cursive;
+      transform:rotate(-3deg);
+    }
+
+    .ornament-divider{
+      position:relative;
+      height:1px;
+      background:linear-gradient(90deg,transparent,var(--gold-light),var(--gold),var(--gold-light),transparent);
+    }
+
+    .ornament-divider::after{
+      content:"❈";
+      position:absolute;
+      left:50%;
+      top:50%;
+      padding:0 14px;
+      color:var(--gold);
+      background:var(--ivory);
+      font-size:25px;
+      transform:translate(-50%,-50%);
+      animation:ornamentPulse 3.4s ease-in-out infinite;
+    }
+
+    .story-strip{
+      display:grid;
+      grid-template-columns:minmax(260px,.78fr) minmax(480px,1.5fr) minmax(280px,.86fr);
+      min-height:390px;
+      border-bottom:1px solid var(--line);
+      background:rgba(255,253,248,.70);
+    }
+
+    .story-card{
+      position:relative;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      padding:48px clamp(24px,4vw,60px);
+      overflow:hidden;
+      color:#fff9e9;
+      background:
+        radial-gradient(circle at 90% 5%,rgba(227,186,104,.22),transparent 28%),
+        linear-gradient(145deg,var(--emerald),var(--emerald-deep));
+    }
+
+    .story-card::before{
+      content:"";
+      position:absolute;
+      inset:18px;
+      opacity:.16;
+      border:1px solid var(--gold-light);
+      border-radius:36% 8% 36% 8%;
+      transform:rotate(-3deg);
+      animation:storyFrame 6s ease-in-out infinite alternate;
+    }
+
+    .story-card h2,.section-heading{
+      position:relative;
+      z-index:1;
+      margin:0;
+      color:var(--gold-light);
+      font-size:clamp(25px,3vw,40px);
+      font-weight:600;
+      letter-spacing:.02em;
+    }
+
+    .story-card p{
+      position:relative;
+      z-index:1;
+      margin:22px 0 0;
+      font-size:14px;
+      line-height:1.9;
+    }
+
+    .metrics{
+      position:relative;
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      align-items:center;
+      padding:44px 26px;
+      overflow:hidden;
+      isolation:isolate;
+    }
+
+    .metrics::before{
+      content:"";
+      position:absolute;
+      inset:-55% -30%;
+      z-index:-1;
+      opacity:.55;
+      background:conic-gradient(from 90deg,transparent,rgba(227,186,104,.16),transparent 34%);
+      animation:metricAura 13s linear infinite;
+    }
+
+    .metric{
+      min-height:210px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:13px;
+      padding:20px;
+      text-align:center;
+      transition:transform .35s ease,background .35s ease,box-shadow .35s ease;
+    }
+
+    .metric+.metric{border-left:1px solid var(--line)}
+
+    .metric-icon{
+      width:86px;
+      height:86px;
+      display:grid;
+      place-items:center;
+      border:1px solid rgba(185,133,47,.36);
+      border-radius:50%;
+      color:var(--rose);
+      background:radial-gradient(circle,#fffdf8 46%,#f5e4ca 100%);
+      box-shadow:inset 0 0 0 8px rgba(255,255,255,.62),0 12px 28px rgba(91,54,24,.10);
+      font-size:35px;
+      animation:iconFloat 4.4s ease-in-out infinite;
+    }
+
+    .metric:nth-child(2) .metric-icon{animation-delay:-1.45s}
+    .metric:nth-child(3) .metric-icon{animation-delay:-2.9s}
+
+    .metric strong{
+      color:#67461f;
+      font-family:'Cinzel',serif;
+      font-size:clamp(17px,2vw,25px);
+    }
+
+    .metric span:last-child{
+      color:#50453d;
+      font-size:13px;
+      line-height:1.55;
+    }
+
+    .story-jewel{
+      position:relative;
+      min-height:390px;
+      margin:0;
+      overflow:hidden;
+      background:#efe0cb;
+    }
+
+    .story-jewel::after{
+      content:"";
+      position:absolute;
+      inset:-40% auto -40% -75%;
+      z-index:1;
+      width:42%;
+      pointer-events:none;
+      opacity:.8;
+      background:linear-gradient(90deg,transparent,rgba(255,248,218,.58),transparent);
+      transform:skewX(-16deg);
+      animation:imageGleam 6.8s ease-in-out infinite;
+    }
+
+    .story-jewel img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      transition:transform .8s ease;
+    }
+
+    .story-jewel picture{
+      display:block;
+      width:100%;
+      height:100%;
+    }
+
+    .story-jewel.story-founder img{
+      object-position:center 20%;
+      animation:portraitPan 9s ease-in-out infinite alternate;
+    }
+
+    .story-jewel:hover img{transform:scale(1.055)}
+
+    .story-jewel figcaption{
+      position:absolute;
+      left:20px;
+      right:20px;
+      bottom:20px;
+      padding:12px 16px;
+      border:1px solid rgba(255,244,217,.72);
+      border-radius:14px;
+      color:#fff9ea;
+      background:rgba(3,60,48,.84);
+      text-align:center;
+      font-family:'Cinzel',serif;
+      font-size:13px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      backdrop-filter:blur(10px);
+      z-index:2;
+      box-shadow:0 10px 26px rgba(3,60,48,.22);
+    }
+
+    .values-section{
+      position:relative;
+      padding:70px clamp(20px,6vw,86px);
+      overflow:hidden;
+      border-bottom:1px solid var(--line);
+      text-align:center;
+    }
+
+    .values-section::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      opacity:.35;
+      background:
+        radial-gradient(circle at 10% 50%,rgba(227,186,104,.22),transparent 24%),
+        radial-gradient(circle at 90% 50%,rgba(214,92,120,.13),transparent 25%);
+      animation:valueGlow 8s ease-in-out infinite alternate;
+    }
+
+    .values-section > *{position:relative;z-index:1}
+
+    .section-kicker{
+      margin:0 0 10px;
+      color:var(--rose);
+      font-size:12px;
+      font-weight:800;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+    }
+
+    .section-heading{
+      color:#76522d;
+    }
+
+    .values-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      margin-top:42px;
+    }
+
+    .value{
+      position:relative;
+      min-height:210px;
+      padding:28px clamp(18px,3vw,42px);
+      border-radius:28px;
+      transition:transform .42s cubic-bezier(.2,.8,.2,1),background .42s ease,box-shadow .42s ease;
+    }
+
+    .value+.value{border-left:1px solid var(--line)}
+    .value-icon{
+      display:block;
+      color:var(--gold);
+      font-size:36px;
+      filter:drop-shadow(0 7px 12px rgba(185,133,47,.18));
+      animation:valueIconFloat 4.8s ease-in-out infinite;
+    }
+
+    .value:nth-child(2) .value-icon{animation-delay:-1.2s}
+    .value:nth-child(3) .value-icon{animation-delay:-2.4s}
+    .value:nth-child(4) .value-icon{animation-delay:-3.6s}
+
+    .value h3{
+      margin:15px 0 10px;
+      color:#6a4822;
+      font-size:18px;
+      font-weight:600;
+    }
+
+    .value p{
+      margin:0;
+      color:#51473f;
+      font-size:13px;
+      line-height:1.65;
+    }
+
+    .thank-you{
+      position:relative;
+      margin:0 clamp(14px,8vw,120px) 72px;
+      padding:50px clamp(26px,7vw,100px) 44px;
+      overflow:hidden;
+      border:1px solid rgba(227,186,104,.48);
+      border-radius:90px 90px 26px 26px;
+      color:#fff9e8;
+      background:
+        radial-gradient(circle at 50% 120%,rgba(227,186,104,.20),transparent 44%),
+        linear-gradient(145deg,var(--emerald),var(--emerald-deep));
+      box-shadow:0 24px 60px rgba(9,59,47,.22);
+      text-align:center;
+      background-size:180% 180%;
+      animation:emeraldFlow 8s ease-in-out infinite alternate;
+    }
+
+    .thank-you::before,.thank-you::after{
+      position:absolute;
+      bottom:-18px;
+      color:#e78ca1;
+      font-size:clamp(82px,12vw,160px);
+      line-height:1;
+      filter:drop-shadow(0 0 18px rgba(227,186,104,.25));
+    }
+
+    .thank-you::before{content:"🪷";left:3%;animation:lotusFloat 4.8s ease-in-out infinite}
+    .thank-you::after{content:"🪷";right:3%;animation:lotusFloatMirrored 4.8s ease-in-out -2.4s infinite}
+
+    .thank-you h2{
+      position:relative;
+      z-index:1;
+      margin:0;
+      color:var(--gold-light);
+      font-size:clamp(32px,4vw,56px);
+      font-weight:600;
+      letter-spacing:.04em;
+    }
+
+    .thank-you p{
+      position:relative;
+      z-index:1;
+      max-width:650px;
+      margin:14px auto 0;
+      font-size:15px;
+      line-height:1.75;
+    }
+
+    .family-line{
+      color:var(--gold-light);
+      font:clamp(31px,4vw,50px)/1.2 'Allura',cursive!important;
+    }
+
+    .shop-cta{
+      position:relative;
+      z-index:2;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:48px;
+      margin-top:22px;
+      padding:12px 25px;
+      border:1px solid rgba(255,244,210,.64);
+      border-radius:999px;
+      color:#244d3f;
+      background:linear-gradient(135deg,#fff7d9,var(--gold-light));
+      text-decoration:none;
+      font-size:13px;
+      font-weight:900;
+      letter-spacing:.07em;
+      text-transform:uppercase;
+      box-shadow:0 12px 28px rgba(0,0,0,.18);
+      transition:transform .2s ease,box-shadow .2s ease;
+    }
+
+    .shop-cta:hover{transform:translateY(-3px);box-shadow:0 16px 34px rgba(0,0,0,.24)}
+
+    .site-footer{
+      position:relative;
+      overflow:hidden;
+      padding:0;
+      border-top:1px solid rgba(52,33,14,.12);
+      color:#333;
+      background:#f4f3f1;
+      text-align:left;
+    }
+
+    .footer-main{
+      width:min(100%,1180px);
+      min-height:162px;
+      margin:0 auto;
+      padding:42px 22px 58px;
+      display:grid;
+      grid-template-columns:1.05fr 1fr;
+      gap:72px;
+      align-items:start;
+    }
+
+    .footer-brand-line{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      width:max-content;
+      color:#34210e;
+      font-family:'Cinzel',serif;
+      font-weight:800;
+    }
+
+    .footer-brand-line img{
+      width:46px;
+      height:46px;
+      object-fit:cover;
+      border-radius:50%;
+      box-shadow:0 8px 18px rgba(70,38,12,.14);
+    }
+
+    .footer-bottom{
+      width:100%;
+      padding:20px 0 38px;
+      border-top:1px solid rgba(52,33,14,.12);
+    }
+
+    .footer-bottom-inner{
+      width:min(100%,1180px);
+      margin:0 auto;
+      padding:0 22px;
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:30px;
+      align-items:center;
+    }
+
+    .footer-copy{
+      color:#333;
+      font-size:14px;
+      text-align:right;
+      white-space:nowrap;
+    }
+
+    .global-rani-whatsapp-help{
+      position:fixed;
+      right:20px;
+      bottom:20px;
+      z-index:9999;
+      display:inline-flex;
+      align-items:center;
+      gap:9px;
+      padding:13px 18px;
+      border:1px solid rgba(255,255,255,.55);
+      border-radius:999px;
+      color:#fff!important;
+      background:linear-gradient(135deg,#128c4a,#25d366);
+      box-shadow:0 14px 34px rgba(18,140,74,.32);
+      text-decoration:none;
+      font:900 14px Inter,Arial,sans-serif;
+      transition:transform .2s ease,box-shadow .2s ease;
+    }
+
+    .global-rani-whatsapp-help:hover{
+      transform:translateY(-3px);
+      box-shadow:0 18px 40px rgba(18,140,74,.4);
+    }
+
+    .global-rani-whatsapp-help .wa-icon{font-size:20px;line-height:1}
+
+    .shop-cta{
+      position:relative;
+      overflow:hidden;
+      isolation:isolate;
+    }
+
+    .shop-cta::after{
+      content:"";
+      position:absolute;
+      inset:-70% auto -70% -45%;
+      z-index:-1;
+      width:28%;
+      background:rgba(255,255,255,.64);
+      transform:skewX(-18deg);
+      animation:buttonGleam 4.4s ease-in-out infinite;
+    }
+
+    .footer-brand-line img{animation:logoFloat 5s ease-in-out infinite}
+    .global-rani-whatsapp-help{animation:whatsappPulse 3.2s ease-in-out infinite}
+
+    @media(hover:hover){
+      .metric:hover{
+        z-index:2;
+        transform:translateY(-10px) scale(1.035);
+        background:rgba(255,250,240,.74);
+        box-shadow:0 22px 45px rgba(91,54,24,.12);
+      }
+
+      .metric:hover .metric-icon{
+        animation:none;
+        transform:rotate(10deg) scale(1.12);
+        box-shadow:inset 0 0 0 8px rgba(255,255,255,.72),0 18px 36px rgba(158,21,51,.18);
+      }
+
+      .value:hover{
+        z-index:2;
+        transform:translateY(-13px) scale(1.035);
+        background:linear-gradient(145deg,rgba(255,253,248,.92),rgba(247,229,199,.74));
+        box-shadow:0 24px 48px rgba(86,50,20,.14);
+      }
+
+      .value:hover .value-icon{
+        animation:none;
+        transform:scale(1.18) rotate(-8deg);
+        color:var(--rose);
+      }
+
+      .global-rani-whatsapp-help:hover{animation:none}
+    }
+
+    @keyframes captionGlow{
+      0%,100%{box-shadow:0 14px 30px rgba(10,32,25,.20),0 0 0 0 rgba(227,186,104,.20)}
+      50%{box-shadow:0 18px 38px rgba(10,32,25,.26),0 0 0 8px rgba(227,186,104,0)}
+    }
+
+    @keyframes sparkleRise{
+      0%,100%{opacity:0;transform:translate3d(0,20px,0) rotate(0deg) scale(.35)}
+      22%{opacity:.82}
+      50%{opacity:1;transform:translate3d(12px,-8px,0) rotate(90deg) scale(1)}
+      78%{opacity:.65}
+      90%{opacity:0;transform:translate3d(-8px,-34px,0) rotate(180deg) scale(.55)}
+    }
+
+    @keyframes titleShimmer{
+      from{background-position:120% 50%}
+      to{background-position:-120% 50%}
+    }
+
+    @keyframes ornamentPulse{
+      0%,100%{transform:translate(-50%,-50%) rotate(0deg) scale(1);filter:drop-shadow(0 0 0 transparent)}
+      50%{transform:translate(-50%,-50%) rotate(45deg) scale(1.2);filter:drop-shadow(0 0 9px rgba(185,133,47,.55))}
+    }
+
+    @keyframes storyFrame{
+      from{transform:rotate(-3deg) scale(.98);opacity:.12}
+      to{transform:rotate(2deg) scale(1.02);opacity:.28}
+    }
+
+    @keyframes metricAura{to{transform:rotate(1turn)}}
+
+    @keyframes iconFloat{
+      0%,100%{transform:translateY(0) rotate(0deg)}
+      50%{transform:translateY(-10px) rotate(4deg)}
+    }
+
+    @keyframes imageGleam{
+      0%,18%{left:-75%}
+      58%,100%{left:145%}
+    }
+
+    @keyframes portraitPan{
+      from{object-position:center 15%}
+      to{object-position:center 29%}
+    }
+
+    @keyframes valueGlow{
+      from{transform:translateX(-1.8%) scale(1)}
+      to{transform:translateX(1.8%) scale(1.04)}
+    }
+
+    @keyframes valueIconFloat{
+      0%,100%{transform:translateY(0) rotate(0deg)}
+      50%{transform:translateY(-9px) rotate(7deg)}
+    }
+
+    @keyframes emeraldFlow{
+      from{background-position:25% 25%;box-shadow:0 24px 60px rgba(9,59,47,.22)}
+      to{background-position:75% 75%;box-shadow:0 30px 76px rgba(9,59,47,.34)}
+    }
+
+    @keyframes lotusFloat{
+      0%,100%{transform:translateY(8px) rotate(-3deg)}
+      50%{transform:translateY(-8px) rotate(3deg)}
+    }
+
+    @keyframes lotusFloatMirrored{
+      0%,100%{transform:scaleX(-1) translateY(8px) rotate(-3deg)}
+      50%{transform:scaleX(-1) translateY(-8px) rotate(3deg)}
+    }
+
+    @keyframes buttonGleam{
+      0%,22%{left:-45%}
+      60%,100%{left:125%}
+    }
+
+    @keyframes logoFloat{
+      0%,100%{transform:translateY(0) rotate(0deg)}
+      50%{transform:translateY(-5px) rotate(3deg)}
+    }
+
+    @keyframes whatsappPulse{
+      0%,100%{box-shadow:0 14px 34px rgba(18,140,74,.32),0 0 0 0 rgba(37,211,102,.26)}
+      50%{box-shadow:0 18px 40px rgba(18,140,74,.42),0 0 0 11px rgba(37,211,102,0)}
+    }
+
+    @keyframes heroKenBurns{
+      from{transform:scale(1.025) translate3d(0,0,0)}
+      to{transform:scale(1.075) translate3d(-.5%,.5%,0)}
+    }
+
+    @keyframes heroRise{
+      from{opacity:0;transform:translateY(32px) scale(.97)}
+      to{opacity:1;transform:translateY(0) scale(1)}
+    }
+
+    @media(prefers-reduced-motion:no-preference){
+      .hero-portrait{animation:heroKenBurns 15s ease-in-out infinite alternate}
+      .hero-copy > .eyebrow,
+      .hero-copy > h1,
+      .hero-copy > .hero-tagline,
+      .hero-copy > .hero-intro,
+      .hero-copy > .signature{
+        opacity:0;
+        animation:heroRise .9s cubic-bezier(.2,.8,.2,1) forwards;
+      }
+      .hero-copy > h1{
+        animation:heroRise .9s cubic-bezier(.2,.8,.2,1) .12s forwards,titleShimmer 6s linear 1.02s infinite;
+      }
+      .hero-copy > .hero-tagline{animation-delay:.24s}
+      .hero-copy > .hero-intro{animation-delay:.36s}
+      .hero-copy > .signature{animation-delay:.5s}
+    }
+
+    [data-reveal]{
+      opacity:0;
+      transform:translateY(28px);
+      transition:opacity .82s ease,transform .82s cubic-bezier(.2,.8,.2,1);
+      transition-delay:var(--reveal-delay,0ms);
+    }
+
+    [data-reveal="left"]{transform:translateX(-56px) rotate(-1.5deg)}
+    [data-reveal="right"]{transform:translateX(56px) rotate(1.5deg)}
+    [data-reveal="zoom"]{transform:translateY(24px) scale(.88)}
+    [data-reveal].revealed{opacity:1;transform:none}
+
+    @media(max-width:1080px){
+      .about-hero{grid-template-columns:1fr 1fr;min-height:650px}
+      .hero-copy{padding:72px 34px 50px}
+      .story-strip{grid-template-columns:1fr 1.6fr}
+      .story-jewel{grid-column:1/-1;min-height:420px}
+      .story-jewel img{object-position:center 38%}
+    }
+
+    @media(max-width:780px){
+      .nav-inner{min-height:66px;padding:8px 14px}
+      .brand span{display:none}
+      .brand img{width:48px;height:48px}
+      .about-hero{grid-template-columns:1fr;min-height:0}
+      .hero-portrait{min-height:560px;background-size:cover;background-position:center top}
+      .hero-portrait::before{background:linear-gradient(0deg,rgba(255,253,248,.94),transparent 34%)}
+      .hero-copy{padding:54px 24px 68px}
+      h1{font-size:clamp(48px,15vw,76px)}
+      .story-strip{grid-template-columns:1fr}
+      .story-card{min-height:350px;text-align:center}
+      .metrics{padding:32px 12px}
+      .metric{min-height:190px;padding:14px 10px}
+      .metric-icon{width:72px;height:72px;font-size:29px}
+      .story-jewel{grid-column:auto;min-height:380px}
+      .values-grid{grid-template-columns:repeat(2,1fr)}
+      .value:nth-child(3){border-left:0}
+      .value:nth-child(n+3){border-top:1px solid var(--line)}
+      .thank-you{margin:0 14px 50px;border-radius:56px 56px 24px 24px}
+      .thank-you::before,.thank-you::after{opacity:.48}
+      .footer-main{grid-template-columns:1fr;gap:34px;padding-bottom:36px}
+      .footer-bottom-inner{grid-template-columns:1fr}
+      .footer-copy{text-align:left;white-space:normal}
+    }
+
+    @media(max-width:500px){
+      .hero-portrait{min-height:500px}
+      .portrait-caption{left:14px;bottom:18px;font-size:10px}
+      .hero-intro{font-size:15px;line-height:1.68}
+      .metrics{grid-template-columns:1fr}
+      .metric{min-height:160px}
+      .metric+.metric{border-left:0;border-top:1px solid var(--line)}
+      .values-section{padding:56px 16px}
+      .values-grid{grid-template-columns:1fr;margin-top:30px}
+      .value+.value,.value:nth-child(3){border-left:0;border-top:1px solid var(--line)}
+      .thank-you{padding:48px 20px 110px}
+      .global-rani-whatsapp-help{right:14px;bottom:14px;padding:12px 15px;font-size:13px}
+    }
+
+    @media(prefers-reduced-motion:reduce){
+      html{scroll-behavior:auto}
+      *,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}
+      [data-reveal]{opacity:1;transform:none}
+    }
+  </style>
+  <link rel="stylesheet" href="assets/global-rani-quality.css">
+</head>
+<body>
+  <nav class="site-nav" aria-label="Primary navigation">
+    <div class="nav-inner">
+      <a class="brand" href="index.html" aria-label="The Global Rani home">
+        <img src="https://ik.imagekit.io/k0wpvuatq/global-rani-logo.png" alt="The Global Rani logo" width="55" height="55" fetchpriority="high">
+        <span>The Global Rani</span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section class="about-hero" aria-labelledby="about-title">
+      <div class="hero-portrait" role="img" aria-label="Kinjal, founder of The Global Rani">
+        <span class="portrait-caption">Founder · Curator · Dreamer</span>
+      </div>
+      <div class="hero-copy">
+        <div class="hero-sparkles" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span>
+        </div>
+        <p class="eyebrow">About Me</p>
+        <h1 id="about-title">Behind <span>The Global Rani</span></h1>
+        <p class="hero-tagline">Jewelry that celebrates you</p>
+        <p class="hero-intro">I’m Kinjal, the heart and soul behind The Global Rani. What started as a dream to bring the regal beauty of Indian jewelry to women around the world has become a heartfelt journey of creativity, culture, and connection.</p>
+        <p class="signature" aria-label="Kinjal">Kinjal ♡</p>
+      </div>
+    </section>
+
+    <div class="ornament-divider" aria-hidden="true"></div>
+
+    <section class="story-strip" aria-label="Kinjal's story and brand philosophy">
+      <article class="story-card" data-reveal="left">
+        <h2>My Story</h2>
+        <p>Growing up, jewelry was more than an accessory—it was tradition, love, and legacy.</p>
+        <p>I created The Global Rani to help you feel that same magic—whether it’s a wedding, a festival, or simply because you deserve to feel like royalty.</p>
+      </article>
+      <div class="metrics" data-reveal="zoom">
+        <div class="metric">
+          <span class="metric-icon" aria-hidden="true">◎</span>
+          <strong>Worldwide</strong>
+          <span>A community of beautiful Ranis</span>
+        </div>
+        <div class="metric">
+          <span class="metric-icon" aria-hidden="true">♢</span>
+          <strong>Curated</strong>
+          <span>Jewelry chosen with intention</span>
+        </div>
+        <div class="metric">
+          <span class="metric-icon" aria-hidden="true">♥</span>
+          <strong>100%</strong>
+          <span>Passion and dedication</span>
+        </div>
+      </div>
+      <figure class="story-jewel story-founder" data-reveal="right">
+        <picture>
+          <source srcset="assets/behind-global-rani/kinjal-story.webp" type="image/webp">
+          <img src="assets/behind-global-rani/kinjal-story.png" alt="Kinjal, founder of The Global Rani" width="672" height="898" loading="lazy" decoding="async">
+        </picture>
+        <figcaption>The heart behind The Global Rani</figcaption>
+      </figure>
+    </section>
+
+    <section class="values-section" aria-labelledby="values-title">
+      <p class="section-kicker">The heart of every collection</p>
+      <h2 class="section-heading" id="values-title">What Drives Me</h2>
+      <div class="values-grid">
+        <article class="value" data-reveal="zoom">
+          <span class="value-icon" aria-hidden="true">♛</span>
+          <h3>Heritage</h3>
+          <p>Inspired by timeless Indian craftsmanship and royal traditions.</p>
+        </article>
+        <article class="value" data-reveal="zoom">
+          <span class="value-icon" aria-hidden="true">♥</span>
+          <h3>Empowerment</h3>
+          <p>Every piece is chosen to make you feel confident, beautiful, and unstoppable.</p>
+        </article>
+        <article class="value" data-reveal="zoom">
+          <span class="value-icon" aria-hidden="true">✦</span>
+          <h3>Quality</h3>
+          <p>Handpicked details and premium materials—because you deserve the best.</p>
+        </article>
+        <article class="value" data-reveal="zoom">
+          <span class="value-icon" aria-hidden="true">⊕</span>
+          <h3>Connection</h3>
+          <p>Bringing a piece of India to your world, wherever you are.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="thank-you" aria-labelledby="thank-you-title" data-reveal="zoom">
+      <h2 id="thank-you-title">Thank You</h2>
+      <p>For supporting my dream and letting me be a part of your beautiful moments.</p>
+      <p class="family-line">You’re not just a customer, you’re family.</p>
+      <a class="shop-cta" href="categories/jewelry-sets.html">Explore the Collection</a>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-main">
+      <div class="footer-brand-column">
+        <a class="footer-brand-line" href="index.html" aria-label="The Global Rani home">
+          <img src="https://ik.imagekit.io/k0wpvuatq/global-rani-logo.png" alt="The Global Rani logo" width="46" height="46" loading="lazy" decoding="async">
+          <span>The Global Rani</span>
+        </a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-bottom-inner">
+        <div class="footer-copy">© 2026, The Global Rani</div>
+      </div>
+    </div>
+  </footer>
+
+  <a class="global-rani-whatsapp-help" href="https://wa.me/12164570935?text=Hello%20Global%20Rani%2C%20I%20need%20help." target="_blank" rel="noopener noreferrer" aria-label="Need help? Contact The Global Rani on WhatsApp">
+    <span class="wa-icon" aria-hidden="true">◉</span>
+    <span>Need help?</span>
+  </a>
+
+  <script>
+    (() => {
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const items = document.querySelectorAll('[data-reveal]');
+      items.forEach((item, index) => {
+        item.style.setProperty('--reveal-delay', `${(index % 4) * 95}ms`);
+      });
+
+      if (!('IntersectionObserver' in window) || reduceMotion) {
+        items.forEach(item => item.classList.add('revealed'));
+      } else {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('revealed');
+            observer.unobserve(entry.target);
+          });
+        }, { threshold: .16, rootMargin: '0px 0px -6% 0px' });
+        items.forEach(item => observer.observe(item));
+      }
+
+      if (reduceMotion) return;
+
+      const hero = document.querySelector('.about-hero');
+      const heroCopy = hero?.querySelector('.hero-copy');
+      if (hero && heroCopy && window.matchMedia('(pointer:fine)').matches) {
+        hero.addEventListener('pointermove', (event) => {
+          const rect = hero.getBoundingClientRect();
+          const x = ((event.clientX - rect.left) / rect.width - .5) * 14;
+          const y = ((event.clientY - rect.top) / rect.height - .5) * 12;
+          heroCopy.style.setProperty('--motion-x', `${x.toFixed(2)}px`);
+          heroCopy.style.setProperty('--motion-y', `${y.toFixed(2)}px`);
+        });
+        hero.addEventListener('pointerleave', () => {
+          heroCopy.style.setProperty('--motion-x', '0px');
+          heroCopy.style.setProperty('--motion-y', '0px');
+        });
+      }
+
+      if (window.matchMedia('(pointer:fine)').matches) {
+        document.addEventListener('pointermove', (event) => {
+          document.body.style.setProperty('--cursor-x', `${event.clientX}px`);
+          document.body.style.setProperty('--cursor-y', `${event.clientY}px`);
+        }, { passive:true });
+      }
+    })();
+  </script>
+  <script src="assets/global-rani-quality.js" defer></script>
+</body>
+</html>
