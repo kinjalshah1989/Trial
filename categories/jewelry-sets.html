@@ -339,6 +339,240 @@
 .profile-dropdown .global-profile-logout{display:block;width:100%;position:relative;z-index:1;padding:11px 14px;border:0;border-radius:14px;background:transparent;color:var(--ruby,#9e1533);font:inherit;font-size:14px;font-weight:900;white-space:nowrap;text-align:center;cursor:pointer}.profile-dropdown .global-profile-logout:hover{background:linear-gradient(135deg,rgba(158,21,51,.10),rgba(185,133,47,.16));color:var(--ruby,#9e1533)}.profile-dropdown .global-profile-logout[hidden]{display:none!important}
 </style>
 <link rel="stylesheet" href="../assets/global-rani-quality.css">
+<style id="jewelry-sets-responsive-style">
+  /* Jewelry Sets page: fluid tablet and phone layout */
+  img { max-width: 100%; }
+  .small-card,
+  .small-card > *,
+  .catalog-controls > * { min-width: 0; }
+  .small-card .small-img {
+    height: auto;
+    aspect-ratio: 4 / 5;
+  }
+  .small-card h3,
+  .small-card p {
+    overflow-wrap: anywhere;
+  }
+  .carousel-btn {
+    width: 46px;
+    height: 46px;
+    touch-action: manipulation;
+  }
+
+  @media (max-width: 900px) {
+    .top-banner { padding-block: 7px; font-size: 11px; letter-spacing: .12em; }
+    .nav-inner { padding: 11px 18px; }
+    header { padding: 36px 18px 20px; gap: 24px; }
+    .hero-img { min-height: clamp(300px, 58vw, 430px); }
+    .section-title { margin-top: 26px; padding-inline: 18px; }
+    .inventory-grid {
+      padding-inline: 18px;
+      gap: 20px;
+    }
+    .jewelry-frame { padding: 12px; border-radius: 28px; }
+    .jewelry-frame::before { inset: 6px; border-radius: 23px; }
+    .small-card { padding: 14px; border-radius: 24px; }
+    .small-card .small-img { border-radius: 18px; }
+    .small-card h3 { font-size: clamp(19px, 2.8vw, 22px); }
+    .small-card p { font-size: 15px; }
+    .catalog-controls { padding-inline: 18px; }
+    .footer-main { padding-inline: 18px; }
+    .footer-bottom-inner { padding-inline: 18px; }
+  }
+
+  @media (max-width: 700px) {
+    body { padding-bottom: env(safe-area-inset-bottom); }
+    nav { top: 0; }
+    .nav-inner {
+      min-height: 64px;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 8px 14px;
+      text-align: left;
+    }
+    .brand { min-width: 0; gap: 9px; }
+    .brand img { width: 46px; height: 46px; flex: 0 0 46px; }
+    .brand span {
+      display: block;
+      min-width: 0;
+      font-size: clamp(14px, 4.5vw, 18px);
+      line-height: 1.08;
+    }
+    .nav-actions { flex: 0 0 auto; gap: 8px; flex-wrap: nowrap; }
+    .profile-trigger { width: 46px; height: 46px; }
+    .profile-trigger::before { width: 12px; height: 12px; top: 9px; }
+    .profile-trigger::after { width: 23px; height: 12px; bottom: 10px; }
+    .profile-dropdown {
+      left: auto;
+      right: -2px;
+      transform: none;
+      min-width: 165px;
+    }
+    .profile-dropdown::before { left: auto; right: 17px; transform: rotate(45deg); }
+    .profile-menu-wrap.open .profile-dropdown {
+      animation: mobileProfileDropdownIn .18s ease both;
+    }
+    @keyframes mobileProfileDropdownIn {
+      from { opacity: 0; transform: translateY(-6px) scale(.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    header {
+      padding: 28px 14px 16px;
+      gap: 22px;
+      text-align: center;
+    }
+    header > div:first-child { display: flex; flex-direction: column; align-items: center; }
+    .eyebrow { font-size: 11px; letter-spacing: .17em; }
+    h1 {
+      max-width: 100%;
+      font-size: clamp(32px, 12vw, 47px);
+      line-height: 1.02;
+      margin: 11px 0;
+    }
+    header p { max-width: 36rem; margin: 0 0 19px; font-size: 15px; line-height: 1.6; }
+    header .back { width: min(100%, 310px); min-height: 48px; display: grid; place-items: center; }
+    .hero-img {
+      width: 100%;
+      min-height: 0;
+      aspect-ratio: 4 / 3;
+      border-radius: 24px;
+    }
+    .section-title { margin: 22px auto 18px; padding-inline: 14px; }
+    .section-title h2 { margin: 0 0 8px; font-size: clamp(27px, 9vw, 38px); line-height: 1.12; }
+    .section-title p { margin: 0; font-size: 15px; line-height: 1.55; }
+
+    .catalog-controls {
+      margin-bottom: 18px;
+      padding-inline: 14px;
+      gap: 10px;
+    }
+    .catalog-filter {
+      width: 100%;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 9px;
+    }
+    .catalog-filter select { width: 100%; min-width: 0; padding-block: 12px; }
+    .catalog-status { width: 100%; text-align: center; line-height: 1.4; }
+    .inventory-grid {
+      grid-template-columns: minmax(0, 1fr);
+      margin-bottom: 62px;
+      padding-inline: 12px;
+      gap: 20px;
+    }
+    .jewelry-frame {
+      width: 100%;
+      max-width: 540px;
+      margin-inline: auto;
+      padding: 10px;
+      border-radius: 25px;
+      contain-intrinsic-size: 430px 360px;
+    }
+    .jewelry-frame::before { border-radius: 21px; }
+    .small-card { padding: 12px; border-radius: 21px; }
+    .small-card .small-img { border-radius: 16px; }
+    .small-card h3 { margin-top: 12px; font-size: clamp(20px, 6.5vw, 25px); line-height: 1.18; }
+    .small-card p { margin: 7px 0 12px; font-size: 14px; line-height: 1.55; }
+    .small-card .tag { margin-top: 12px; }
+    .price-row { gap: 12px; }
+    .small-card .price { width: 100%; font-size: 25px; }
+    .price-row .add-btn {
+      width: 100%;
+      min-height: 48px;
+      display: grid;
+      place-items: center;
+      padding: 12px 16px;
+      text-align: center;
+    }
+    .carousel-btn { width: 44px; height: 44px; }
+    .carousel-btn.prev { left: 10px; }
+    .carousel-btn.next { right: 10px; }
+    .carousel-dots { bottom: 13px; }
+    .carousel-dot { width: 12px; height: 12px; }
+
+    .catalog-pagination {
+      margin-top: -36px;
+      margin-bottom: 58px;
+      padding-inline: 12px;
+      gap: 8px;
+    }
+    .catalog-page-btn { min-height: 44px; padding: 10px 15px; }
+    .catalog-page-indicator { min-width: 78px; font-size: 14px; }
+    .catalog-load-more { flex-basis: 100%; min-height: 46px; }
+
+    .set-gif-modal { padding: 12px; }
+    .set-gif-dialog { width: 100%; max-height: 94dvh; padding: 9px; }
+    .set-gif-close { top: 5px; right: 5px; width: 42px; height: 42px; }
+    .set-gif-dialog img,
+    .set-gif-dialog canvas { max-height: calc(94dvh - 150px); }
+
+    .footer-main { padding: 34px 16px 30px; }
+    .footer-link-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .footer-bottom { padding-bottom: 120px; }
+    .footer-bottom-inner { padding-inline: 16px; }
+
+    .floating-category-cart {
+      right: max(12px, env(safe-area-inset-right));
+      bottom: max(12px, env(safe-area-inset-bottom));
+      width: 78px;
+      min-width: 78px;
+      height: 62px;
+      padding: 5px 6px;
+      justify-content: space-between;
+    }
+    .floating-cart-bag { width: 38px; font-size: 28px; }
+    .floating-cart-count {
+      width: 34px;
+      height: 34px;
+      margin-left: 0;
+      font-size: 18px;
+      border-width: 1px;
+    }
+    .floating-cart-drawer {
+      width: min(100vw, 430px);
+      padding: 18px 14px max(18px, env(safe-area-inset-bottom));
+    }
+    .floating-cart-item { grid-template-columns: 58px minmax(0, 1fr); gap: 10px; }
+    .floating-cart-item img { width: 58px; height: 58px; }
+    .floating-cart-item-row { align-items: flex-start; flex-wrap: wrap; }
+
+    .global-rani-whatsapp-help {
+      top: 52%;
+      right: max(10px, env(safe-area-inset-right));
+      bottom: auto;
+      transform: translateY(-50%);
+      padding: 11px 12px;
+      border-radius: 22px;
+    }
+    .global-rani-whatsapp-help:hover { transform: translateY(calc(-50% - 3px)); }
+    .global-rani-whatsapp-help .wa-icon { font-size: 19px; }
+    .global-rani-whatsapp-help span:last-child { display: none; }
+  }
+
+  @media (max-width: 380px) {
+    .brand span { font-size: 14px; }
+    .brand img { width: 42px; height: 42px; flex-basis: 42px; }
+    .profile-trigger { width: 42px; height: 42px; }
+    .top-banner { font-size: 10px; }
+    .catalog-page-btn { padding-inline: 12px; font-size: 13px; }
+    .catalog-page-indicator { min-width: 70px; font-size: 13px; }
+    .small-card { padding: 10px; }
+  }
+
+  @media (hover: none) {
+    .product:hover,
+    .floating-category-cart:hover { transform: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .product,
+    .product-carousel img,
+    .floating-category-cart,
+    .global-rani-whatsapp-help { transition: none !important; }
+  }
+</style>
 </head>
 <body><div class="top-banner">We Ship Globally</div><nav><div class="nav-inner"><a class="brand" href="../index.html"><img alt="The Global Rani logo" onerror="this.onerror=null;this.src='https://ik.imagekit.io/k0wpvuatq/category-temple-jewelry.jpg';" src="https://ik.imagekit.io/k0wpvuatq/global-rani-logo.png"/><span>The Global Rani</span></a><div class="nav-actions"><div class="profile-menu-wrap"><button aria-expanded="false" aria-haspopup="true" aria-label="Open member profile sign up and login" class="profile-icon-link profile-trigger bloom-hover" title="Sign up or log in" type="button"><span class="profile-caret-badge">⌄</span></button><div class="profile-dropdown" role="menu"><a href="../account.html" role="menuitem">Member Profile</a><a href="../account.html?action=login" role="menuitem">Log in</a><button class="profile-dropdown-logout global-profile-logout" hidden="" role="menuitem" type="button">Log Out</button></div></div></div></div></nav>
 <header><div><div class="eyebrow">Complete Royal Collections</div><h1>JEWELRY SETS</h1><p>Discover coordinated necklace-and-earring sets designed for weddings, celebrations, and statement occasions.</p><a class="back" href="#inventory">Shop Jewelry Sets</a></div><div class="hero-img"><img alt="Maharani Manika Topaz Set" decoding="async" loading="lazy" onerror="this.onerror=null;this.src='https://ik.imagekit.io/k0wpvuatq/category-temple-jewelry.jpg';" src="https://ik.imagekit.io/k0wpvuatq/maharani-manika-topaz-set-1.png"/></div></header>
@@ -909,7 +1143,6 @@
 <style id="floating-category-cart-style">
   .floating-category-cart {
     position: fixed;
-    left: auto;
     right: clamp(14px, 2.2vw, 28px);
     bottom: clamp(16px, 2.4vw, 30px);
     z-index: 9998;
@@ -1141,10 +1374,36 @@
 })();
 </script>
 <style id="global-rani-whatsapp-help-style">
-.global-rani-whatsapp-help{position:fixed;right:20px;top:56%;bottom:auto;z-index:9999;display:inline-flex;align-items:center;gap:9px;padding:13px 18px;border-radius:999px;text-decoration:none;color:#fff!important;background:linear-gradient(135deg,#128c4a,#25d366);font-family:Inter,Arial,sans-serif;font-weight:900;font-size:14px;box-shadow:0 14px 34px rgba(18,140,74,.32);border:1px solid rgba(255,255,255,.55);transform:translateY(-50%);transition:transform .2s ease,box-shadow .2s ease}
-.global-rani-whatsapp-help:hover{transform:translateY(calc(-50% - 3px));box-shadow:0 18px 40px rgba(18,140,74,.4)}
+.global-rani-whatsapp-help{position:fixed;right:20px;bottom:20px;z-index:9999;display:inline-flex;align-items:center;gap:9px;padding:13px 18px;border-radius:999px;text-decoration:none;color:#fff!important;background:linear-gradient(135deg,#128c4a,#25d366);font-family:Inter,Arial,sans-serif;font-weight:900;font-size:14px;box-shadow:0 14px 34px rgba(18,140,74,.32);border:1px solid rgba(255,255,255,.55);transition:transform .2s ease,box-shadow .2s ease}
+.global-rani-whatsapp-help:hover{transform:translateY(-3px);box-shadow:0 18px 40px rgba(18,140,74,.4)}
 .global-rani-whatsapp-help .wa-icon{font-size:20px;line-height:1}
-@media(max-width:620px){.global-rani-whatsapp-help{right:14px;top:58%;bottom:auto;padding:12px 15px;font-size:13px}}
+@media(max-width:620px){.global-rani-whatsapp-help{right:14px;bottom:14px;padding:12px 15px;font-size:13px}}
+</style>
+<style id="jewelry-sets-floating-responsive-style">
+@media(max-width:700px){
+  .floating-category-cart{
+    right:max(12px,env(safe-area-inset-right))!important;
+    bottom:max(12px,env(safe-area-inset-bottom))!important;
+    width:78px!important;
+    min-width:78px!important;
+    height:62px!important;
+    padding:5px 6px!important;
+    justify-content:space-between
+  }
+  .floating-cart-bag{width:38px!important;font-size:28px!important}
+  .floating-cart-count{width:34px!important;height:34px!important;margin-left:0!important;font-size:18px!important;border-width:1px}
+  .floating-cart-drawer{width:min(100vw,430px);padding:18px 14px max(18px,env(safe-area-inset-bottom))!important}
+  .global-rani-whatsapp-help{
+    top:52%!important;
+    right:max(10px,env(safe-area-inset-right))!important;
+    bottom:auto!important;
+    transform:translateY(-50%);
+    padding:11px 12px!important;
+    border-radius:22px
+  }
+  .global-rani-whatsapp-help:hover{transform:translateY(calc(-50% - 3px))}
+  .global-rani-whatsapp-help span:last-child{display:none}
+}
 </style>
 <a aria-label="Need help? Contact The Global Rani on WhatsApp" class="global-rani-whatsapp-help" href="https://wa.me/12164570935?text=Hello%20Global%20Rani%2C%20I%20need%20help." rel="noopener noreferrer" target="_blank"><span aria-hidden="true" class="wa-icon">◉</span><span>Need help?</span></a>
 <script id="disable-unavailable-tryon-script">
