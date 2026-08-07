@@ -1,3 +1,10 @@
+// Member order queries must use the same standard database as checkout.
+import { listDocuments, queryDocumentsByStringFields } from "../shared/firebase-orders.mjs";
+import { getCatalog } from "../shared/secure-catalog.mjs";
+
+const FIREBASE_PROJECT_ID = "the-global-rani-website";
+const stripeProductImageCache = new Map();
+
 const json = (body, status = 200) =>
   new Response(JSON.stringify(body), {
     status,
@@ -22,7 +29,7 @@ function decodeFirebaseToken(idToken) {
   }
 }
 
-async function verifyFirebaseUser(idToken) {
+export async function verifyFirebaseUser(idToken) {
   const apiKey =
     process.env.FIREBASE_WEB_API_KEY ||
     ["AI", "zaSyBise9pqTYgQwmG-xOVZQ0-30j1EvcgDng"].join("");
@@ -62,106 +69,153 @@ async function verifyFirebaseUser(idToken) {
     );
   }
 
+  if (projectId !== FIREBASE_PROJECT_ID) {
+    throw new Error(
+      `Your login belongs to ${projectId}; expected ${FIREBASE_PROJECT_ID}. Please log out and log in again.`
+    );
+  }
+
   return {
     uid: user.localId,
     email: user.email || "",
-    projectId,
+    emailVerified: user.emailVerified === true,
+    projectId: FIREBASE_PROJECT_ID,
   };
 }
 
-function fromFirestore(value) {
-  if (!value || typeof value !== "object") return null;
-
-  if ("nullValue" in value) return null;
-  if ("stringValue" in value) return value.stringValue;
-  if ("integerValue" in value) return Number(value.integerValue);
-  if ("doubleValue" in value) return Number(value.doubleValue);
-  if ("booleanValue" in value) return Boolean(value.booleanValue);
-  if ("timestampValue" in value) return value.timestampValue;
-
-  if ("arrayValue" in value) {
-    return (value.arrayValue?.values || []).map(fromFirestore);
-  }
-
-  if ("mapValue" in value) {
-    return Object.fromEntries(
-      Object.entries(value.mapValue?.fields || {}).map(([key, child]) => [
-        key,
-        fromFirestore(child),
-      ])
-    );
-  }
-
-  return null;
+function normalizeEmail(value) {
+  return String(value || "").trim().toLowerCase();
 }
 
-function documentToOrder(document) {
-  const fields = document?.fields || {};
+function orderContainsEmail(order, expectedEmail) {
+  const target = normalizeEmail(expectedEmail);
+  if (!target || !order || typeof order !== "object") return false;
 
-  return Object.fromEntries(
-    Object.entries(fields).map(([key, value]) => [
-      key,
-      fromFirestore(value),
-    ])
-  );
+  const pending = [order];
+  const visited = new Set();
+  while (pending.length) {
+    const value = pending.pop();
+    if (!value || typeof value !== "object" || visited.has(value)) continue;
+    visited.add(value);
+
+    for (const [key, child] of Object.entries(value)) {
+      const emailField = String(key).replace(/[^a-z]/gi, "").toLowerCase().includes("email");
+      if (emailField && typeof child === "string" && normalizeEmail(child) === target) return true;
+      if (child && typeof child === "object") pending.push(child);
+    }
+  }
+  return false;
 }
 
-async function loadOrders({ uid, projectId, idToken }) {
-  const url =
-    `https://firestore.googleapis.com/v1/projects/` +
-    `${encodeURIComponent(projectId)}/databases/(default)/documents:runQuery`;
+function normalizeProductName(value) {
+  return String(value || "").trim().toLowerCase();
+}
 
-  const response = await fetch(url, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${idToken}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      structuredQuery: {
-        from: [
-          {
-            collectionId: "orders",
-          },
-        ],
-        where: {
-          fieldFilter: {
-            field: {
-              fieldPath: "firebaseUserId",
-            },
-            op: "EQUAL",
-            value: {
-              stringValue: uid,
-            },
-          },
-        },
-        limit: 100,
-      },
-    }),
+async function stripeProductImages(sessionId) {
+  const id = String(sessionId || "").trim();
+  const secretKey = String(process.env.STRIPE_SECRET_KEY || "").trim();
+  if (!secretKey || !/^cs_(?:test_|live_)?[A-Za-z0-9]+$/.test(id)) return new Map();
+  if (stripeProductImageCache.has(id)) return stripeProductImageCache.get(id);
+
+  const request = (async () => {
+    const images = new Map();
+    let startingAfter = "";
+    for (let page = 0; page < 10; page += 1) {
+      const url = new URL(`https://api.stripe.com/v1/checkout/sessions/${encodeURIComponent(id)}/line_items`);
+      url.searchParams.set("limit", "100");
+      url.searchParams.append("expand[]", "data.price.product");
+      if (startingAfter) url.searchParams.set("starting_after", startingAfter);
+      const response = await fetch(url, {
+        headers: { Authorization: `Bearer ${secretKey}` }
+      });
+      if (!response.ok) throw new Error(`Stripe product images failed (${response.status}).`);
+      const body = await response.json();
+      const lineItems = Array.isArray(body?.data) ? body.data : [];
+      for (const lineItem of lineItems) {
+        const product = lineItem?.price?.product && typeof lineItem.price.product === "object"
+          ? lineItem.price.product
+          : {};
+        const image = Array.isArray(product?.images)
+          ? String(product.images.find(value => /^https:\/\//i.test(String(value || ""))) || "")
+          : "";
+        const name = normalizeProductName(lineItem?.description);
+        if (name && image) images.set(name, image);
+      }
+      if (!body?.has_more) return images;
+      startingAfter = String(lineItems.at(-1)?.id || "");
+      if (!startingAfter) return images;
+    }
+    return images;
+  })().catch(error => {
+    console.warn("Previous order image lookup failed:", error?.message || error);
+    return new Map();
   });
 
-  if (!response.ok) {
-    const detail = await response.text();
+  stripeProductImageCache.set(id, request);
+  return request;
+}
 
-    if (response.status === 403) {
-      throw new Error(
-        "Previous Orders needs permission in Firebase Firestore Rules."
-      );
-    }
+async function enrichOrderImages(orders) {
+  if (!Array.isArray(orders) || !orders.some(order =>
+    Array.isArray(order?.items) && order.items.some(item => item?.name && !item?.image)
+  )) return orders;
 
-    throw new Error(
-      `Could not load orders (${response.status}): ${detail.slice(0, 180)}`
-    );
+  const sessionIds = [...new Set(orders
+    .filter(order => Array.isArray(order?.items) && order.items.some(item => item?.name && !item?.image))
+    .map(order => String(order?.stripeCheckoutSessionId || "").trim())
+    .filter(Boolean))];
+  const stripeImages = new Map(await Promise.all(sessionIds.map(async id => [id, await stripeProductImages(id)])));
+
+  const unresolved = orders.some(order => Array.isArray(order?.items) && order.items.some(item => {
+    if (!item?.name || item?.image) return false;
+    return !stripeImages.get(String(order?.stripeCheckoutSessionId || "").trim())?.get(normalizeProductName(item.name));
+  }));
+  let catalog = {};
+  if (unresolved) {
+    try { catalog = await getCatalog(); }
+    catch (error) { console.warn("Previous order catalog image lookup failed:", error?.message || error); }
   }
 
-  const rows = await response.json();
+  return orders.map(order => ({
+    ...order,
+    items: Array.isArray(order?.items) ? order.items.map(item => {
+      if (!item?.name || item?.image) return item;
+      const name = normalizeProductName(item.name);
+      const stripeImage = stripeImages.get(String(order?.stripeCheckoutSessionId || "").trim())?.get(name);
+      const catalogImage = String(catalog?.[name]?.image || "");
+      const image = stripeImage || (/^https:\/\//i.test(catalogImage) ? catalogImage : "");
+      return image ? { ...item, image } : item;
+    }) : []
+  }));
+}
 
-  return rows
-    .filter((row) => row.document)
-    .map((row) => documentToOrder(row.document))
-    .sort((a, b) =>
-      String(b.createdAt || "").localeCompare(String(a.createdAt || ""))
-    );
+async function loadOrders({ uid, email, emailVerified }) {
+  const memberEmail = String(email || "").trim();
+  const normalizedMemberEmail = normalizeEmail(memberEmail);
+  let matches;
+  if (emailVerified && normalizedMemberEmail) {
+    // Older orders used several different email shapes. A server-side scan of
+    // the orders collection lets verified members recover that legacy history
+    // without exposing any other customer's documents to the browser.
+    matches = await listDocuments("orders");
+  } else {
+    matches = await queryDocumentsByStringFields("orders", [
+      { fieldPath: "firebaseUserId", value: uid }
+    ]);
+  }
+  const uniqueOrders = new Map();
+  for (const order of matches) {
+    const belongsToMember = String(order.firebaseUserId || "").trim() === uid ||
+      (emailVerified && orderContainsEmail(order, normalizedMemberEmail));
+    if (!belongsToMember) continue;
+
+    const key = String(order.orderNumber || order.stripeCheckoutSessionId || order.id || "").trim();
+    if (key) uniqueOrders.set(key, order);
+  }
+
+  return [...uniqueOrders.values()].sort((a, b) =>
+    String(b.paidAt || b.createdAt || "").localeCompare(String(a.paidAt || a.createdAt || ""))
+  );
 }
 
 export default async function handler(request) {
@@ -187,15 +241,16 @@ export default async function handler(request) {
 
     const member = await verifyFirebaseUser(idToken);
 
-    const orders = await loadOrders({
+    const orders = await enrichOrderImages(await loadOrders({
       uid: member.uid,
-      projectId: member.projectId,
-      idToken,
-    });
+      email: member.email,
+      emailVerified: member.emailVerified,
+    }));
 
     return json({
       member: {
         email: member.email,
+        emailVerified: member.emailVerified,
       },
       orders,
     });

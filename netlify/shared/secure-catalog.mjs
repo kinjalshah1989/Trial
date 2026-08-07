@@ -4,7 +4,15 @@ import staticCatalog from './static-catalog.json' with { type: 'json' };
 const folders = [
   { path: '/global-rani-products', fallback: 85 },
   { path: '/global-rani-earrings', fallback: 45 },
-  { path: '/global-rani-bangles', fallback: 45 }
+  { path: '/global-rani-bangles', fallback: 45 },
+  { path: '/global-rani-pink', fallback: 85 },
+  { path: '/global-rani-red', fallback: 85 },
+  { path: '/global-rani-green', fallback: 85 },
+  { path: '/global-rani-blue', fallback: 85 },
+  { path: '/global-rani-gold', fallback: 85 },
+  { path: '/global-rani-purple', fallback: 85 },
+  { path: '/global-rani-black', fallback: 85 },
+  { path: '/global-rani-multicolor', fallback: 85 }
 ];
 let cache = { at: 0, catalog: null };
 const normalize = value => String(value || '').trim().toLowerCase();
@@ -29,11 +37,18 @@ async function imageKitCatalog() {
       const n=String(f.name||'');
       let m=n.match(/^(.*)-set-([123])\.(png|jpe?g|webp|avif)$/i);
       if(!m) m=n.match(/^(.*?)(?:-earrings|-earring|-set)?-([123])\.(png|jpe?g|webp|avif)$/i);
-      if(!m) continue;
-      const base=m[1].replace(/-(earrings?|set)$/i,'');
-      if(!groups.has(base)) groups.set(base,[]); groups.get(base).push(f);
+      const isImage=/\.(png|jpe?g|webp|avif)$/i.test(n);
+      if(!m && (!isImage || /(?:^|[-_ ])(?:ar|try[-_ ]?on)\.(png|jpe?g|webp|avif)$/i.test(n))) continue;
+      const rawBase=m ? m[1] : n.replace(/\.[^.]+$/,'');
+      const base=rawBase.replace(/-(earrings?|set|image|photo|view)$/i,'');
+      const filePath=String(f.filePath||f.path||'');
+      const parent=filePath.slice(0,Math.max(0,filePath.lastIndexOf('/')));
+      const relativeParent=parent.slice(cfg.path.length).replace(/^\/+|\/+$/g,'');
+      const key=`${relativeParent.toLowerCase()}::${base.toLowerCase()}`;
+      if(!groups.has(key)) groups.set(key,{base,relativeParent,imgs:[]});
+      groups.get(key).imgs.push(f);
     }
-    for(const [base, imgs] of groups){
+    for(const {base,relativeParent,imgs} of groups.values()){
       const first=imgs.sort((a,b)=>String(a.name).localeCompare(String(b.name)))[0];
       const md=first.customMetadata||{};
       if(['false','0','no','off','inactive'].includes(String(md.active??'true').toLowerCase())) continue;
@@ -41,7 +56,13 @@ async function imageKitCatalog() {
       let priceUSD = numeric(md.price ?? md.priceUSD, cfg.fallback);
       if (cfg.path === '/global-rani-products') {
         const range = configuredSetPriceRange();
-        priceUSD = await getOrCreatePermanentPrice(`${base}-set`, range.min, range.max);
+        // jewelry-products.mjs prices every variant by its collection ID.
+        // Checkout must use that same key or the cart and Stripe can resolve
+        // two different permanent prices for the identical product.
+        const priceId = relativeParent
+          ? relativeParent.split('/')[0].toLowerCase()
+          : base.toLowerCase();
+        priceUSD = await getOrCreatePermanentPrice(priceId, range.min, range.max);
       }
       out[normalize(name)]={name,priceUSD,image:String(first.url||'')};
     }

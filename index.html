@@ -7,6 +7,7 @@
 <title>The Global Rani | Indian Jewelry Worldwide</title>
 <meta content="The Global Rani is a trendy, feminine Indian jewelry ecommerce boutique shipping worldwide." name="description"/>
 <meta content="#fff8ef" name="theme-color"/>
+<link href="assets/global-rani-favicon.png" rel="icon" sizes="64x64" type="image/png"/>
 <link href="https://theglobalrani.com/" rel="canonical"/>
 <meta content="website" property="og:type"/>
 <meta content="The Global Rani | Indian Jewelry Worldwide" property="og:title"/>
@@ -1794,8 +1795,8 @@
     .quantity-btn { width:28px; height:28px; border:none; border-radius:50%; background:linear-gradient(135deg,var(--ruby),var(--lotus)); color:#000; font-weight:900; cursor:pointer; line-height:1; display:inline-flex; align-items:center; justify-content:center; }
     .quantity-btn:hover { transform:translateY(-1px); box-shadow:0 8px 16px rgba(158,21,51,.20); }
     .quantity-value { min-width:22px; text-align:center; font-weight:900; color:var(--ink); }
-    #paypal-button-container { min-height: 90px; padding: 18px; border: 1px dashed rgba(185,133,47,.45); border-radius: 22px; background:rgba(255,255,255,.5); }
-    #paypal-button-container.payment-locked {
+    #stripe-checkout-container { min-height: 90px; padding: 18px; border: 1px dashed rgba(185,133,47,.45); border-radius: 22px; background:rgba(255,255,255,.5); }
+    #stripe-checkout-container.payment-locked {
       display: grid;
       place-items: center;
       min-height: 120px;
@@ -4170,9 +4171,9 @@
 
   
 
-    /* Single editorial inventory sale video after Royal Drops */
+    /* Large editorial inventory mosaic after New Arrivals */
     .inventory-editorial-section {
-      width: min(72vw, 920px);
+      width: min(94vw, 1480px);
       margin: clamp(40px, 5vw, 76px) auto clamp(46px, 6vw, 90px);
       padding: 0;
       position: relative;
@@ -4180,8 +4181,8 @@
     .inventory-editorial-shell {
       position: relative;
       overflow: hidden;
-      aspect-ratio: 16 / 7.2;
-      min-height: 280px;
+      aspect-ratio: 16 / 8;
+      min-height: 480px;
       background: linear-gradient(135deg, #f7f1ea 0%, #e6ddd1 48%, #f3ede6 100%);
       border-radius: 6px;
       box-shadow: 0 22px 48px rgba(50, 28, 12, .14);
@@ -4289,12 +4290,12 @@
       .inventory-editorial-tile img { animation: none; }
     }
     @media (max-width: 1100px) {
-      .inventory-editorial-section { width: 78vw; }
+      .inventory-editorial-section { width: 92vw; }
       .inventory-editorial-copy { max-width: 38%; }
     }
     @media (max-width: 900px) {
-      .inventory-editorial-section { width: 86vw; }
-      .inventory-editorial-shell { aspect-ratio: 16 / 9; min-height: 290px; }
+      .inventory-editorial-section { width: 94vw; }
+      .inventory-editorial-shell { aspect-ratio: 16 / 10; min-height: 500px; }
       .inventory-editorial-tile.tile-a { left: 3%; top: 5%; width: 20%; height: 31%; }
       .inventory-editorial-tile.tile-b { left: 25%; top: 5%; width: 26%; height: 20%; }
       .inventory-editorial-tile.tile-c { left: 53%; top: 5%; width: 18%; height: 34%; }
@@ -4309,8 +4310,8 @@
       .inventory-editorial-tile.tile-l { left: 78%; top: 74%; width: 17%; height: 18%; }
     }
     @media (max-width: 640px) {
-      .inventory-editorial-section { width: 90vw; margin: 34px auto 52px; }
-      .inventory-editorial-shell { aspect-ratio: 4 / 5; min-height: 410px; }
+      .inventory-editorial-section { width: 96vw; margin: 34px auto 52px; }
+      .inventory-editorial-shell { aspect-ratio: 4 / 5; min-height: 520px; }
       .inventory-editorial-tile.tile-a { left: 5%; top: 4%; width: 31%; height: 18%; }
       .inventory-editorial-tile.tile-b { left: 40%; top: 4%; width: 54%; height: 14%; }
       .inventory-editorial-tile.tile-c { left: 7%; top: 25%; width: 24%; height: 20%; }
@@ -4326,6 +4327,205 @@
     }
 
 .cart-tax-shipping-note{margin:4px 0 14px;font-size:14px;color:#4f4a45;line-height:1.4;}
+</style>
+<style id="new-arrivals-style">
+/* Wide, shop-style New Arrivals rail that replaces the former Royal Drops stage. */
+#shop.new-arrivals-section {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: clamp(54px, 6vw, 88px) 0 clamp(62px, 7vw, 104px);
+  overflow: hidden;
+  perspective: none;
+  background: linear-gradient(180deg, rgba(255,255,255,.82), rgba(255,249,241,.88));
+  box-sizing: border-box;
+}
+#shop.new-arrivals-section::before,
+#shop.new-arrivals-section::after { display: none; }
+.new-arrivals-heading {
+  width: min(100%, 1680px);
+  margin: 0 auto;
+  padding: 0 clamp(18px, 3vw, 48px) 28px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+}
+.new-arrivals-eyebrow {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--ruby);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+.new-arrivals-heading h2 {
+  margin: 0;
+  color: #2f251d;
+  font-family: 'Cinzel', serif;
+  font-size: clamp(38px, 5vw, 66px);
+  font-weight: 600;
+  line-height: 1;
+}
+.new-arrivals-controls { display: flex; gap: 10px; }
+.new-arrivals-arrow {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(158,21,51,.2);
+  border-radius: 50%;
+  background: #fff;
+  color: var(--ruby);
+  box-shadow: 0 10px 24px rgba(70,38,12,.12);
+  font-size: 29px;
+  line-height: 1;
+  cursor: pointer;
+}
+.new-arrivals-viewport { width: 100%; overflow: hidden; }
+.new-arrivals-track {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(16px, 1.7vw, 28px);
+  padding: 0 clamp(18px, 3vw, 48px) 18px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: clamp(18px, 3vw, 48px);
+  overscroll-behavior-inline: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  box-sizing: border-box;
+}
+.new-arrivals-track::-webkit-scrollbar { display: none; }
+.product.new-arrival-card {
+  flex: 0 0 clamp(252px, 22.5vw, 344px);
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  opacity: 1;
+  transform: none;
+  transition: transform .25s ease;
+  isolation: auto;
+  scroll-snap-align: start;
+}
+.product.new-arrival-card::before,
+.product.new-arrival-card::after { display: none; }
+.product.new-arrival-card:hover { transform: translateY(-6px); }
+.new-arrival-photo {
+  position: relative;
+  width: 100%;
+  aspect-ratio: .76;
+  overflow: hidden;
+  border-radius: 999px 999px 26px 26px;
+  background: radial-gradient(circle at 50% 18%, #fffdf7, #f2e4d3 72%);
+  box-shadow: 0 18px 38px rgba(70,38,12,.13);
+}
+.new-arrival-photo img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+  transition: transform .55s ease;
+}
+.new-arrival-card:hover .new-arrival-photo img { transform: scale(1.035); }
+.new-arrival-badge {
+  position: absolute;
+  top: 17px;
+  right: 17px;
+  padding: 7px 13px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--ruby), #cb5070);
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(158,21,51,.22);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: .1em;
+}
+.new-arrival-copy { padding: 17px 2px 0; }
+.new-arrival-category {
+  display: block;
+  margin-bottom: 7px;
+  color: #8c7565;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.product.new-arrival-card h3 {
+  min-height: 44px;
+  margin: 0;
+  color: #2d241e;
+  font-family: Inter, Arial, sans-serif;
+  font-size: 15px;
+  font-weight: 750;
+  line-height: 1.45;
+  text-transform: uppercase;
+}
+.new-arrival-detail {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 8px;
+  color: #7a685c;
+  font-size: 12px;
+}
+.new-arrival-detail span { color: var(--gold); }
+.new-arrival-buy-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-top: 12px;
+}
+.new-arrival-price {
+  color: #241b15;
+  font-size: 18px;
+  font-weight: 800;
+}
+.new-arrival-add {
+  flex: 0 0 auto;
+  padding: 9px 16px;
+  border: 1px solid rgba(158,21,51,.25);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--ruby);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 8px 18px rgba(70,38,12,.09);
+}
+.new-arrival-add:hover { background: var(--ruby); color: #fff; }
+.new-arrivals-status {
+  width: 100%;
+  min-height: 260px;
+  margin: 0;
+  display: grid;
+  place-items: center;
+  color: #7c6759;
+  font-weight: 700;
+  text-align: center;
+}
+@media (max-width: 700px) {
+  #shop.new-arrivals-section { padding-block: 44px 66px; }
+  .new-arrivals-heading { align-items: center; padding-bottom: 22px; }
+  .new-arrivals-eyebrow { font-size: 10px; letter-spacing: .16em; }
+  .new-arrivals-heading h2 { font-size: clamp(34px, 10vw, 48px); }
+  .new-arrivals-controls { gap: 7px; }
+  .new-arrivals-arrow { width: 39px; height: 39px; font-size: 25px; }
+  .new-arrivals-track { gap: 16px; }
+  .product.new-arrival-card { flex-basis: min(76vw, 312px); }
+  .new-arrival-photo { border-radius: 999px 999px 22px 22px; }
+}
 </style>
 <style>
 /* Final mobile sizing adjustment: make the hero and logo only slightly larger. */
@@ -4601,11 +4801,153 @@
 .profile-dropdown .global-profile-logout{display:block;width:100%;position:relative;z-index:1;padding:11px 14px;border:0;border-radius:14px;background:transparent;color:var(--ruby,#9e1533);font:inherit;font-size:14px;font-weight:900;white-space:nowrap;text-align:center;cursor:pointer}.profile-dropdown .global-profile-logout:hover{background:linear-gradient(135deg,rgba(158,21,51,.10),rgba(185,133,47,.16));color:var(--ruby,#9e1533)}.profile-dropdown .global-profile-logout[hidden]{display:none!important}
 </style>
 
+<style id="shop-by-color-styles">
+.shop-by-color {
+  position: relative;
+  z-index: 9;
+  width: 100%;
+  max-width: none;
+  min-height: 0;
+  margin: 0 auto;
+  padding: 0;
+  overflow: visible;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.shop-by-color__inner {
+  width: 100%;
+  margin: 0 auto;
+  padding: 2px 12px 4px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  column-gap: clamp(20px, 2vw, 36px);
+  align-items: center;
+}
+.shop-by-color__eyebrow {
+  grid-column: 1;
+  justify-self: end;
+  margin: 0;
+  color: var(--ruby);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 900;
+  line-height: 1.2;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.shop-by-color__row {
+  grid-column: 2;
+  display: flex;
+  justify-content: center;
+  gap: clamp(28px, 3vw, 46px);
+  align-items: start;
+}
+.color-story {
+  flex: 0 0 58px;
+  width: 58px;
+  min-width: 0;
+  color: var(--dark);
+  text-align: center;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.color-story__image {
+  position: relative;
+  display: block;
+  width: 54px;
+  aspect-ratio: 1;
+  margin: 0 auto 3px;
+  overflow: hidden;
+  border: 3px solid var(--accent);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 32% 24%,
+    rgba(255,255,255,.94) 0 10%,
+    var(--soft) 42%,
+    color-mix(in srgb, var(--accent) 48%, var(--soft)) 100%
+  );
+  box-shadow:
+    0 0 0 2px rgba(255,255,255,.9),
+    0 7px 15px color-mix(in srgb, var(--accent) 20%, transparent);
+  transition: transform .22s ease, box-shadow .22s ease;
+}
+.color-story__image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(145deg, rgba(255,255,255,.20), transparent 50%, rgba(52,33,14,.08));
+  pointer-events: none;
+}
+.color-story__label {
+  display: block;
+  overflow: hidden;
+  color: #2f2018;
+  font-size: 10.5px;
+  font-weight: 900;
+  line-height: 1.05;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.color-story:hover .color-story__image,
+.color-story:focus-visible .color-story__image {
+  transform: translateY(-3px) scale(1.04);
+  box-shadow:
+    0 0 0 2px rgba(255,255,255,.96),
+    0 10px 20px color-mix(in srgb, var(--accent) 30%, transparent);
+}
+.color-story:focus-visible { outline: 0; }
+.color-story:focus-visible .color-story__label {
+  color: var(--ruby);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+@media (max-width: 1100px) {
+  .shop-by-color__inner { display: block; }
+  .shop-by-color__eyebrow {
+    display: block;
+    margin: 0 8px 4px;
+    font-size: 11px;
+    text-align: left;
+  }
+}
+@media (max-width: 900px) {
+  .shop-by-color__inner { padding: 2px 8px 4px; }
+  .shop-by-color__row {
+    justify-content: flex-start;
+    gap: 14px;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    padding: 2px 4px 5px;
+    scroll-padding-inline: 4px;
+    scroll-snap-type: inline mandatory;
+    scrollbar-width: none;
+  }
+  .color-story { flex-basis: 64px; width: 64px; }
+  .shop-by-color__row::-webkit-scrollbar { display: none; }
+  .color-story { scroll-snap-align: start; }
+  .color-story__image { width: 52px; }
+  .color-story__label { font-size: 10px; }
+}
+@media (max-width: 520px) {
+  .shop-by-color__inner { padding: 2px 6px 3px; }
+  .shop-by-color__row { gap: 11px; }
+  .color-story { flex-basis: 58px; width: 58px; }
+  .color-story__image { width: 48px; border-width: 2px; }
+  .color-story__label { font-size: 9.5px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .color-story__image { transition: none; }
+}
+</style>
+
 <style id="global-rani-hover-surprise-styles">
 .global-rani-surprise-heading-bottom{margin:32px 0 0}.global-rani-surprise-heading-bottom h2{margin-bottom:0}.global-rani-surprise-section{width:min(100%,1380px);margin:0 auto;padding:58px clamp(14px,3vw,22px) 70px;position:relative;overflow:hidden}.global-rani-surprise-heading{text-align:center;margin-bottom:30px}.global-rani-surprise-heading h2{font-family:'Cinzel',serif;color:var(--gold,#b9852f);font-size:clamp(30px,5vw,62px);line-height:1.12;margin:8px 0 12px}.global-rani-surprise-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(14px,2vw,24px);align-items:start}.global-rani-surprise-card{position:relative;display:block;text-decoration:none;width:100%;min-width:0;padding:0;border:0;border-radius:clamp(20px,2vw,30px);background:#f7eee7;overflow:hidden;cursor:pointer;box-shadow:0 22px 50px rgba(91,50,62,.14);isolation:isolate;touch-action:manipulation;-webkit-tap-highlight-color:transparent}.global-rani-surprise-card img{display:block;width:100%;height:auto;aspect-ratio:1/1;object-fit:cover;object-position:center top;transition:opacity .28s ease,transform .35s ease,filter .35s ease}.global-rani-surprise-card .surprise-hover{position:absolute;inset:0;opacity:0;transform:translateY(18px) scale(.96)}.global-rani-surprise-card .surprise-label{position:absolute;left:50%;bottom:clamp(12px,1.5vw,18px);z-index:4;transform:translateX(-50%);max-width:calc(100% - 24px);padding:clamp(8px,1vw,10px) clamp(14px,1.5vw,17px);border-radius:999px;background:rgba(255,255,255,.94);color:#8e1531;font-size:clamp(13px,1.25vw,16px);font-weight:900;letter-spacing:.06em;white-space:nowrap;box-shadow:0 8px 22px rgba(83,40,53,.16)}.global-rani-surprise-card:hover .surprise-default,.global-rani-surprise-card.is-active .surprise-default{opacity:0;transform:scale(.985);filter:blur(1px)}.global-rani-surprise-card:hover .surprise-hover,.global-rani-surprise-card.is-active .surprise-hover{opacity:1;animation:globalRaniBasketJiggle .62s ease-in-out infinite alternate}.global-rani-surprise-card:hover .surprise-label,.global-rani-surprise-card.is-active .surprise-label{background:#8e1531;color:#fff}@keyframes globalRaniBasketJiggle{0%{transform:translateY(-7px) rotate(-1.1deg) scale(1.018)}25%{transform:translateY(-13px) rotate(1.4deg) scale(1.035)}50%{transform:translateY(-10px) rotate(-1.5deg) scale(1.04)}75%{transform:translateY(-14px) rotate(1deg) scale(1.032)}100%{transform:translateY(-8px) rotate(-.7deg) scale(1.02)}}
 @media(max-width:1050px){.global-rani-surprise-grid{grid-template-columns:repeat(2,minmax(0,1fr));max-width:860px;margin:0 auto}.global-rani-surprise-card:last-child{grid-column:1/-1;width:min(100%,420px);justify-self:center}.global-rani-surprise-section{padding-top:46px;padding-bottom:58px}}
-@media(max-width:640px){.global-rani-surprise-heading-bottom{margin-top:22px}.global-rani-surprise-section{padding:36px 12px 46px}.global-rani-surprise-heading{margin-bottom:20px}.global-rani-surprise-heading h2{font-size:clamp(27px,9vw,40px)}.global-rani-surprise-grid{grid-template-columns:1fr;gap:16px;max-width:430px}.global-rani-surprise-card,.global-rani-surprise-card:last-child{grid-column:auto;width:100%;max-width:none;border-radius:22px}.global-rani-surprise-card img{aspect-ratio:4/5}.global-rani-surprise-card .surprise-label{bottom:12px;font-size:14px;padding:8px 15px}}
-@media(max-width:380px){.global-rani-surprise-section{padding-left:8px;padding-right:8px}.global-rani-surprise-grid{gap:12px}.global-rani-surprise-card{border-radius:18px}}
+@media(max-width:640px){.global-rani-surprise-heading-bottom{margin-top:18px}.global-rani-surprise-section{padding:22px 6px 30px}.global-rani-surprise-heading{margin-bottom:16px}.global-rani-surprise-heading h2{font-size:clamp(25px,8vw,36px)}.global-rani-surprise-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(5px,2vw,12px);max-width:none;width:100%;padding:0 2px}.global-rani-surprise-card,.global-rani-surprise-card:last-child{grid-column:auto;width:100%;max-width:none;border-radius:clamp(14px,4vw,22px)}.global-rani-surprise-card img{aspect-ratio:1/1;object-position:center top}.global-rani-surprise-card .surprise-label{bottom:clamp(6px,1.6vw,10px);max-width:calc(100% - 10px);font-size:clamp(9px,3vw,13px);padding:clamp(4px,1.4vw,7px) clamp(7px,2.4vw,13px)}}
+@media(max-width:380px){.global-rani-surprise-section{padding:16px 3px 22px}.global-rani-surprise-grid{gap:4px;padding:0}.global-rani-surprise-card{border-radius:14px}.global-rani-surprise-card .surprise-label{bottom:5px;font-size:8.5px;padding:3px 6px}}
 @media(hover:none){.global-rani-surprise-card:hover .surprise-default{opacity:1;transform:none;filter:none}.global-rani-surprise-card:hover .surprise-hover{opacity:0;animation:none}.global-rani-surprise-card:hover .surprise-label{background:rgba(255,255,255,.94);color:#8e1531}.global-rani-surprise-card.is-active .surprise-default{opacity:0;transform:scale(.985);filter:blur(1px)}.global-rani-surprise-card.is-active .surprise-hover{opacity:1;animation:globalRaniBasketJiggle .62s ease-in-out infinite alternate}.global-rani-surprise-card.is-active .surprise-label{background:#8e1531;color:#fff}}
 @media(prefers-reduced-motion:reduce){.global-rani-surprise-card img{transition:none}.global-rani-surprise-card:hover .surprise-hover,.global-rani-surprise-card.is-active .surprise-hover{animation:none;transform:none}}
 </style>
@@ -4641,9 +4983,48 @@
 </select>
 </div>
 <div class="profile-menu-wrap"><button aria-expanded="false" aria-haspopup="true" aria-label="Open member profile sign up and login" class="profile-icon-link profile-trigger bloom-hover" title="Sign up or log in" type="button"><span class="profile-caret-badge">⌄</span></button><div class="profile-dropdown" data-profile-dropdown="" role="menu"><a href="account.html" role="menuitem">Member Profile</a><a href="account.html?action=login" role="menuitem">Log in</a><button class="profile-dropdown-logout global-profile-logout" hidden="" role="menuitem" type="button">Log Out</button></div></div>
-<button aria-label="Open shopping bag" class="cart-btn cart-icon-btn bloom-hover" onclick="toggleCart()"><span aria-hidden="true" class="bag-icon"><svg focusable="false" role="img" viewbox="0 0 24 24"><path class="bag-body" d="M6.2 8.2h11.6l1.1 12.1H5.1L6.2 8.2Z"></path><path class="bag-handle" d="M8.8 9V6.9a3.2 3.2 0 0 1 6.4 0V9"></path><path class="bag-sparkle" d="M17.2 3.4l.45 1.15 1.15.45-1.15.45-.45 1.15-.45-1.15-1.15-.45 1.15-.45.45-1.15Z"></path></svg></span><span class="cart-count-badge" id="cartCount">0</span></button><div class="hamburger-menu-wrap"><button aria-expanded="false" aria-haspopup="true" aria-label="Open site menu" class="hamburger-toggle bloom-hover" type="button"><span></span><span></span><span></span></button><div class="hamburger-dropdown" role="menu"><span class="hamburger-menu-label">Menu</span><a href="#categories" role="menuitem">Shop by Collection</a><a href="#shop" role="menuitem">Royal Drops</a><a href="#ugc" role="menuitem">Videos</a><a href="#happy-customers" role="menuitem">Happy Customers</a><a href="behind-the-global-rani.html" role="menuitem">Behind The Global Rani</a></div></div>
+<button aria-label="Open shopping bag" class="cart-btn cart-icon-btn bloom-hover" onclick="toggleCart()"><span aria-hidden="true" class="bag-icon"><svg focusable="false" role="img" viewbox="0 0 24 24"><path class="bag-body" d="M6.2 8.2h11.6l1.1 12.1H5.1L6.2 8.2Z"></path><path class="bag-handle" d="M8.8 9V6.9a3.2 3.2 0 0 1 6.4 0V9"></path><path class="bag-sparkle" d="M17.2 3.4l.45 1.15 1.15.45-1.15.45-.45 1.15-.45-1.15-1.15-.45 1.15-.45.45-1.15Z"></path></svg></span><span class="cart-count-badge" id="cartCount">0</span></button><div class="hamburger-menu-wrap"><button aria-expanded="false" aria-haspopup="true" aria-label="Open site menu" class="hamburger-toggle bloom-hover" type="button"><span></span><span></span><span></span></button><div class="hamburger-dropdown" role="menu"><span class="hamburger-menu-label">Menu</span><a href="#categories" role="menuitem">Shop by Collection</a><a href="#shop" role="menuitem">New Arrivals</a><a href="#ugc" role="menuitem">Videos</a><a href="#happy-customers" role="menuitem">Happy Customers</a><a href="behind-the-global-rani.html" role="menuitem">Behind The Global Rani</a></div></div>
 </div>
 </nav>
+<section aria-label="Shop jewelry by color" class="shop-by-color" id="shop-by-colors">
+  <div class="shop-by-color__inner">
+    <h2 class="shop-by-color__eyebrow">Shop by colors</h2>
+    <div class="shop-by-color__row" role="list">
+      <a aria-label="Shop pink jewelry" class="color-story" href="categories/set-colors.html?color=pink" role="listitem" style="--accent:#ef4f9a;--soft:#ffe0ef;">
+        <span aria-hidden="true" class="color-story__image"></span>
+        <span class="color-story__label">Pink</span>
+      </a>
+      <a aria-label="Shop red jewelry" class="color-story" href="categories/set-colors.html?color=red" role="listitem" style="--accent:#d3243d;--soft:#ffe0e4;">
+        <span aria-hidden="true" class="color-story__image"></span>
+        <span class="color-story__label">Red</span>
+      </a>
+      <a aria-label="Shop green jewelry" class="color-story" href="categories/set-colors.html?color=green" role="listitem" style="--accent:#16865d;--soft:#dff7eb;">
+        <span aria-hidden="true" class="color-story__image"></span>
+        <span class="color-story__label">Green</span>
+      </a>
+      <a aria-label="Shop blue jewelry" class="color-story" href="categories/set-colors.html?color=blue" role="listitem" style="--accent:#2c77cf;--soft:#e0efff;">
+        <span aria-hidden="true" class="color-story__image"></span>
+        <span class="color-story__label">Blue</span>
+      </a>
+      <a aria-label="Shop gold jewelry" class="color-story" href="categories/set-colors.html?color=gold" role="listitem" style="--accent:#c68b24;--soft:#fff1c8;">
+        <span aria-hidden="true" class="color-story__image"></span>
+        <span class="color-story__label">Gold</span>
+      </a>
+      <a aria-label="Shop purple jewelry" class="color-story" href="categories/set-colors.html?color=purple" role="listitem" style="--accent:#8d4fc3;--soft:#f0e2ff;">
+        <span aria-hidden="true" class="color-story__image"></span>
+        <span class="color-story__label">Purple</span>
+      </a>
+      <a aria-label="Shop black jewelry" class="color-story" href="categories/set-colors.html?color=black" role="listitem" style="--accent:#342f38;--soft:#e8e5ea;">
+        <span aria-hidden="true" class="color-story__image"></span>
+        <span class="color-story__label">Black</span>
+      </a>
+      <a aria-label="Shop multicolor jewelry" class="color-story" href="categories/set-colors.html?color=multicolor" role="listitem" style="--accent:#e0642f;--soft:#fff0de;">
+        <span aria-hidden="true" class="color-story__image"></span>
+        <span class="color-story__label">Multicolor</span>
+      </a>
+    </div>
+  </div>
+</section>
 <header>
 <div class="hero">
 <div class="eyebrow">Indian jewelry • global glow</div>
@@ -4733,20 +5114,21 @@
 <button aria-label="Open Handcrafted Jewelry video" class="collection-video-card has-video" data-video-src="https://ik.imagekit.io/k0wpvuatq/ferris-handcrafted-jewellery.mp4" data-video-title="Handcrafted Jewelry" type="button"><video autoplay="" loop="" muted="" playsinline="" preload="metadata" src="https://ik.imagekit.io/k0wpvuatq/ferris-handcrafted-jewellery.mp4"></video></button>
 </div>
 </section>
-<section id="shop">
-<div class="section-title">
-<h2>Royal Drops</h2>
+<section aria-labelledby="newArrivalsTitle" class="new-arrivals-section" id="shop">
+<div class="new-arrivals-heading">
+<div>
+<span class="new-arrivals-eyebrow">Fresh from The Global Rani</span>
+<h2 id="newArrivalsTitle">New Arrivals</h2>
 </div>
-<div aria-label="Floating 3D Royal Drops product carousel" class="royal-drops-shell">
-<button aria-label="Previous Royal Drops product" class="royal-scroll-btn prev bloom-hover" onclick="rotateRoyalDrops(-1)" type="button">‹</button>
-<div class="royal-3d-stage" id="royalDropsStage">
-<div class="royal-drops-track" id="royalDropsTrack">
-<div class="royal-drops-loading" id="royalDropsLoading" role="status">Loading Royal Drops…</div>
-</div>
-<div aria-label="Royal Drops carousel controls" class="royal-3d-controls" id="royalDropsControls">
+<div aria-label="New Arrivals carousel controls" class="new-arrivals-controls">
+<button aria-label="Scroll New Arrivals left" class="new-arrivals-arrow bloom-hover" onclick="scrollNewArrivals(-1)" type="button">‹</button>
+<button aria-label="Scroll New Arrivals right" class="new-arrivals-arrow bloom-hover" onclick="scrollNewArrivals(1)" type="button">›</button>
 </div>
 </div>
-<button aria-label="Next Royal Drops product" class="royal-scroll-btn next bloom-hover" onclick="rotateRoyalDrops(1)" type="button">›</button>
+<div class="new-arrivals-viewport">
+<div aria-label="New jewelry set arrivals" class="new-arrivals-track" id="newArrivalsTrack" role="list">
+<p class="new-arrivals-status" role="status">Loading new jewelry sets…</p>
+</div>
 </div>
 </section>
 <section aria-label="Inventory sale video showcase" class="inventory-editorial-section">
@@ -4893,7 +5275,7 @@
 <div>
 <div class="checkout-currency-note" id="checkoutCurrencyNote">Select your country above to see prices in your local currency.</div>
 <div class="checkout-currency-note" id="checkoutProfileNote">Payment is locked. Please add items to cart, then use your saved member shipping details. Guest checkout is available only when signed out.</div>
-<div id="paypal-button-container">Payment will appear after shipping details are submitted.</div>
+<div id="stripe-checkout-container">Payment will appear after shipping details are submitted.</div>
 </div>
 </div>
 </section>
@@ -4932,8 +5314,7 @@
 <script>
     let cart = [];
     try { localStorage.removeItem('globalRaniCart'); } catch (error) {}
-    const PAYPAL_CLIENT_ID = 'AaNc6OO4JNRFIubsnRC3uWqR4ASUDN2x_hb_zcLpSyQAzV3GwZxodEdNDI9yqCZ6iv-5yHKRINjdJ0C-';
-    const paypalSupportedCurrencies = new Set(['AUD','BRL','CAD','CNY','CZK','DKK','EUR','HKD','HUF','ILS','JPY','MYR','MXN','TWD','NZD','NOK','PHP','PLN','GBP','SGD','SEK','CHF','THB','USD']);
+    const stripeSupportedCurrencies = new Set(['AED','AUD','BRL','CAD','CHF','CNY','CZK','DKK','EUR','GBP','HKD','HUF','ILS','INR','JPY','MYR','MXN','NOK','NZD','PHP','PLN','QAR','SAR','SEK','SGD','THB','TWD','USD','ZAR']);
     const fallbackRates = {
       USD: 1, INR: 95.5221, GBP: 0.748727, EUR: 0.874011, CAD: 1.41985, AUD: 1.44071,
       AED: 3.6725, SGD: 1.28, NZD: 1.63, JPY: 161.0, MYR: 4.24, PHP: 58.6, MXN: 18.2,
@@ -4941,8 +5322,9 @@
     };
     let selectedCurrency = { country: 'US', code: 'USD', name: 'United States', symbol: '$' };
     let exchangeRates = { ...fallbackRates };
-    let currentPayPalCurrency = 'USD';
+    let currentStripeCurrency = 'USD';
     let profileSubmittedForPayment = false;
+    let stripeCheckoutInProgress = false;
 
     function saveCart() {
       sessionStorage.setItem('globalRaniCart', JSON.stringify(cart));
@@ -5099,7 +5481,7 @@
         exchangeRates = { ...fallbackRates };
       }
       updateDisplayedPrices();
-      renderPayPalButtons();
+      renderStripeCheckout();
     }
 
     function addCartItem(item, button) {
@@ -5128,7 +5510,7 @@
         setTimeout(() => { button.textContent = originalText; }, 900);
       }
       renderCart();
-      renderPayPalButtons();
+      renderStripeCheckout();
       const profileStatus = document.getElementById('profileStatus');
       if (profileStatus) profileStatus.textContent = profileSubmittedForPayment ? 'Item added. Your saved member shipping details are ready, so payment can continue.' : 'Item added. Continue as guest or save shipping details before payment.';
       const drawer = document.getElementById('cartDrawer');
@@ -5151,7 +5533,7 @@
       cart.splice(index, 1);
       saveCart();
       renderCart();
-      renderPayPalButtons();
+      renderStripeCheckout();
       const drawerCart = document.getElementById('drawerCart');
       if (!cart.length && drawerCart) {
         drawerCart.innerHTML = '<p>Your cart is empty.</p>';
@@ -5163,7 +5545,7 @@
       cart[index].quantity = getItemQuantity(cart[index]) + 1;
       saveCart();
       renderCart();
-      renderPayPalButtons();
+      renderStripeCheckout();
     }
 
     function decrementCartItem(index) {
@@ -5176,7 +5558,7 @@
       cart[index].quantity = nextQuantity;
       saveCart();
       renderCart();
-      renderPayPalButtons();
+      renderStripeCheckout();
     }
 
     function getCartTotalUSD() {
@@ -5214,7 +5596,7 @@
     function updateCheckoutCurrencyNote() {
       const note = document.getElementById('checkoutCurrencyNote');
       if (!note) return;
-      const paymentCurrency = paypalSupportedCurrencies.has(selectedCurrency.code) ? selectedCurrency.code : 'USD';
+      const paymentCurrency = stripeSupportedCurrencies.has(selectedCurrency.code) ? selectedCurrency.code : 'USD';
       if (selectedCurrency.country === 'IN') {
         note.textContent = '';
         note.hidden = true;
@@ -5222,7 +5604,7 @@
         note.textContent = '';
         note.hidden = true;
       } else {
-        note.textContent = `Prices are displayed in ${selectedCurrency.code}. PayPal does not support every currency, so checkout will process in USD for this country.`;
+        note.textContent = `Prices are displayed in ${selectedCurrency.code}. Stripe Checkout will process this order in USD.`;
       }
     }
 
@@ -5233,17 +5615,11 @@
     function handleCurrencyChange(event) {
       const selectedValue = event.target.value;
       selectedCurrency = parseCurrencySelection(selectedValue);
-      localStorage.setItem('globalRaniCurrency', selectedValue);
-
-      // Update every visible amount immediately, then reload the home page so
-      // the selected country/currency is applied consistently across the site.
+      // Update immediately and keep the choice for every other storefront page.
+      window.GlobalRaniCurrency?.setSelection?.(selectedValue);
+      try { localStorage.setItem('globalRaniCurrency', selectedValue); } catch (error) {}
       updateDisplayedPrices();
-      renderPayPalButtons();
-
-      const destination = new URL('index.html', window.location.href);
-      destination.searchParams.set('currency', selectedCurrency.code);
-      destination.searchParams.set('refresh', Date.now().toString());
-      window.location.assign(destination.href);
+      renderStripeCheckout();
     }
 
 
@@ -5483,77 +5859,81 @@
       return shuffled;
     }
 
-    function royalProductCard(product) {
-      const id = String(product.id || product.name || 'royal-drop').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-      const name = String(product.name || 'Royal Drop');
+    function newArrivalProductCard(product) {
+      const name = String(product.name || 'Global Rani Jewelry');
       const price = Number(product.price) || 0;
-      const images = [...new Set((Array.isArray(product.images) ? product.images : [product.image]).filter(Boolean))].slice(0, 3);
-      const imageMarkup = images.map((url, index) => `<img alt="${escapeRoyalHtml(name)} photo ${index + 1}" class="${index === 0 ? 'active' : ''}" decoding="async" loading="lazy" src="${escapeRoyalHtml(url)}"/>`).join('');
-      const photoControls = images.length > 1 ? `
-        <button aria-label="Previous ${escapeRoyalHtml(name)} photo" class="carousel-btn royal-photo-btn prev bloom-hover" onclick="event.stopPropagation(); moveCarousel('${id}', -1)" type="button">‹</button>
-        <button aria-label="Next ${escapeRoyalHtml(name)} photo" class="carousel-btn royal-photo-btn next bloom-hover" onclick="event.stopPropagation(); moveCarousel('${id}', 1)" type="button">›</button>
-        <div aria-label="${escapeRoyalHtml(name)} carousel dots" class="carousel-dots">
-          ${images.map((_, index) => `<button aria-label="Show photo ${index + 1}" class="carousel-dot ${index === 0 ? 'active' : ''}" onclick="event.stopPropagation(); showCarousel('${id}', ${index})" type="button"></button>`).join('')}
-        </div>` : '';
-      const arImage = String(product.arImage || '').trim();
-      const tryOnButton = arImage
-        ? `<button class="royal-tryon-btn bloom-hover" data-royal-action="tryon" data-tryon-id="${id}" data-tryon-image="${escapeRoyalHtml(arImage)}" data-tryon-name="${escapeRoyalHtml(name)}" onclick="return openGlobalRaniTryOn(event, this)" type="button" aria-disabled="false">Try It On</button>`
-        : '<button class="royal-tryon-btn bloom-hover" disabled aria-disabled="true" type="button">Product not available to try-on</button>';
+      const category = String(product.category || 'Jewelry');
+      const image = String(product.image || (Array.isArray(product.images) ? product.images.find(Boolean) : '') || '');
 
-      return `<article class="product royal-3d-card bloom-hover" data-name="${escapeRoyalHtml(name)}" data-price="${price.toFixed(2)}" data-usd-price="${price.toFixed(2)}">
-        <div class="royal-3d-card-inner">
-          <div class="product-carousel royal-orbit-product" data-carousel="${id}">
-            ${imageMarkup}${photoControls}
-          </div>
-          <div class="royal-3d-info">
-            <h3>${escapeRoyalHtml(name)}</h3>
-            <div class="price converted-price" data-usd="${price.toFixed(2)}">$${price.toFixed(2)}</div>
-            <div class="royal-3d-actions">
-              <button class="add-btn bloom-hover" data-royal-action="cart" onclick="return handleRoyalAddToCart(event, this)" onpointerdown="return handleRoyalAddToCart(event, this)" type="button">Add to Cart</button>
-              ${tryOnButton}
-            </div>
+      return `<article class="product new-arrival-card visible" data-image="${escapeRoyalHtml(image)}" data-name="${escapeRoyalHtml(name)}" data-price="${price.toFixed(2)}" data-usd-price="${price.toFixed(2)}" role="listitem">
+        <div class="new-arrival-photo">
+          <img alt="${escapeRoyalHtml(name)}" decoding="async" loading="lazy" src="${escapeRoyalHtml(image)}"/>
+          <span class="new-arrival-badge">NEW</span>
+        </div>
+        <div class="new-arrival-copy">
+          <span class="new-arrival-category">${escapeRoyalHtml(category)}</span>
+          <h3>${escapeRoyalHtml(name)}</h3>
+          <div class="new-arrival-detail"><span aria-hidden="true">✦</span> Freshly added to the collection</div>
+          <div class="new-arrival-buy-row">
+            <strong class="converted-price new-arrival-price" data-usd="${price.toFixed(2)}">$${price.toFixed(2)}</strong>
+            <button aria-label="Add ${escapeRoyalHtml(name)} to cart" class="new-arrival-add bloom-hover" onclick="event.stopPropagation(); addToCart(this)" type="button">Add</button>
           </div>
         </div>
       </article>`;
     }
 
-    async function loadRandomRoyalDrops() {
-      const track = document.getElementById('royalDropsTrack');
-      const controls = document.getElementById('royalDropsControls');
-      if (!track || !controls) return;
-
-      try {
-        const response = await fetch('/api/jewelry-products?royalDrops=' + Date.now(), { headers: { Accept: 'application/json' } });
-        if (!response.ok) throw new Error('Royal Drops could not be loaded.');
-        const data = await response.json();
-        const available = (Array.isArray(data.products) ? data.products : []).filter(product =>
-          Number(product.price) >= 0 && (product.image || (Array.isArray(product.images) && product.images.length))
-        );
-        if (!available.length) throw new Error('No ImageKit products are available for Royal Drops.');
-
-        const selected = shuffleRoyalProducts(available).slice(0, Math.min(4, available.length));
-        track.innerHTML = selected.map(royalProductCard).join('');
-        controls.innerHTML = selected.map((product, index) =>
-          `<button aria-label="Show ${escapeRoyalHtml(product.name || 'Royal Drop')}" class="royal-3d-dot" onclick="setRoyalDrop(${index})" type="button"></button>`
-        ).join('');
-        royalDropIndex = 0;
-        updateDisplayedPrices();
-        updateRoyalDrops();
-        setupRoyalTryOnLinks();
-        setupRoyalActionButtons();
-
-        document.querySelectorAll('#royalDropsTrack .product').forEach(card => observer.observe(card));
-        document.querySelectorAll('#royalDropsTrack .product-carousel').forEach((carousel, index) => {
-          if (carousel.querySelectorAll('img').length > 1) {
-            window.setInterval(() => moveCarousel(carousel.dataset.carousel, 1), 4500 + (index * 500));
-          }
+    function interleaveNewArrivalGroups(groups) {
+      const output = [];
+      const seen = new Set();
+      const longest = Math.max(0, ...groups.map(group => group.length));
+      for (let productIndex = 0; productIndex < longest; productIndex += 1) {
+        groups.forEach(group => {
+          const product = group[productIndex];
+          if (!product) return;
+          const key = String(product.name || product.id || '').trim().toLowerCase();
+          if (!key || seen.has(key)) return;
+          seen.add(key);
+          output.push(product);
         });
+      }
+      return output;
+    }
+
+    async function loadNewArrivals() {
+      const track = document.getElementById('newArrivalsTrack');
+      if (!track) return;
+
+      const catalogUrls = ['/api/jewelry-products'];
+      try {
+        const results = await Promise.allSettled(catalogUrls.map(async url => {
+          const response = await fetch(`${url}?newArrivals=${Date.now()}`, { headers: { Accept: 'application/json' } });
+          if (!response.ok) throw new Error(`${url} returned ${response.status}`);
+          const data = await response.json();
+          return (Array.isArray(data.products) ? data.products : []).filter(product =>
+            Number(product.price) >= 0 && (product.image || (Array.isArray(product.images) && product.images.length))
+          );
+        }));
+
+        const groups = results.filter(result => result.status === 'fulfilled').map(result => result.value);
+        const products = interleaveNewArrivalGroups(groups);
+        if (!products.length) throw new Error('No ImageKit jewelry products are available.');
+
+        track.innerHTML = products.map(newArrivalProductCard).join('');
+        updateDisplayedPrices();
       } catch (error) {
-        track.innerHTML = '<p class="royal-drops-loading">Royal Drops are temporarily unavailable. Please refresh the page.</p>';
-        controls.innerHTML = '';
+        track.innerHTML = '<p class="new-arrivals-status">New arrivals are temporarily unavailable. Please refresh the page.</p>';
         console.error(error);
       }
     }
+
+    function scrollNewArrivals(direction) {
+      const track = document.getElementById('newArrivalsTrack');
+      if (!track) return;
+      const firstCard = track.querySelector('.new-arrival-card');
+      const distance = firstCard ? firstCard.getBoundingClientRect().width + 22 : Math.min(window.innerWidth * .8, 360);
+      track.scrollBy({ left: direction * distance * 2, behavior: 'smooth' });
+    }
+    window.scrollNewArrivals = scrollNewArrivals;
 
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
@@ -5561,9 +5941,7 @@
       });
     }, { threshold: .18 });
 
-    setupRoyalDropDrag();
-    loadRandomRoyalDrops();
-    setInterval(() => rotateRoyalDrops(1), 7000);
+    loadNewArrivals();
 
     const petalLayer = document.getElementById('petalLayer');
     const cursorFlowers = document.getElementById('cursorFlowers');
@@ -5779,8 +6157,8 @@
             checkoutNote.textContent = '';
             checkoutNote.hidden = true;
           } else {
-            checkoutNote.textContent = 'Guest shipping details submitted. Payment is ready.';
-            checkoutNote.hidden = false;
+            checkoutNote.textContent = '';
+            checkoutNote.hidden = true;
           }
         } else if (member) {
           checkoutNote.textContent = verificationRequired
@@ -5817,7 +6195,7 @@
         const checkoutNote = document.getElementById('checkoutProfileNote');
         if (checkoutNote) { checkoutNote.textContent = ''; checkoutNote.hidden = true; }
         if (status) status.textContent = 'Thank you! Shipping information is verified. Now complete payment below.';
-        renderPayPalButtons();
+        renderStripeCheckout();
         document.getElementById('checkout')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
         setTimeout(() => { if (status) status.textContent = ''; }, 6000);
       } catch (error) {
@@ -5832,7 +6210,7 @@
       const form = document.getElementById('customerProfileForm');
       if (form) form.reset();
       profileSubmittedForPayment = false;
-      renderPayPalButtons();
+      renderStripeCheckout();
       const status = document.getElementById('profileStatus');
       sessionStorage.removeItem('globalRaniCustomerProfile');
       sessionStorage.removeItem('globalRaniGuestShippingProfile');
@@ -5882,28 +6260,8 @@
       renderCustomerProfile();
     }
 
-    function getPayPalCurrency() {
-      return paypalSupportedCurrencies.has(selectedCurrency.code) ? selectedCurrency.code : 'USD';
-    }
-
-    function loadPayPalSdk(currencyCode) {
-      const namespace = `paypal_${currencyCode}`;
-      if (window[namespace]) return Promise.resolve(window[namespace]);
-      return new Promise((resolve, reject) => {
-        const existing = document.querySelector(`script[data-paypal-currency="${currencyCode}"]`);
-        if (existing) {
-          existing.addEventListener('load', () => resolve(window[namespace]));
-          existing.addEventListener('error', reject);
-          return;
-        }
-        const script = document.createElement('script');
-        script.src = `https://www.paypal.com/sdk/js?client-id=${PAYPAL_CLIENT_ID}&currency=${currencyCode}`;
-        script.dataset.namespace = namespace;
-        script.dataset.paypalCurrency = currencyCode;
-        script.onload = () => resolve(window[namespace]);
-        script.onerror = reject;
-        document.head.appendChild(script);
-      });
+    function getStripeCurrency() {
+      return stripeSupportedCurrencies.has(selectedCurrency.code) ? selectedCurrency.code : 'USD';
     }
 
     function hideOrderConfirmation() {
@@ -5911,76 +6269,90 @@
       if (confirmation) confirmation.classList.remove('show');
     }
 
-    function showOrderConfirmation(details, paidCart, paidTotal, currencyCode) {
-      const confirmation = document.getElementById('orderConfirmation');
-      const thankYouMessage = document.getElementById('thankYouMessage');
-      const paidItems = document.getElementById('paidItems');
-      const paidTotalEl = document.getElementById('paidTotal');
-      if (!confirmation || !paidItems || !paidTotalEl) return;
-      const firstName = details?.payer?.name?.given_name || 'beautiful customer';
-      const orderId = details?.id ? ` Your PayPal order ID is ${details.id}.` : '';
-      if (thankYouMessage) {
-        thankYouMessage.textContent = `Thank you, ${firstName}! Your payment was successful. We are so grateful for your order and cannot wait to prepare your Global Rani jewelry with love and care.${orderId}`;
+    async function beginStripeCheckout(button) {
+      const container = document.getElementById('stripe-checkout-container');
+      if (!container || !cart.length || !profileSubmittedForPayment) return;
+      const currencyCode = getStripeCurrency();
+      const paidCart = cart.map(item => ({ ...item }));
+      const shipping = getProfileData();
+      const member = getLoggedInMember();
+      stripeCheckoutInProgress = true;
+      if (button) {
+        button.disabled = true;
+        button.textContent = 'Please wait…';
       }
-      paidItems.innerHTML = paidCart.map(item => {
-        const itemTotal = currencyCode === 'USD' ? getDiscountedUSD(item.priceUSD) : convertedAmount(item.priceUSD, currencyCode);
-        return `<div class="receipt-item"><span>${item.name}</span><strong>${formatCurrency(itemTotal, currencyCode)}</strong></div>`;
-      }).join('');
-      paidTotalEl.textContent = formatCurrency(paidTotal, currencyCode);
-      confirmation.classList.add('show');
-      confirmation.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      container.classList.add('payment-locked');
+      try {
+        const response = await fetch('/api/create-stripe-checkout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            currency: currencyCode,
+            tipUSD: 0,
+            shipping,
+            items: paidCart.map(item => ({ name: item.name, priceUSD: Number(item.priceUSD), quantity: getItemQuantity(item) }))
+          })
+        });
+        const result = await response.json().catch(() => ({}));
+        if (response.status === 409 && result.priceChanged && Array.isArray(result.items)) {
+          result.items.forEach(authoritative => {
+            const existing = cart.find(item => getCartItemKey(item) === getCartItemKey(authoritative));
+            if (!existing || !Number.isFinite(Number(authoritative.priceUSD))) return;
+            existing.priceUSD = Number(authoritative.priceUSD);
+            if (authoritative.image) existing.image = authoritative.image;
+          });
+          saveCart();
+          renderCart();
+        }
+        if (!response.ok || !result.url || !result.sessionId || !result.checkoutToken) {
+          throw new Error(result.error || 'Secure Stripe Checkout could not be created.');
+        }
+        sessionStorage.setItem('globalRaniPendingStripeCheckout', JSON.stringify({
+          sessionId: result.sessionId,
+          checkoutToken: result.checkoutToken,
+          checkoutMode: getCheckoutMode(),
+          firebaseUserId: member?.uid || '',
+          shipping,
+          paidCart,
+          tipUSD: 0,
+          amountTotal: result.amountTotal,
+          total: result.total,
+          currency: result.currency
+        }));
+        window.location.assign(result.url);
+      } catch (error) {
+        console.error('Stripe Checkout error:', error);
+        stripeCheckoutInProgress = false;
+        container.classList.remove('payment-locked');
+        container.textContent = error?.message || 'Stripe Checkout could not load. Please try again.';
+        setTimeout(renderStripeCheckout, 4500);
+      }
     }
 
-    async function renderPayPalButtons() {
-      const container = document.getElementById('paypal-button-container');
+    function renderStripeCheckout() {
+      const container = document.getElementById('stripe-checkout-container');
       const checkoutNote = document.getElementById('checkoutProfileNote');
       if (!container) return;
+      if (stripeCheckoutInProgress) return;
       container.classList.add('payment-locked');
       if (!cart.length) {
-        container.innerHTML = 'Add a product to your cart first.';
+        container.textContent = 'Add a product to your cart first.';
         if (checkoutNote) checkoutNote.textContent = 'Payment is locked. Please add items to cart, then use your saved member shipping details. Guest checkout is available only when signed out.';
         return;
       }
       if (!profileSubmittedForPayment) {
-        container.innerHTML = 'Payment is locked until shipping information is verified.';
+        container.textContent = 'Payment is locked until shipping information is verified.';
         if (checkoutNote) checkoutNote.textContent = getLoggedInMember() ? 'Please verify the saved shipping information for this member profile before payment.' : 'Continue as a guest by submitting shipping details below, or create a profile to save details for next time.';
         return;
       }
-      const currencyCode = getPayPalCurrency();
-      currentPayPalCurrency = currencyCode;
+      currentStripeCurrency = getStripeCurrency();
       container.classList.remove('payment-locked');
-      container.innerHTML = 'Loading PayPal checkout...';
-      try {
-        const paypalInstance = await loadPayPalSdk(currencyCode);
-        container.innerHTML = '';
-        paypalInstance.Buttons({
-          createOrder: function(data, actions) {
-            const totalUSD = getCartPayableTotalUSD();
-            const total = currencyCode === 'USD' ? totalUSD : convertedAmount(getCartTotalUSD(), currencyCode);
-            return actions.order.create({
-              purchase_units: [{ description: 'The Global Rani jewelry order. Shipping details are emailed from the customer profile section and should be confirmed in PayPal.', amount: { currency_code: currencyCode, value: (total || 0.01).toFixed(2) } }]
-            });
-          },
-          onApprove: function(data, actions) {
-            return actions.order.capture().then(function(details) {
-              const paidCart = cart.map(item => ({ ...item }));
-              const totalUSD = paidCart.reduce((sum, item) => sum + getDiscountedUSD(item.priceUSD), 0);
-              const paidTotal = currencyCode === 'USD' ? totalUSD : convertedAmount(totalUSD, currencyCode);
-              showOrderConfirmation(details, paidCart, paidTotal, currencyCode);
-              cart = [];
-              saveCart();
-              profileSubmittedForPayment = false;
-              renderCart();
-              renderPayPalButtons();
-            });
-          }
-        }).render('#paypal-button-container');
-      } catch (error) {
-        container.innerHTML = 'PayPal checkout could not load. Please refresh the page or try again.';
-      }
+      container.innerHTML = '<button class="checkout-btn bloom-hover" id="stripeCheckoutButton" type="button">Continue to payment</button>';
+      container.querySelector('#stripeCheckoutButton')?.addEventListener('click', event => beginStripeCheckout(event.currentTarget));
     }
 
-    const savedCurrency = localStorage.getItem('globalRaniCurrency');
+    let savedCurrency = '';
+    try { savedCurrency = localStorage.getItem('globalRaniCurrency') || ''; } catch (error) {}
     const countryCurrency = document.getElementById('countryCurrency');
     if (savedCurrency && countryCurrency && [...countryCurrency.options].some(option => option.value === savedCurrency)) {
       countryCurrency.value = savedCurrency;
@@ -5989,6 +6361,18 @@
       selectedCurrency = parseCurrencySelection(countryCurrency.value);
       countryCurrency.addEventListener('change', handleCurrencyChange);
     }
+    window.addEventListener('global-rani-currency-change', event => {
+      const selection = event.detail?.selection;
+      if (!selection?.code) return;
+      selectedCurrency = selection;
+      if (Number(event.detail?.rate) > 0) exchangeRates[selection.code] = Number(event.detail.rate);
+      const selectionValue = `${selection.country}|${selection.code}|${selection.name}|${selection.symbol}`;
+      if (countryCurrency && [...countryCurrency.options].some(option => option.value === selectionValue)) {
+        countryCurrency.value = selectionValue;
+      }
+      updateDisplayedPrices();
+      renderStripeCheckout();
+    });
 
     loadCart();
     loadCustomerProfile();
@@ -6277,10 +6661,10 @@
     const input = chat.querySelector('[data-chat-input]');
 
     const products = {
-      jaipur: { name:'The Jaipur Pastel Set', price:'$65.00', image:'https://ik.imagekit.io/k0wpvuatq/jaipur-pastel-set-1.jpeg', id:'jaipur-pastel', reason:'Soft pastel kundan that feels elegant, romantic, and camera-ready.' },
-      noir: { name:'The Noir Pearl Empress Set', price:'$55.00', image:'https://ik.imagekit.io/k0wpvuatq/noir-pearl-empress-set-1.jpg', id:'noir-pearl-empress', reason:'Polished pearls and noir stones for sophisticated evening styling.' },
-      scarlet: { name:'The Scarlet Maharani Set', price:'$55.00', image:'https://ik.imagekit.io/k0wpvuatq/scarlet-maharani-set-3.jpg', id:'scarlet-maharani', reason:'A bold ruby choker that creates an unmistakable royal statement.' },
-      lotus: { name:'The Lotus Rajwadi Set', price:'$55.00', image:'https://ik.imagekit.io/k0wpvuatq/lotus-rajwadi-set-1.jpg', id:'lotus-rajwadi', reason:'Colorful heritage details with a festive, gift-worthy finish.' }
+      jaipur: { name:'The Jaipur Pastel Set', priceUSD:65, image:'https://ik.imagekit.io/k0wpvuatq/jaipur-pastel-set-1.jpeg', id:'jaipur-pastel', reason:'Soft pastel kundan that feels elegant, romantic, and camera-ready.' },
+      noir: { name:'The Noir Pearl Empress Set', priceUSD:55, image:'https://ik.imagekit.io/k0wpvuatq/noir-pearl-empress-set-1.jpg', id:'noir-pearl-empress', reason:'Polished pearls and noir stones for sophisticated evening styling.' },
+      scarlet: { name:'The Scarlet Maharani Set', priceUSD:55, image:'https://ik.imagekit.io/k0wpvuatq/scarlet-maharani-set-3.jpg', id:'scarlet-maharani', reason:'A bold ruby choker that creates an unmistakable royal statement.' },
+      lotus: { name:'The Lotus Rajwadi Set', priceUSD:55, image:'https://ik.imagekit.io/k0wpvuatq/lotus-rajwadi-set-1.jpg', id:'lotus-rajwadi', reason:'Colorful heritage details with a festive, gift-worthy finish.' }
     };
     const occasionMap = {
       wedding: ['scarlet','jaipur','lotus'],
@@ -6317,7 +6701,7 @@
     function addProductCard(product){
       const card = document.createElement('div');
       card.className = 'global-rani-shopper-card';
-      card.innerHTML = `<img src="${product.image}" alt="${product.name}" loading="lazy" decoding="async"><div class="global-rani-shopper-copy"><strong>${product.name}</strong><small>${product.reason}</small><div class="global-rani-shopper-price">${product.price}</div><div class="global-rani-shopper-actions"><button type="button" class="primary" data-view-product>View product</button><a class="secondary" href="ar-tryon.html?product=${encodeURIComponent(product.id)}">Try it on</a></div></div>`;
+      card.innerHTML = `<img src="${product.image}" alt="${product.name}" loading="lazy" decoding="async"><div class="global-rani-shopper-copy"><strong>${product.name}</strong><small>${product.reason}</small><div class="global-rani-shopper-price" data-global-rani-usd="${product.priceUSD}">$${product.priceUSD.toFixed(2)}</div><div class="global-rani-shopper-actions"><button type="button" class="primary" data-view-product>View product</button><a class="secondary" href="ar-tryon.html?product=${encodeURIComponent(product.id)}">Try it on</a></div></div>`;
       card.querySelector('[data-view-product]').addEventListener('click', () => {
         closeChat();
         document.getElementById('shop')?.scrollIntoView({ behavior:'smooth', block:'start' });
@@ -6574,7 +6958,7 @@
       const name=product.name||product.title||titleFromFile(product.fileName||src);
       const price=Number(product.price??product.priceUSD??defaultPriceFor(product.folder||src))||45;
       dialog.dataset.name=name;dialog.dataset.price=String(price);dialog.dataset.usdPrice=String(price);dialog.dataset.image=src;
-      modalImage.src=src;modalImage.alt=name;modalName.textContent=name;modalPrice.textContent=`$${price.toFixed(2)}`;
+      modalImage.src=src;modalImage.alt=name;modalName.textContent=name;modalPrice.dataset.globalRaniUsd=String(price);modalPrice.textContent=window.GlobalRaniCurrency?.formatUSD?.(price)||`$${price.toFixed(2)}`;
       modal.classList.add('open');modal.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';modalClose?.focus();
     }
     modalClose?.addEventListener('click',closeInventoryProduct);
@@ -6935,7 +7319,7 @@
   });
 })();
 </script>
-  <script src="assets/global-rani-quality.js" defer></script>
+  <script src="assets/global-rani-quality.js?v=20260807-1" defer></script>
 </body>
 </html>
 <style>

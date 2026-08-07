@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Thank You | The Global Rani</title>
+  <meta name="description" content="Thank you for your Global Rani order.">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" type="image/png" href="assets/global-rani-favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&amp;family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/global-rani-quality.css">
+  <style>
+    :root{--ruby:#9e1533;--rose:#c73352;--gold:#b9852f;--gold2:#e3b75d;--emerald:#037a5c;--ink:#34210e;--ivory:#fffdf8}
+    *{box-sizing:border-box}
+    body{min-height:100vh;margin:0;color:var(--ink);font-family:Inter,Arial,sans-serif;background:radial-gradient(circle at 15% 10%,rgba(227,183,93,.28),transparent 27%),radial-gradient(circle at 88% 78%,rgba(158,21,51,.13),transparent 31%),linear-gradient(135deg,#fff8ee,#fffdf8 52%,#f8ead8)}
+    .top-banner{padding:9px 16px;text-align:center;color:#fff8ef;background:linear-gradient(90deg,var(--ruby),var(--gold),var(--emerald));font-size:12px;font-weight:900;letter-spacing:.16em;text-transform:uppercase}
+    nav{background:rgba(255,253,248,.86);border-bottom:1px solid rgba(185,133,47,.25);backdrop-filter:blur(14px)}
+    .nav-inner{width:min(1160px,100%);margin:auto;padding:13px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .brand{display:flex;align-items:center;gap:12px;color:var(--gold);text-decoration:none;font-family:Cinzel,serif;font-size:20px;font-weight:800}
+    .brand img{width:54px;height:54px;border-radius:50%;object-fit:contain;background:#fff;box-shadow:0 9px 24px rgba(89,51,15,.17)}
+    .home-link{padding:10px 15px;border-radius:999px;color:#fff;text-decoration:none;font-size:13px;font-weight:800;background:linear-gradient(135deg,var(--ruby),var(--gold));box-shadow:0 10px 24px rgba(158,21,51,.2)}
+    main{width:min(880px,calc(100% - 28px));margin:clamp(38px,8vw,88px) auto 70px}
+    .card{position:relative;overflow:hidden;padding:clamp(28px,6vw,62px);border:1px solid rgba(185,133,47,.3);border-radius:36px;text-align:center;background:rgba(255,255,255,.78);box-shadow:0 28px 80px rgba(70,38,12,.17);backdrop-filter:blur(12px)}
+    .card:before{content:"";position:absolute;inset:0;background:linear-gradient(120deg,transparent 16%,rgba(255,255,255,.72) 38%,transparent 58%);transform:translateX(-130%);animation:gleam 4.8s ease-in-out infinite;pointer-events:none}
+    @keyframes gleam{0%,45%{transform:translateX(-130%)}75%,100%{transform:translateX(130%)}}
+    .status-orb{width:88px;height:88px;margin:0 auto 24px;border-radius:50%;display:grid;place-items:center;color:#fff;background:linear-gradient(135deg,var(--gold),var(--ruby));box-shadow:0 18px 45px rgba(158,21,51,.25);font-size:40px;font-weight:900}
+    .status-orb:after{content:"…"}
+    body.success .status-orb{background:linear-gradient(135deg,var(--emerald),#29b882)}
+    body.success .status-orb:after{content:"✓"}
+    body.error .status-orb{background:linear-gradient(135deg,#7b2939,var(--ruby))}
+    body.error .status-orb:after{content:"!"}
+    .eyebrow{margin:0 0 10px;color:var(--ruby);font-size:12px;font-weight:900;letter-spacing:.22em;text-transform:uppercase}
+    h1{margin:0;font-family:Cinzel,serif;font-size:clamp(34px,6vw,58px);line-height:1.08;background:linear-gradient(120deg,#6f3f10,var(--gold),var(--ruby));-webkit-background-clip:text;color:transparent}
+    .message{max-width:680px;margin:18px auto 0;color:#5b4b40;font-size:17px;line-height:1.75}
+    .details{width:min(100%,640px);margin:34px auto 0;padding:22px;border-radius:24px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:rgba(185,133,47,.23);overflow:hidden}
+    .detail{min-width:0;padding:18px 16px;background:rgba(255,253,248,.93);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+    .detail-label{display:block;margin-bottom:8px;color:#7b6a5c;font-size:11px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}
+    .detail-value{display:block;overflow-wrap:anywhere;color:var(--ink);font-size:15px;font-weight:800}
+    .notice{margin:22px 0 0;padding:14px 18px;border-radius:16px;color:#385849;background:rgba(3,122,92,.09);font-size:14px;font-weight:700;line-height:1.55}
+    .actions{margin-top:30px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+    .button{min-width:180px;padding:14px 20px;border-radius:999px;text-decoration:none;font-weight:900;color:#fff;background:linear-gradient(135deg,var(--ruby),var(--gold));box-shadow:0 13px 28px rgba(158,21,51,.2)}
+    .button.secondary{color:var(--ruby);background:#fff;border:1px solid rgba(158,21,51,.22);box-shadow:none}
+    .support{margin:24px 0 0;color:#776a61;font-size:13px;line-height:1.6}
+    [hidden]{display:none!important}
+    @media(max-width:680px){.nav-inner{padding:10px 14px}.brand span{display:none}.brand img{width:46px;height:46px}.details{grid-template-columns:1fr}.card{border-radius:27px}.button{width:100%}}
+    @media(prefers-reduced-motion:reduce){.card:before{animation:none}}
+  </style>
+</head>
+<body>
+  <div class="top-banner">Indian Jewelry • Global Glow</div>
+  <nav>
+    <div class="nav-inner">
+      <a class="brand" href="index.html" aria-label="The Global Rani home"><img src="https://ik.imagekit.io/k0wpvuatq/global-rani-logo.png" alt="The Global Rani logo"><span>The Global Rani</span></a>
+      <a class="home-link" href="index.html">Return home</a>
+    </div>
+  </nav>
+  <main>
+    <section class="card" aria-labelledby="thankYouTitle">
+      <div class="status-orb" aria-hidden="true"></div>
+      <p class="eyebrow" id="statusEyebrow">Confirming your payment</p>
+      <h1 id="thankYouTitle">Just a moment…</h1>
+      <p class="message" id="thankYouMessage" aria-live="polite">Stripe has returned you safely to The Global Rani. We are confirming your payment and preparing your order details.</p>
+      <div class="details" id="orderDetails" hidden>
+        <div class="detail"><span class="detail-label">Order number</span><span class="detail-value" id="orderNumber">—</span></div>
+        <div class="detail"><span class="detail-label">Amount paid</span><span class="detail-value" id="amountPaid">—</span></div>
+      </div>
+      <p class="notice" id="notificationStatus" hidden></p>
+      <div class="actions" id="thankYouActions" hidden>
+        <a class="button" href="index.html">Continue shopping</a>
+        <a class="button secondary" href="account.html">View member profile</a>
+      </div>
+      <p class="support" id="supportMessage">Please keep this page open while we confirm the order.</p>
+    </section>
+  </main>
+  <script>
+    (() => {
+      const sessionId = new URLSearchParams(location.search).get('session_id') || '';
+      const title = document.getElementById('thankYouTitle');
+      const eyebrow = document.getElementById('statusEyebrow');
+      const message = document.getElementById('thankYouMessage');
+      const details = document.getElementById('orderDetails');
+      const orderNumber = document.getElementById('orderNumber');
+      const amountPaid = document.getElementById('amountPaid');
+      const notification = document.getElementById('notificationStatus');
+      const actions = document.getElementById('thankYouActions');
+      const support = document.getElementById('supportMessage');
+      let attempts = 0;
+      const MAX_ATTEMPTS = 15;
+
+      function clearCompletedCheckout() {
+        try {
+          sessionStorage.removeItem('globalRaniCart');
+          sessionStorage.removeItem('globalRaniPendingStripeCheckout');
+          sessionStorage.removeItem('globalRaniScrollToCheckout');
+          localStorage.removeItem('globalRaniCart');
+        } catch (_) {}
+      }
+
+      function showError(text) {
+        document.body.classList.remove('success');
+        document.body.classList.add('error');
+        eyebrow.textContent = 'Order confirmation needs attention';
+        title.textContent = 'Please keep your Stripe reference';
+        message.textContent = text;
+        support.textContent = sessionId ? `Stripe reference: ${sessionId}` : 'No Stripe session reference was provided.';
+        actions.hidden = false;
+      }
+
+      function showPaid(data) {
+        document.body.classList.remove('error');
+        document.body.classList.add('success');
+        const firstName = String(data.customerName || '').trim().split(/\s+/)[0];
+        eyebrow.textContent = 'Payment successful';
+        title.textContent = firstName ? `Thank you, ${firstName}!` : 'Thank you for your order!';
+        message.textContent = 'Your Stripe payment was successful. The Global Rani has received your paid order and will begin preparing it with care.';
+        orderNumber.textContent = data.orderNumber || 'Processing';
+        amountPaid.textContent = data.amount && data.currency ? `${data.amount} ${data.currency}` : 'Paid';
+        details.hidden = false;
+        if (data.emailStatus === 'SENT') {
+          notification.hidden = false;
+          notification.textContent = 'Order confirmation emails were sent to you and Global Rani.';
+        } else {
+          notification.hidden = true;
+          notification.textContent = '';
+        }
+        support.textContent = 'Save your order number for your records. You may safely close this page.';
+        actions.hidden = false;
+        clearCompletedCheckout();
+      }
+
+      async function refreshStatus() {
+        attempts += 1;
+        try {
+          const response = await fetch(`/api/order-status?session_id=${encodeURIComponent(sessionId)}`, { cache: 'no-store' });
+          const data = await response.json().catch(() => ({}));
+          if (!response.ok) throw new Error(data.error || 'Order status is temporarily unavailable.');
+          if (data.paid) {
+            showPaid(data);
+            if (data.processing && attempts < MAX_ATTEMPTS) setTimeout(refreshStatus, 2500);
+            return;
+          }
+          if (attempts < MAX_ATTEMPTS) {
+            message.textContent = 'Your payment is still being confirmed. This page will update automatically.';
+            setTimeout(refreshStatus, 2500);
+          } else {
+            showError('Stripe has not yet confirmed this payment. If you completed payment, contact Global Rani with the reference below.');
+          }
+        } catch (error) {
+          if (attempts < MAX_ATTEMPTS) {
+            message.textContent = 'Your payment confirmation is taking a little longer than usual. We are continuing automatically.';
+            setTimeout(refreshStatus, 2500);
+          } else {
+            showError(`${error.message} If payment completed, Global Rani can locate it using the Stripe reference below.`);
+          }
+        }
+      }
+
+      if (!/^cs_(?:test_|live_)?[A-Za-z0-9]+$/.test(sessionId)) {
+        showError('This thank-you link does not contain a valid Stripe Checkout reference.');
+      } else {
+        refreshStatus();
+      }
+    })();
+  </script>
+</body>
+</html>

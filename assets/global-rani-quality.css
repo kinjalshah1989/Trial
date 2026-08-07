@@ -83,6 +83,17 @@ html.quality-page-hidden *::after{
   }
 }
 
+/* Keep the floating help action centered consistently across every page. */
+.global-rani-whatsapp-help{
+  left:50%!important;
+  right:auto!important;
+  transform:translateX(-50%)!important;
+}
+
+.global-rani-whatsapp-help:hover{
+  transform:translateX(-50%) translateY(-3px)!important;
+}
+
 @media print{
   .global-rani-whatsapp-help,
   .chat-toggle,

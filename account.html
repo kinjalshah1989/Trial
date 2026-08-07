@@ -343,7 +343,9 @@
     .order-secondary-action { border:2px solid var(--ruby); background:#fff; color:var(--ruby); box-shadow:0 8px 20px rgba(158,21,51,.10); }
     .order-secondary-action[hidden] { display:none; }
     .previous-orders-title { margin:4px 0 14px; color:var(--ruby); font-family:Georgia,'Times New Roman',serif; font-size:1.45rem; }
-    .order-refresh-btn,.order-logout-btn { border:0; border-radius:999px; padding:11px 18px; font:inherit; font-weight:900; cursor:pointer; }
+    .order-verify-btn,.order-refresh-btn,.order-logout-btn { border:0; border-radius:999px; padding:11px 18px; font:inherit; font-weight:900; cursor:pointer; }
+    .order-verify-btn { background:linear-gradient(135deg,var(--ruby),var(--gold)); color:#fff; }
+    .order-verify-btn[hidden] { display:none; }
     .order-refresh-btn { background:linear-gradient(135deg,var(--emerald),var(--gold)); color:#fff; }
     .order-logout-btn { background:#fff; color:var(--ruby); border:1px solid rgba(158,21,51,.28); }
     .order-list { display:grid; gap:18px; }
@@ -360,7 +362,7 @@
     .order-total { border-top:1px solid rgba(52,33,14,.12); padding-top:14px; display:flex; justify-content:space-between; gap:14px; font-weight:950; color:var(--dark); }
     .order-empty,.order-loading,.order-error { text-align:center; padding:28px 16px; border-radius:20px; background:#fffaf2; color:rgba(52,33,14,.78); font-weight:800; }
     .order-error { color:#a1122f; background:#fff0f2; }
-    @media(max-width:680px){ .order-summary-head{flex-direction:column}.order-summary-actions{width:100%}.order-refresh-btn,.order-logout-btn{flex:1}.current-cart-item{grid-template-columns:50px 1fr}.current-cart-item img{width:50px;height:50px}.current-cart-item-price{grid-column:2}.current-cart-footer{align-items:stretch;flex-direction:column}.current-cart-actions{width:100%;flex-direction:column}.order-primary-action,.order-secondary-action{width:100%}.order-item{grid-template-columns:50px 1fr}.order-item img{width:50px;height:50px}.order-item-price{grid-column:2;text-align:left} }
+    @media(max-width:680px){ .order-summary-head{flex-direction:column}.order-summary-actions{width:100%}.order-verify-btn,.order-refresh-btn,.order-logout-btn{flex:1}.current-cart-item{grid-template-columns:50px 1fr}.current-cart-item img{width:50px;height:50px}.current-cart-item-price{grid-column:2}.current-cart-footer{align-items:stretch;flex-direction:column}.current-cart-actions{width:100%;flex-direction:column}.order-primary-action,.order-secondary-action{width:100%}.order-item{grid-template-columns:50px 1fr}.order-item img{width:50px;height:50px}.order-item-price{grid-column:2;text-align:left} }
 
 
     .cart-tax-shipping-note{margin:5px 0 0;font-size:14px;color:#5d554d;line-height:1.4;}
@@ -424,6 +426,7 @@
           <p class="order-member-email" id="orderMemberEmail"></p>
         </div>
         <div class="order-summary-actions">
+          <button class="order-verify-btn" type="button" id="verifyOrdersEmailBtn" hidden>Verify Email</button>
           <button class="order-refresh-btn" type="button" id="refreshOrdersBtn">Refresh Orders</button>
         </div>
       </div>
@@ -459,6 +462,8 @@
       setPersistence,
       browserSessionPersistence,
       sendPasswordResetEmail,
+      sendEmailVerification,
+      reload,
       getIdToken
     } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
@@ -498,6 +503,7 @@
     const orderSummarySection = document.getElementById("orderSummarySection");
     const memberOrderList = document.getElementById("memberOrderList");
     const orderMemberEmail = document.getElementById("orderMemberEmail");
+    const verifyOrdersEmailBtn = document.getElementById("verifyOrdersEmailBtn");
     const refreshOrdersBtn = document.getElementById("refreshOrdersBtn");
     const ordersLogoutBtn = document.getElementById("ordersLogoutBtn");
     const profileMemberLink = document.getElementById("profileMemberLink");
@@ -593,6 +599,7 @@
     syncGuestCheckoutVisibility();
     window.addEventListener("pageshow", () => { syncGuestCheckoutVisibility(); renderCurrentCartSummary(); });
     window.addEventListener("focus", () => { syncGuestCheckoutVisibility(); renderCurrentCartSummary(); });
+    window.addEventListener("global-rani-currency-change", renderCurrentCartSummary);
 
     function getCurrentCart() {
       try {
@@ -610,7 +617,7 @@
 
       if (!hasItems) {
         currentCartItems.innerHTML = '<div class="current-cart-empty">Your cart is empty. Continue shopping to add your favorite jewelry.</div>';
-        currentCartTotal.textContent = 'Cart total: $0.00';
+        currentCartTotal.textContent = `Cart total: ${formatCurrentCartMoney(0)}`;
         orderPrimaryAction.textContent = 'Continue to Shop';
         orderPrimaryAction.href = 'index.html#shop';
         if (orderContinueShopping) orderContinueShopping.hidden = true;
@@ -621,11 +628,11 @@
         const quantity = Math.max(1, Number(item.quantity) || 1);
         const price = Number(item.priceUSD) || 0;
         const image = item.image ? `<img src="${escapeOrderHtml(item.image)}" alt="" loading="lazy" decoding="async">` : '<div></div>';
-        return `<div class="current-cart-item">${image}<div><div class="current-cart-item-name">${escapeOrderHtml(item.name)}</div><div class="current-cart-item-meta">Quantity: ${quantity}</div></div><div class="current-cart-item-price">${formatMoney(price * quantity, 'USD')}</div></div>`;
+        return `<div class="current-cart-item">${image}<div><div class="current-cart-item-name">${escapeOrderHtml(item.name)}</div><div class="current-cart-item-meta">Quantity: ${quantity}</div></div><div class="current-cart-item-price">${formatCurrentCartMoney(price * quantity)}</div></div>`;
       }).join('');
 
       const total = cart.reduce((sum, item) => sum + ((Number(item.priceUSD) || 0) * Math.max(1, Number(item.quantity) || 1)), 0);
-      currentCartTotal.textContent = `Cart total: ${formatMoney(total, 'USD')}`;
+      currentCartTotal.textContent = `Cart total: ${formatCurrentCartMoney(total)}`;
       orderPrimaryAction.textContent = 'Continue to Checkout';
       orderPrimaryAction.href = 'shipping.html';
       if (orderContinueShopping) orderContinueShopping.hidden = false;
@@ -694,13 +701,16 @@
       try {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         setSessionMember(userCredential.user);
-        showSignupMessage("Account created successfully.", "success");
+        try {
+          await sendEmailVerification(userCredential.user);
+          showSignupMessage("Account created. Please open the verification email we sent so your earlier orders can appear.", "success");
+        } catch (verificationError) {
+          console.error("Verification email failed:", verificationError);
+          showSignupMessage("Account created. Open Order Summary and use Verify Email to include your earlier orders.", "success");
+        }
         // Remember that this shipping verification started from a new signup.
         // After the address is verified, shipping.html will open the Order Summary.
         sessionStorage.setItem("globalRaniSignupShippingFlow", "true");
-        // A newly-created member cannot have previous orders yet.
-        // Let the Order Summary render immediately without an unnecessary API request.
-        sessionStorage.setItem("globalRaniNewMemberNoPreviousOrders", "true");
         window.setTimeout(() => {
           window.location.href = "shipping.html";
         }, 5000);
@@ -821,6 +831,10 @@
       catch { return `$${amount.toFixed(2)}`; }
     }
 
+    function formatCurrentCartMoney(value) {
+      return window.GlobalRaniCurrency?.formatUSD?.(value) || formatMoney(value, "USD");
+    }
+
     function renderMemberOrders(orders) {
       if (!memberOrderList) return;
       if (!Array.isArray(orders) || !orders.length) {
@@ -852,16 +866,6 @@
       orderSummarySection.classList.add("show");
       if (orderMemberEmail) orderMemberEmail.textContent = user.email ? `Signed in as ${user.email}` : "Signed-in member";
 
-      // A customer who has just signed up has no previous orders. Showing the
-      // normal empty-order state is faster and avoids a needless first fetch.
-      const isBrandNewMember = sessionStorage.getItem("globalRaniNewMemberNoPreviousOrders") === "true";
-      if (isBrandNewMember && !forceRefresh) {
-        sessionStorage.removeItem("globalRaniNewMemberNoPreviousOrders");
-        renderMemberOrders([]);
-        if (refreshOrdersBtn) refreshOrdersBtn.disabled = false;
-        return;
-      }
-
       memberOrderList.innerHTML = '<div class="order-loading">Loading your orders…</div>';
       if (refreshOrdersBtn) refreshOrdersBtn.disabled = true;
 
@@ -873,21 +877,28 @@
         });
         const body = await response.json().catch(() => ({}));
         if (!response.ok) throw new Error(body.error || "Could not load your orders.");
-        return body.orders || [];
+        return body;
       }
 
       try {
-        let orders;
+        let result;
         try {
-          orders = await requestOrders(forceRefresh);
+          result = await requestOrders(forceRefresh);
         } catch (firstError) {
           // A freshly-created Firebase session can need a moment before its
           // token is accepted on the next page. Refresh once, just as login does.
           if (!(firstError instanceof TypeError) && firstError?.message !== "Failed to fetch") throw firstError;
           await new Promise(resolve => setTimeout(resolve, 700));
-          orders = await requestOrders(true);
+          result = await requestOrders(true);
         }
-        renderMemberOrders(orders);
+        const emailVerified = result?.member?.emailVerified === true;
+        if (verifyOrdersEmailBtn) verifyOrdersEmailBtn.hidden = emailVerified;
+        if (orderMemberEmail) {
+          orderMemberEmail.textContent = emailVerified
+            ? `Signed in as ${user.email || "member"}`
+            : `Signed in as ${user.email || "member"} · Verify this email to include guest and earlier orders.`;
+        }
+        renderMemberOrders(result?.orders || []);
       } catch (error) {
         console.error("Order summary failed:", error);
         memberOrderList.innerHTML = `<div class="order-error">${escapeOrderHtml(error.message || "Could not load your orders. Please try again.")}</div>`;
@@ -898,6 +909,28 @@
 
     refreshOrdersBtn?.addEventListener("click", () => {
       if (auth.currentUser) loadMemberOrders(auth.currentUser, true);
+    });
+
+    verifyOrdersEmailBtn?.addEventListener("click", async () => {
+      const user = auth.currentUser;
+      if (!user) return;
+      verifyOrdersEmailBtn.disabled = true;
+      try {
+        await reload(user);
+        if (user.emailVerified) {
+          verifyOrdersEmailBtn.hidden = true;
+          await loadMemberOrders(user, true);
+          alert("Your email is verified. All matching previous orders are now included.");
+        } else {
+          await sendEmailVerification(user);
+          alert("Verification email sent. Open it, click the link, then return here and press Refresh Orders.");
+        }
+      } catch (error) {
+        console.error("Email verification failed:", error);
+        alert(error?.message || "Could not send the verification email. Please try again.");
+      } finally {
+        verifyOrdersEmailBtn.disabled = false;
+      }
     });
 
     async function completeMemberLogout() {
@@ -965,6 +998,7 @@
       updateProfileIcon(user);
       setSessionMember(user);
       if (user) {
+        if (verifyOrdersEmailBtn) verifyOrdersEmailBtn.hidden = user.emailVerified === true;
         if (signupRedirectPending) {
           if (accountPanel) accountPanel.style.display = "block";
           if (choiceScreen) choiceScreen.style.display = "none";
@@ -989,6 +1023,7 @@
           window.setTimeout(() => orderSummarySection?.scrollIntoView({ behavior: "smooth", block: "start" }), 0);
         }
       } else {
+        if (verifyOrdersEmailBtn) verifyOrdersEmailBtn.hidden = true;
         if (accountPanel) accountPanel.style.display = "block";
         if (orderSummarySection) orderSummarySection.classList.remove("show");
         if (memberOrderList) memberOrderList.innerHTML = '<div class="order-loading">Loading your orders…</div>';
@@ -1130,6 +1165,6 @@
 </style>
 <a class="global-rani-whatsapp-help" href="https://wa.me/12164570935?text=Hello%20Global%20Rani%2C%20I%20need%20help." target="_blank" rel="noopener noreferrer" aria-label="Need help? Contact The Global Rani on WhatsApp"><span class="wa-icon" aria-hidden="true">◉</span><span>Need help?</span></a>
 
-  <script src="assets/global-rani-quality.js" defer></script>
+  <script src="assets/global-rani-quality.js?v=20260807-1" defer></script>
 </body>
 </html>

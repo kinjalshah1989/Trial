@@ -243,8 +243,8 @@
     }
     .card-payment-section { margin-top: 14px; }
     .card-payment-section h3 { margin: 0 0 10px; }
-    #paypal-button-container { min-height: 45px; }
-    #paypal-button-container.payment-locked {
+    #stripe-checkout-container { min-height: 48px; }
+    #stripe-checkout-container.payment-locked {
       min-height: 0;
       padding: 10px 12px;
       border-radius: 14px;
@@ -1616,18 +1616,16 @@
 
 
 
-    /* FINAL mobile/smaller-screen header fix: one compact row, Ship-to below */
+    /* FINAL mobile/smaller-screen header fix: one compact row */
     @media (max-width: 1180px) {
       .nav-inner {
         display: grid !important;
         grid-template-columns: minmax(0, 1fr) auto auto auto !important;
-        grid-template-areas:
-          "brand menu profile bag"
-          "ship ship ship ship" !important;
+        grid-template-areas: "brand menu profile bag" !important;
         align-items: center !important;
         justify-items: stretch !important;
         column-gap: clamp(4px, 1.2vw, 9px) !important;
-        row-gap: 8px !important;
+        row-gap: 0 !important;
         padding: 9px clamp(6px, 1.8vw, 14px) !important;
       }
       .brand {
@@ -1724,22 +1722,6 @@
         height: clamp(16px, 4.8vw, 22px) !important;
         padding: 0 clamp(3px, 1.3vw, 6px) !important;
         font-size: clamp(9px, 2.6vw, 12px) !important;
-      }
-      .currency-switcher {
-        grid-area: ship !important;
-        grid-column: 1 / -1 !important;
-        order: 99 !important;
-        width: 100% !important;
-        max-width: 100% !important;
-        margin: 0 !important;
-        justify-content: center !important;
-        padding: 8px 10px !important;
-        min-height: 40px !important;
-      }
-      .currency-switcher select {
-        width: auto !important;
-        max-width: min(290px, 76vw) !important;
-        font-size: 13px !important;
       }
       .hamburger-dropdown,
       .profile-dropdown { right: 0 !important; left: auto !important; }
@@ -1921,27 +1903,6 @@
 <nav>
 <div class="nav-inner">
 <a aria-label="Return to The Global Rani homepage" class="brand" href="index.html"><img alt="The Global Rani logo" src="https://ik.imagekit.io/k0wpvuatq/global-rani-logo.png"/><span>The Global Rani</span></a>
-<div class="currency-switcher bloom-hover">
-<label for="countryCurrency">Ship to</label>
-<select aria-label="Choose country and currency" id="countryCurrency">
-<option value="US|USD|United States|$">🇺🇸 United States — USD</option>
-<option value="IN|INR|India|₹">🇮🇳 India — INR</option>
-<option value="GB|GBP|United Kingdom|£">🇬🇧 United Kingdom — GBP</option>
-<option value="CA|CAD|Canada|C$">🇨🇦 Canada — CAD</option>
-<option value="AU|AUD|Australia|A$">🇦🇺 Australia — AUD</option>
-<option value="EU|EUR|Europe|€">🇪🇺 Europe — EUR</option>
-<option value="AE|AED|UAE|د.إ">🇦🇪 UAE — AED</option>
-<option value="SG|SGD|Singapore|S$">🇸🇬 Singapore — SGD</option>
-<option value="NZ|NZD|New Zealand|NZ$">🇳🇿 New Zealand — NZD</option>
-<option value="JP|JPY|Japan|¥">🇯🇵 Japan — JPY</option>
-<option value="MY|MYR|Malaysia|RM">🇲🇾 Malaysia — MYR</option>
-<option value="PH|PHP|Philippines|₱">🇵🇭 Philippines — PHP</option>
-<option value="MX|MXN|Mexico|MX$">🇲🇽 Mexico — MXN</option>
-<option value="ZA|ZAR|South Africa|R">🇿🇦 South Africa — ZAR</option>
-<option value="SA|SAR|Saudi Arabia|﷼">🇸🇦 Saudi Arabia — SAR</option>
-<option value="QA|QAR|Qatar|ر.ق">🇶🇦 Qatar — QAR</option>
-</select>
-</div>
 <div class="profile-menu-wrap"><button aria-expanded="false" aria-haspopup="true" aria-label="Open member profile sign up and login" class="profile-icon-link profile-trigger bloom-hover" title="Sign up or log in" type="button"><span class="profile-caret-badge">⌄</span></button><div class="profile-dropdown" role="menu"><a class="profile-member-action" href="account.html" role="menuitem">Member Profile</a><a class="profile-login-action" href="account.html?action=login" role="menuitem">Log in</a><a class="profile-logout-action" href="#" id="checkoutLogoutLink" role="menuitem" style="display:none;">Log out</a></div></div>
 <button aria-label="Open shopping bag" class="cart-btn cart-icon-btn bloom-hover" onclick="toggleCart()"><span aria-hidden="true" class="bag-icon"><svg focusable="false" role="img" viewbox="0 0 24 24"><path class="bag-body" d="M6.2 8.2h11.6l1.1 12.1H5.1L6.2 8.2Z"></path><path class="bag-handle" d="M8.8 9V6.9a3.2 3.2 0 0 1 6.4 0V9"></path><path class="bag-sparkle" d="M17.2 3.4l.45 1.15 1.15.45-1.15.45-.45 1.15-.45-1.15-1.15-.45 1.15-.45.45-1.15Z"></path></svg></span><span class="cart-count-badge" id="cartCount">0</span></button>
 </div>
@@ -2033,7 +1994,7 @@
 </section>
 <section id="shop">
 <div class="section-title">
-<h2>Royal Drops</h2>
+<h2>New Arrivals</h2>
 <p>Shop trend-forward Indian jewelry styled for weddings, festive outfits, brunch looks, and gift-ready moments.</p>
 </div>
 <div class="products">
@@ -2236,12 +2197,11 @@
 <div class="tip-total-line" hidden="" id="tipTotalLine"><span>Tip</span><strong id="selectedTipAmount">$0.00</strong></div>
 <p class="tip-thanks">Thank you, we appreciate it.</p>
 </div>
+<div class="card-payment-section" id="cardPaymentSection">
+<div aria-label="Continue to card payment" id="stripe-checkout-container"></div>
+</div>
 <div class="checkout-currency-note" id="checkoutCurrencyNote">Select your country above to see prices in your local currency.</div>
 <div class="checkout-currency-note" id="checkoutProfileNote">Payment is locked. Please add items to cart, then use your saved member shipping details. Guest checkout is available only when signed out.</div>
-<div class="card-payment-section" id="cardPaymentSection">
-<h3>Pay by Debit or Credit Card</h3>
-<div aria-label="Debit or credit card payment" id="paypal-button-container"></div>
-</div>
 </div>
 </div>
 </section>
@@ -2279,25 +2239,7 @@
 <script>
     let cart = [];
     try { localStorage.removeItem('globalRaniCart'); } catch (error) {}
-    let paypalClientConfigPromise = null;
-
-    async function getPayPalClientConfig() {
-      if (!paypalClientConfigPromise) {
-        paypalClientConfigPromise = fetch('/api/paypal-config', { cache: 'no-store' })
-          .then(async response => {
-            const data = await response.json().catch(() => ({}));
-            if (!response.ok || !data.clientId) {
-              throw new Error(data.error || 'Live PayPal is not configured correctly.');
-            }
-            if (data.environment !== 'live') {
-              throw new Error('PayPal must be configured in live mode.');
-            }
-            return data;
-          });
-      }
-      return paypalClientConfigPromise;
-    }
-    const paypalSupportedCurrencies = new Set(['AUD','BRL','CAD','CNY','CZK','DKK','EUR','HKD','HUF','ILS','JPY','MYR','MXN','TWD','NZD','NOK','PHP','PLN','GBP','SGD','SEK','CHF','THB','USD']);
+    const stripeSupportedCurrencies = new Set(['AED','AUD','BRL','CAD','CHF','CNY','CZK','DKK','EUR','GBP','HKD','HUF','ILS','INR','JPY','MYR','MXN','NOK','NZD','PHP','PLN','QAR','SAR','SEK','SGD','THB','TWD','USD','ZAR']);
     const fallbackRates = {
       USD: 1, INR: 95.5221, GBP: 0.748727, EUR: 0.874011, CAD: 1.41985, AUD: 1.44071,
       AED: 3.6725, SGD: 1.28, NZD: 1.63, JPY: 161.0, MYR: 4.24, PHP: 58.6, MXN: 18.2,
@@ -2305,8 +2247,9 @@
     };
     let selectedCurrency = { country: 'US', code: 'USD', name: 'United States', symbol: '$' };
     let exchangeRates = { ...fallbackRates };
-    let currentPayPalCurrency = 'USD';
+    let currentStripeCurrency = 'USD';
     let profileSubmittedForPayment = false;
+    let stripeCheckoutInProgress = false;
 
     function hasCheckoutCart() {
       return Array.isArray(cart) && cart.some(item => item && item.name && Number(item.priceUSD) > 0);
@@ -2485,7 +2428,7 @@
         exchangeRates = { ...fallbackRates };
       }
       updateDisplayedPrices();
-      renderPayPalButtons();
+      renderStripeCheckout();
     }
 
     function addToCart(button) {
@@ -2504,7 +2447,7 @@
       button.textContent = 'Added ✓';
       setTimeout(() => button.textContent = 'Add to Cart', 900);
       renderCart();
-      renderPayPalButtons();
+      renderStripeCheckout();
       const profileStatus = document.getElementById('profileStatus');
       if (profileStatus) profileStatus.textContent = profileSubmittedForPayment ? 'Item added. Your saved member shipping details are ready, so payment can continue.' : 'Item added. Continue as guest or save shipping details before payment.';
       const drawer = document.getElementById('cartDrawer');
@@ -2524,7 +2467,7 @@
       renderCart();
       enforceCheckoutAccess();
       updateCheckoutStepVisibility();
-      renderPayPalButtons();
+      renderStripeCheckout();
       const profileStatus = document.getElementById('profileStatus');
       const checkoutNote = document.getElementById('checkoutProfileNote');
       if (!cart.length) {
@@ -2544,7 +2487,7 @@
       renderCart();
       enforceCheckoutAccess();
       updateCheckoutStepVisibility();
-      renderPayPalButtons();
+      renderStripeCheckout();
     }
 
     function decrementCartItem(index) {
@@ -2560,7 +2503,7 @@
       renderCart();
       enforceCheckoutAccess();
       updateCheckoutStepVisibility();
-      renderPayPalButtons();
+      renderStripeCheckout();
     }
 
 
@@ -2599,7 +2542,7 @@
     function applyTipChange() {
       updateTipUI();
       renderCart();
-      renderPayPalButtons();
+      renderStripeCheckout();
     }
 
     function setupTipControls() {
@@ -2674,7 +2617,7 @@
     function updateCheckoutCurrencyNote() {
       const note = document.getElementById('checkoutCurrencyNote');
       if (!note) return;
-      const paymentCurrency = paypalSupportedCurrencies.has(selectedCurrency.code) ? selectedCurrency.code : 'USD';
+      const paymentCurrency = stripeSupportedCurrencies.has(selectedCurrency.code) ? selectedCurrency.code : 'USD';
       if (selectedCurrency.country === 'IN') {
         note.textContent = '';
         note.hidden = true;
@@ -2682,7 +2625,7 @@
         note.textContent = '';
         note.hidden = true;
       } else {
-        note.textContent = `Prices are displayed in ${selectedCurrency.code}. PayPal does not support every currency, so checkout will process in USD for this country.`;
+        note.textContent = `Prices are displayed in ${selectedCurrency.code}. Stripe Checkout will process this order in USD.`;
       }
     }
 
@@ -2693,17 +2636,10 @@
     function handleCurrencyChange(event) {
       const selectedValue = event.target.value;
       selectedCurrency = parseCurrencySelection(selectedValue);
-      localStorage.setItem('globalRaniCurrency', selectedValue);
-
-      // Update every visible amount immediately, then reload the home page so
-      // the selected country/currency is applied consistently across the site.
+      window.GlobalRaniCurrency?.setSelection?.(selectedValue);
+      try { localStorage.setItem('globalRaniCurrency', selectedValue); } catch (error) {}
       updateDisplayedPrices();
-      renderPayPalButtons();
-
-      const destination = new URL('index.html', window.location.href);
-      destination.searchParams.set('currency', selectedCurrency.code);
-      destination.searchParams.set('refresh', Date.now().toString());
-      window.location.assign(destination.href);
+      renderStripeCheckout();
     }
 
     const carouselState = {};
@@ -2951,8 +2887,8 @@
             checkoutNote.textContent = '';
             checkoutNote.hidden = true;
           } else {
-            checkoutNote.textContent = 'Guest shipping details submitted. Payment is ready.';
-            checkoutNote.hidden = false;
+            checkoutNote.textContent = '';
+            checkoutNote.hidden = true;
           }
         } else if (member) {
           checkoutNote.textContent = verificationRequired
@@ -2991,8 +2927,8 @@
         renderCustomerProfile();
         const checkoutNote = document.getElementById('checkoutProfileNote');
         if (checkoutNote) { checkoutNote.textContent = ''; checkoutNote.hidden = true; }
-        if (status) status.textContent = 'Thank you! Shipping information is verified. Now complete payment below.';
-        renderPayPalButtons();
+        if (status) status.textContent = 'Thank you! Shipping information is verified. Select Continue to payment below.';
+        renderStripeCheckout();
         document.getElementById('checkout')?.scrollIntoView({ behavior: shouldContinueToCheckout ? 'smooth' : 'smooth', block: 'start' });
         setTimeout(() => { if (status) status.textContent = ''; }, 6000);
       } catch (error) {
@@ -3007,7 +2943,7 @@
       const form = document.getElementById('customerProfileForm');
       if (form) form.reset();
       profileSubmittedForPayment = false;
-      renderPayPalButtons();
+      renderStripeCheckout();
       const status = document.getElementById('profileStatus');
       sessionStorage.removeItem('globalRaniCustomerProfile');
       sessionStorage.removeItem('globalRaniGuestShippingProfile');
@@ -3065,36 +3001,8 @@
       renderCustomerProfile();
     }
 
-    function getPayPalCurrency() {
-      return paypalSupportedCurrencies.has(selectedCurrency.code) ? selectedCurrency.code : 'USD';
-    }
-
-    async function loadPayPalSdk(currencyCode) {
-      const config = await getPayPalClientConfig();
-      const namespace = `paypal_${currencyCode}`;
-      if (window[namespace]) return window[namespace];
-      return new Promise((resolve, reject) => {
-        const existing = document.querySelector(`script[data-paypal-currency="${currencyCode}"]`);
-        if (existing) {
-          if (window[namespace]) return resolve(window[namespace]);
-          existing.addEventListener('load', () => resolve(window[namespace]), { once: true });
-          existing.addEventListener('error', () => reject(new Error('The live PayPal checkout could not be loaded.')), { once: true });
-          return;
-        }
-        const script = document.createElement('script');
-        const params = new URLSearchParams({
-          'client-id': config.clientId,
-          currency: currencyCode,
-          intent: 'capture',
-          components: 'buttons'
-        });
-        script.src = `https://www.paypal.com/sdk/js?${params.toString()}`;
-        script.dataset.namespace = namespace;
-        script.dataset.paypalCurrency = currencyCode;
-        script.onload = () => resolve(window[namespace]);
-        script.onerror = () => reject(new Error('The live PayPal checkout could not be loaded.'));
-        document.head.appendChild(script);
-      });
+    function getStripeCurrency() {
+      return stripeSupportedCurrencies.has(selectedCurrency.code) ? selectedCurrency.code : 'USD';
     }
 
     function hideOrderConfirmation() {
@@ -3102,159 +3010,237 @@
       if (confirmation) confirmation.classList.remove('show');
     }
 
-    function showOrderConfirmation(details, paidCart, paidTotal, currencyCode) {
+    function escapeCheckoutHtml(value) {
+      return String(value ?? '').replace(/[&<>'"]/g, char => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', "'":'&#39;', '"':'&quot;' }[char]));
+    }
+
+    function showOrderConfirmation(details, paidCart, paidTotal, currencyCode, paidTipUSD = 0) {
       const confirmation = document.getElementById('orderConfirmation');
       const thankYouMessage = document.getElementById('thankYouMessage');
       const paidItems = document.getElementById('paidItems');
       const paidTotalEl = document.getElementById('paidTotal');
       if (!confirmation || !paidItems || !paidTotalEl) return;
-      const firstName = details?.payer?.name?.given_name || 'beautiful customer';
-      const orderId = details?.id ? ` Your PayPal order ID is ${details.id}.` : '';
+      const firstName = String(details?.customerName || '').trim().split(/\s+/)[0] || 'beautiful customer';
+      const paymentReference = details?.id ? ` Your Stripe reference is ${details.id}.` : '';
       if (thankYouMessage) {
-        thankYouMessage.textContent = `Thank you, ${firstName}! Your payment was successful. We are so grateful for your order and cannot wait to prepare your Global Rani jewelry with love and care.${orderId}`;
+        thankYouMessage.textContent = `Thank you, ${firstName}! Your payment was successful. We are so grateful for your order and cannot wait to prepare your Global Rani jewelry with love and care.${paymentReference}`;
       }
-      const paidTipUSD = getTipAmountUSD();
       paidItems.innerHTML = paidCart.map(item => {
         const itemTotalUSD = getDiscountedUSD(item.priceUSD) * getItemQuantity(item);
-        const itemTotal = currencyCode === 'USD' ? itemTotalUSD : convertedAmount(item.priceUSD * getItemQuantity(item), currencyCode);
-        return `<div class="receipt-item"><span>${item.name} × ${getItemQuantity(item)}</span><strong>${formatCurrency(itemTotal, currencyCode)}</strong></div>`;
+        const itemTotal = currencyCode === 'USD' ? itemTotalUSD : rawConvertedAmount(itemTotalUSD, currencyCode);
+        return `<div class="receipt-item"><span>${escapeCheckoutHtml(item.name)} × ${getItemQuantity(item)}</span><strong>${formatCurrency(itemTotal, currencyCode)}</strong></div>`;
       }).join('') + (paidTipUSD > 0 ? `<div class="receipt-item"><span>Tip</span><strong>${formatCurrency(currencyCode === 'USD' ? paidTipUSD : rawConvertedAmount(paidTipUSD, currencyCode), currencyCode)}</strong></div>` : '');
       paidTotalEl.textContent = formatCurrency(paidTotal, currencyCode);
       confirmation.classList.add('show');
       confirmation.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
-    async function renderPayPalButtons() {
-      updateCheckoutStepVisibility();
-      const container = document.getElementById('paypal-button-container');
-      const checkoutNote = document.getElementById('checkoutProfileNote');
-      if (!container) return;
-      if (!enforceCheckoutAccess()) {
-        container.innerHTML = 'Add a product to your cart before checkout.';
-        return;
+    async function beginStripeCheckout(button) {
+      const container = document.getElementById('stripe-checkout-container');
+      if (!container || !cart.length || !profileSubmittedForPayment) return;
+      const currencyCode = getStripeCurrency();
+      const paidCart = cart.map(item => ({ ...item }));
+      const paidTipUSD = getTipAmountUSD();
+      const shipping = getProfileData();
+      const member = getLoggedInMember();
+      stripeCheckoutInProgress = true;
+      if (button) {
+        button.disabled = true;
+        button.textContent = 'Please wait…';
       }
       container.classList.add('payment-locked');
-      if (!cart.length) {
-        container.innerHTML = 'Add a product to your cart first.';
+      try {
+        const response = await fetch('/api/create-stripe-checkout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            currency: currencyCode,
+            tipUSD: paidTipUSD,
+            checkoutMode: getCheckoutMode(),
+            firebaseUserId: member?.uid || '',
+            shipping,
+            items: paidCart.map(item => ({ name: item.name, priceUSD: Number(item.priceUSD), quantity: getItemQuantity(item) }))
+          })
+        });
+        const result = await response.json().catch(() => ({}));
+        if (response.status === 409 && result.priceChanged && Array.isArray(result.items)) {
+          result.items.forEach(authoritative => {
+            const existing = cart.find(item => getCartItemKey(item) === getCartItemKey(authoritative));
+            if (!existing || !Number.isFinite(Number(authoritative.priceUSD))) return;
+            existing.priceUSD = Number(authoritative.priceUSD);
+            if (authoritative.image) existing.image = authoritative.image;
+          });
+          saveCart();
+          renderCart();
+        }
+        if (!response.ok || !result.url || !result.sessionId || !result.checkoutToken) {
+          throw new Error(result.error || 'Secure Stripe Checkout could not be created.');
+        }
+        sessionStorage.setItem('globalRaniPendingStripeCheckout', JSON.stringify({
+          sessionId: result.sessionId,
+          checkoutToken: result.checkoutToken,
+          checkoutMode: getCheckoutMode(),
+          firebaseUserId: member?.uid || '',
+          shipping,
+          paidCart,
+          tipUSD: paidTipUSD,
+          amountTotal: result.amountTotal,
+          total: result.total,
+          currency: result.currency
+        }));
+        window.location.assign(result.url);
+      } catch (error) {
+        console.error('Stripe Checkout error:', error);
+        stripeCheckoutInProgress = false;
+        showStripeRetry(error?.message || 'Stripe Checkout could not load. Please try again.');
+      }
+    }
+
+    function showStripeRetry(message) {
+      const container = document.getElementById('stripe-checkout-container');
+      if (!container) return;
+      container.classList.remove('payment-locked');
+      container.replaceChildren();
+      const note = document.createElement('p');
+      note.className = 'checkout-currency-note';
+      note.textContent = message || 'Stripe Checkout is ready to reopen.';
+      const button = document.createElement('button');
+      button.className = 'checkout-btn bloom-hover';
+      button.type = 'button';
+      button.textContent = 'Continue to payment';
+      button.addEventListener('click', () => beginStripeCheckout(button));
+      container.append(note, button);
+    }
+
+    function renderStripeCheckout() {
+      updateCheckoutStepVisibility();
+      const container = document.getElementById('stripe-checkout-container');
+      const checkoutNote = document.getElementById('checkoutProfileNote');
+      if (!container) return;
+      if (stripeCheckoutInProgress) return;
+      container.classList.add('payment-locked');
+      if (!enforceCheckoutAccess() || !cart.length) {
+        container.textContent = 'Add a product to your cart before checkout.';
         if (checkoutNote) checkoutNote.textContent = 'Payment is locked. Please add items to cart, then use your saved member shipping details. Guest checkout is available only when signed out.';
         return;
       }
       if (!profileSubmittedForPayment) {
-        container.innerHTML = 'Payment is locked until shipping information is verified.';
+        container.textContent = 'Payment is locked until shipping information is verified.';
         if (checkoutNote) checkoutNote.textContent = getLoggedInMember() ? 'Please verify the saved shipping information for this member profile before payment.' : 'Continue as a guest by submitting shipping details below, or create a profile to save details for next time.';
         return;
       }
-      const currencyCode = getPayPalCurrency();
-      currentPayPalCurrency = currencyCode;
+      currentStripeCurrency = getStripeCurrency();
       container.classList.remove('payment-locked');
-      container.innerHTML = 'Loading secure card checkout...';
-      try {
-        const paypalInstance = await loadPayPalSdk(currencyCode);
-        container.innerHTML = '';
-        let secureCheckoutToken = '';
-        const cardButtons = paypalInstance.Buttons({
-          fundingSource: paypalInstance.FUNDING.CARD,
-          style: {
-            layout: 'vertical',
-            shape: 'rect',
-            label: 'pay',
-            height: 48
-          },
-          createOrder: async function() {
-            const response = await fetch('/api/create-paypal-order', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                currency: currencyCode,
-                tipUSD: getTipAmountUSD(),
-                items: cart.map(item => ({ name: item.name, quantity: getItemQuantity(item) }))
-              })
-            });
-            const result = await response.json().catch(() => ({}));
-            if (!response.ok || !result.orderId) throw new Error(result.error || 'Secure checkout could not be created.');
-            secureCheckoutToken = result.checkoutToken || '';
-            return result.orderId;
-          },
-          onApprove: function(data, actions) {
-            return actions.order.capture().then(async function(details) {
-              const paidCart = cart.map(item => ({ ...item }));
-              const paidItemsTotalUSD = paidCart.reduce((sum, item) => sum + (getDiscountedUSD(item.priceUSD) * getItemQuantity(item)), 0);
-              const paidTipUSD = getTipAmountUSD();
-              const totalUSD = paidItemsTotalUSD + paidTipUSD;
-              const paidTotal = currencyCode === 'USD' ? totalUSD : rawConvertedAmount(totalUSD, currencyCode);
-              const shipping = getProfileData();
-              const member = getLoggedInMember();
-              container.classList.add('payment-locked');
-              container.innerHTML = 'Payment received. Securely recording your order...';
+      container.replaceChildren();
+      const button = document.createElement('button');
+      button.className = 'checkout-btn bloom-hover';
+      button.type = 'button';
+      button.textContent = 'Continue to payment';
+      button.addEventListener('click', () => beginStripeCheckout(button));
+      container.append(button);
+    }
 
-              try {
-                const response = await fetch('/api/create-order', {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify({
-                    paypalOrderId: details.id,
-                    checkoutToken: secureCheckoutToken,
-                    checkoutMode: getCheckoutMode(),
-                    firebaseUserId: member?.uid || '',
-                    shipping,
-                    tipUSD: paidTipUSD,
-                    items: paidCart.map(item => ({
-                      name: item.name,
-                      quantity: getItemQuantity(item),
-                      image: item.image || item.imageUrl || '',
-                      priceUSD: Number(item.priceUSD) || 0
-                    }))
-                  })
-                });
-                const result = await response.json().catch(() => ({}));
-                if (!response.ok || !result.ok) {
-                  throw new Error(result.error || 'The paid order could not be recorded.');
-                }
+    function cleanStripeReturnUrl(parameter) {
+      const url = new URL(window.location.href);
+      url.searchParams.delete(parameter);
+      history.replaceState({}, '', `${url.pathname}${url.search}${url.hash}`);
+    }
 
-                details.globalRaniOrderNumber = result.orderNumber;
-                showOrderConfirmation(details, paidCart, paidTotal, currencyCode);
-                const thankYouMessage = document.getElementById('thankYouMessage');
-                if (thankYouMessage && result.orderNumber) {
-                  thankYouMessage.textContent += ` Your Global Rani order number is ${result.orderNumber}.`;
-                }
-                cart = [];
-                saveCart();
-                profileSubmittedForPayment = false;
-                renderCart();
-                renderPayPalButtons();
-              } catch (error) {
-                console.error('Paid order recording failed:', error);
-                container.classList.add('payment-locked');
-                container.innerHTML = `Your PayPal payment succeeded, but we could not save the order automatically. Please contact Global Rani and provide PayPal order ID <strong>${details.id}</strong>. Your cart has been kept on this device.`;
-              }
-            });
-          }
-        });
-        if (!cardButtons.isEligible()) {
-          container.innerHTML = 'Debit or credit card checkout is not available for this location or currency.';
-          return;
+    async function completeStripeCheckoutFromReturn() {
+      const params = new URLSearchParams(window.location.search);
+      const cancelled = params.get('stripe_cancelled');
+      const stripeSessionId = params.get('stripe_session_id');
+      if (cancelled) {
+        cleanStripeReturnUrl('stripe_cancelled');
+        const checkoutNote = document.getElementById('checkoutProfileNote');
+        if (checkoutNote) {
+          checkoutNote.hidden = false;
+          checkoutNote.textContent = 'Stripe Checkout was canceled. Your cart has been kept, and you can try again whenever you are ready.';
         }
-        await cardButtons.render('#paypal-button-container');
+        showStripeRetry('Stripe Checkout was canceled. Your cart is still saved.');
+        return;
+      }
+      if (!stripeSessionId) return;
+
+      const container = document.getElementById('stripe-checkout-container');
+      let pending = null;
+      try { pending = JSON.parse(sessionStorage.getItem('globalRaniPendingStripeCheckout') || 'null'); } catch (error) {}
+      if (!pending || pending.sessionId !== stripeSessionId) {
+        stripeCheckoutInProgress = true;
+        if (container) {
+          container.classList.add('payment-locked');
+          container.textContent = `Payment returned from Stripe, but this browser no longer has the order details. Please contact Global Rani with Stripe reference ${stripeSessionId}.`;
+        }
+        return;
+      }
+
+      profileSubmittedForPayment = true;
+      stripeCheckoutInProgress = true;
+      updateCheckoutStepVisibility();
+      if (container) {
+        container.classList.add('payment-locked');
+        container.textContent = 'Payment received. Securely recording your order...';
+      }
+      try {
+        const response = await fetch('/api/create-order', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            stripeSessionId,
+            checkoutToken: pending.checkoutToken,
+            checkoutMode: pending.checkoutMode,
+            firebaseUserId: pending.firebaseUserId,
+            shipping: pending.shipping
+          })
+        });
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok || !result.ok) throw new Error(result.error || 'The paid order could not be recorded.');
+
+        const currencyCode = String(result.currency || pending.currency || 'USD').toUpperCase();
+        const paidTotal = currencyCode === 'JPY' ? Number(result.amountTotal) : Number(result.amountTotal) / 100;
+        showOrderConfirmation({ id: stripeSessionId, customerName: pending.shipping?.customerName }, pending.paidCart || [], paidTotal, currencyCode, Number(pending.tipUSD) || 0);
+        const thankYouMessage = document.getElementById('thankYouMessage');
+        if (thankYouMessage && result.orderNumber) {
+          thankYouMessage.textContent += ` Your Global Rani order number is ${result.orderNumber}.`;
+        }
+        cart = [];
+        saveCart();
+        profileSubmittedForPayment = false;
+        sessionStorage.removeItem('globalRaniPendingStripeCheckout');
+        cleanStripeReturnUrl('stripe_session_id');
+        stripeCheckoutInProgress = false;
+        renderCart();
+        renderStripeCheckout();
       } catch (error) {
-        container.innerHTML = 'Debit or credit card checkout could not load. Please refresh the page or try again.';
+        console.error('Paid Stripe order recording failed:', error);
+        if (container) {
+          container.classList.add('payment-locked');
+          container.textContent = `${error?.message || 'The paid order could not be recorded.'} Your cart is still saved. Stripe reference: ${stripeSessionId}`;
+        }
       }
     }
 
-    const savedCurrency = localStorage.getItem('globalRaniCurrency');
-    const countryCurrency = document.getElementById('countryCurrency');
-    if (savedCurrency && countryCurrency && [...countryCurrency.options].some(option => option.value === savedCurrency)) {
-      countryCurrency.value = savedCurrency;
+    let savedCurrency = '';
+    try { savedCurrency = localStorage.getItem('globalRaniCurrency') || ''; } catch (error) {}
+    if (savedCurrency && savedCurrency.split('|').length === 4) {
+      selectedCurrency = parseCurrencySelection(savedCurrency);
     }
-    if (countryCurrency) {
-      selectedCurrency = parseCurrencySelection(countryCurrency.value);
-      countryCurrency.addEventListener('change', handleCurrencyChange);
-    }
+    window.addEventListener('global-rani-currency-change', event => {
+      const selection = event.detail?.selection;
+      if (!selection?.code) return;
+      selectedCurrency = selection;
+      if (Number(event.detail?.rate) > 0) exchangeRates[selection.code] = Number(event.detail.rate);
+      updateDisplayedPrices();
+      renderStripeCheckout();
+    });
 
     loadCart();
     setupTipControls();
     enforceCheckoutAccess();
     loadCustomerProfile();
     loadRates();
+    completeStripeCheckoutFromReturn();
+    renderStripeCheckout();
   </script>
 <!-- Hidden looping website music. Browsers may require the first tap/click before audible autoplay is allowed. -->
 <audio autoplay="" id="globalRaniMusic" loop="" playsinline="" preload="auto">
@@ -3585,6 +3571,6 @@
     }
   });
 </script>
-  <script src="assets/global-rani-quality.js" defer></script>
+  <script src="assets/global-rani-quality.js?v=20260807-1" defer></script>
 </body>
 </html>

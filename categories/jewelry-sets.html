@@ -575,7 +575,7 @@
 </style>
 </head>
 <body><div class="top-banner">We Ship Globally</div><nav><div class="nav-inner"><a class="brand" href="../index.html"><img alt="The Global Rani logo" onerror="this.onerror=null;this.src='https://ik.imagekit.io/k0wpvuatq/category-temple-jewelry.jpg';" src="https://ik.imagekit.io/k0wpvuatq/global-rani-logo.png"/><span>The Global Rani</span></a><div class="nav-actions"><div class="profile-menu-wrap"><button aria-expanded="false" aria-haspopup="true" aria-label="Open member profile sign up and login" class="profile-icon-link profile-trigger bloom-hover" title="Sign up or log in" type="button"><span class="profile-caret-badge">⌄</span></button><div class="profile-dropdown" role="menu"><a href="../account.html" role="menuitem">Member Profile</a><a href="../account.html?action=login" role="menuitem">Log in</a><button class="profile-dropdown-logout global-profile-logout" hidden="" role="menuitem" type="button">Log Out</button></div></div></div></div></nav>
-<header><div><div class="eyebrow">Complete Royal Collections</div><h1>JEWELRY SETS</h1><p>Discover coordinated necklace-and-earring sets designed for weddings, celebrations, and statement occasions.</p><a class="back" href="#inventory">Shop Jewelry Sets</a></div><div class="hero-img"><img alt="Maharani Manika Topaz Set" decoding="async" loading="lazy" onerror="this.onerror=null;this.src='https://ik.imagekit.io/k0wpvuatq/category-temple-jewelry.jpg';" src="https://ik.imagekit.io/k0wpvuatq/maharani-manika-topaz-set-1.png"/></div></header>
+<header><div><div class="eyebrow">Complete Royal Collections</div><h1>JEWELRY SETS</h1><p>Discover coordinated necklace-and-earring sets designed for weddings, celebrations, and statement occasions.</p></div><div class="hero-img"><img alt="Maharani Manika Topaz Set" decoding="async" loading="lazy" onerror="this.onerror=null;this.src='https://ik.imagekit.io/k0wpvuatq/category-temple-jewelry.jpg';" src="https://ik.imagekit.io/k0wpvuatq/maharani-manika-topaz-set-1.png"/></div></header>
 <section class="section-title" id="inventory"><h2>Jewelry Sets Collection</h2><p>Four regal sets from the Maharani Manika and Rajwadi collections.</p></section>
 <div aria-label="Product catalog controls" class="catalog-controls">
 <label class="catalog-filter">Category
@@ -1307,6 +1307,7 @@
   };
   const quantity = item => Math.max(1, Number(item && item.quantity) || 1);
   const price = item => Number(item && (item.priceUSD ?? item.price)) || 0;
+  const formatLivePrice = value => window.GlobalRaniCurrency?.formatUSD?.(value) || `$${Number(value || 0).toFixed(2)}`;
   const escapeHtml = value => String(value ?? '').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
 
   function refresh() {
@@ -1314,7 +1315,7 @@
     const totalQuantity = cart.reduce((sum, item) => sum + quantity(item), 0);
     const totalPrice = cart.reduce((sum, item) => sum + price(item) * quantity(item), 0);
     count.textContent = totalQuantity;
-    totalRoot.textContent = `$${totalPrice.toFixed(2)}`;
+    totalRoot.textContent = formatLivePrice(totalPrice);
     if (!cart.length) {
       itemsRoot.innerHTML = '<div class="floating-cart-empty">Your shopping bag is empty.<br>Add a jewelry piece to see it here.</div>';
       return;
@@ -1330,7 +1331,7 @@
               <strong>${quantity(item)}</strong>
               <button type="button" data-cart-action="plus" data-index="${index}" aria-label="Increase quantity">+</button>
             </div>
-            <strong>$${(price(item) * quantity(item)).toFixed(2)}</strong>
+            <strong>${formatLivePrice(price(item) * quantity(item))}</strong>
           </div>
           <button class="floating-cart-remove" type="button" data-cart-action="remove" data-index="${index}">Remove</button>
         </div>
@@ -1369,6 +1370,7 @@
   document.addEventListener('click', () => setTimeout(refresh, 80), true);
   window.addEventListener('pageshow', refresh);
   window.addEventListener('storage', refresh);
+  window.addEventListener('global-rani-currency-change', refresh);
   window.GlobalRaniFloatingCart = { refresh, open: () => setOpen(true), close: () => setOpen(false) };
   refresh();
 })();
@@ -1533,5 +1535,5 @@
     }
   });
 </script>
-<script src="../assets/global-rani-quality.js" defer></script>
+<script src="../assets/global-rani-quality.js?v=20260807-1" defer></script>
 </body></html>

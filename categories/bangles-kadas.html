@@ -1078,6 +1078,7 @@
   };
   const quantity = item => Math.max(1, Number(item && item.quantity) || 1);
   const price = item => Number(item && (item.priceUSD ?? item.price)) || 0;
+  const formatLivePrice = value => window.GlobalRaniCurrency?.formatUSD?.(value) || `$${Number(value || 0).toFixed(2)}`;
   const escapeHtml = value => String(value ?? '').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
 
   function refresh() {
@@ -1085,7 +1086,7 @@
     const totalQuantity = cart.reduce((sum, item) => sum + quantity(item), 0);
     const totalPrice = cart.reduce((sum, item) => sum + price(item) * quantity(item), 0);
     count.textContent = totalQuantity;
-    totalRoot.textContent = `$${totalPrice.toFixed(2)}`;
+    totalRoot.textContent = formatLivePrice(totalPrice);
     if (!cart.length) {
       itemsRoot.innerHTML = '<div class="floating-cart-empty">Your shopping bag is empty.<br>Add a jewelry piece to see it here.</div>';
       return;
@@ -1101,7 +1102,7 @@
               <strong>${quantity(item)}</strong>
               <button type="button" data-cart-action="plus" data-index="${index}" aria-label="Increase quantity">+</button>
             </div>
-            <strong>$${(price(item) * quantity(item)).toFixed(2)}</strong>
+            <strong>${formatLivePrice(price(item) * quantity(item))}</strong>
           </div>
           <button class="floating-cart-remove" type="button" data-cart-action="remove" data-index="${index}">Remove</button>
         </div>
@@ -1140,6 +1141,7 @@
   document.addEventListener('click', () => setTimeout(refresh, 80), true);
   window.addEventListener('pageshow', refresh);
   window.addEventListener('storage', refresh);
+  window.addEventListener('global-rani-currency-change', refresh);
   window.GlobalRaniFloatingCart = { refresh, open: () => setOpen(true), close: () => setOpen(false) };
   refresh();
 })();
@@ -1278,5 +1280,5 @@
     }
   });
 </script>
-<script src="../assets/global-rani-quality.js" defer></script>
+<script src="../assets/global-rani-quality.js?v=20260807-1" defer></script>
 </body></html>
